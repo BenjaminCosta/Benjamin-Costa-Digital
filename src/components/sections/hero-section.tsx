@@ -1,11 +1,18 @@
 import { ArrowIcon } from "@/components/ui/arrow-icon";
 import { ButtonLink } from "@/components/ui/button-link";
-import { MediaSlot } from "@/components/ui/media-slot";
-import { site } from "@/data/site-content";
+import { Backdrop } from "@/components/ui/backdrop";
+import { backdrops, site } from "@/data/site-content";
 
 export function HeroSection() {
   return (
     <section className="hero" aria-labelledby="hero-title">
+      <Backdrop
+        src={backdrops.hero}
+        className="hero__backdrop"
+        sizes="(min-width: 64rem) 100vw, 220vw"
+        eager
+      />
+
       <div className="hero__panel">
         <div className="page-container indexed hero__body">
           <span className="indexed__index only-desktop" aria-hidden="true">
@@ -40,18 +47,11 @@ export function HeroSection() {
         </div>
       </div>
 
-      <MediaSlot
-        slot="hero image"
-        className="hero__media"
-        sizes="(min-width: 64rem) 40vw, 100vw"
-        preload
-      >
-        <p className="hero__coords only-desktop" aria-hidden="true">
-          {site.coordinates[0]}
-          <br />
-          {site.coordinates[1]}
-        </p>
-      </MediaSlot>
+      <p className="hero__coords only-desktop" aria-hidden="true">
+        {site.coordinates[0]}
+        <br />
+        {site.coordinates[1]}
+      </p>
     </section>
   );
 }

@@ -420,6 +420,70 @@ a {
   backdrop-filter: blur(18px);
 }
 
+/* Glass/acrylic photography behind a section: present, never loud */
+.backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.backdrop img {
+  object-fit: cover;
+}
+
+.hero__backdrop {
+  inset-block-start: 22rem;
+  opacity: 0.92;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 42%);
+  mask-image: linear-gradient(180deg, transparent 0, #000 42%);
+}
+
+.hero__backdrop img {
+  object-position: 62% 100%;
+}
+
+.audit__backdrop {
+  opacity: 0.5;
+  -webkit-mask-image: linear-gradient(200deg, #000 18%, transparent 62%);
+  mask-image: linear-gradient(200deg, #000 18%, transparent 62%);
+}
+
+.audit__backdrop img {
+  object-position: 92% 0;
+}
+
+.about__backdrop {
+  inset-block-start: auto;
+  height: 24rem;
+  opacity: 0.85;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 55%);
+  mask-image: linear-gradient(180deg, transparent 0, #000 55%);
+}
+
+.about__backdrop img {
+  object-position: 90% 100%;
+}
+
+.contact__backdrop {
+  inset-block-start: auto;
+  height: 26rem;
+  opacity: 0.7;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 60%);
+  mask-image: linear-gradient(180deg, transparent 0, #000 60%);
+}
+
+.contact__backdrop img {
+  object-position: 88% 50%;
+}
+
+.audit__body,
+.contact__body {
+  position: relative;
+  z-index: 1;
+}
+
 /* ==========================================================================
    Header
    ========================================================================== */
@@ -579,14 +643,21 @@ a {
   white-space: nowrap;
 }
 
-.hero__media {
-  aspect-ratio: 393 / 400;
+.hero {
+  position: relative;
+  overflow: clip;
+  padding-block-end: 15.5rem;
+}
+
+.hero__panel {
+  position: relative;
+  z-index: 1;
 }
 
 /* ---------- 02 Audit ---------- */
 
 .audit {
-  padding-block-end: 10rem;
+  padding-block-end: 3.5rem;
   overflow: clip;
 }
 
@@ -666,25 +737,6 @@ a {
 
 .audit .button {
   margin-block-start: 1.125rem;
-}
-
-.audit__media {
-  position: absolute;
-  inset-inline: 0;
-  inset-block-end: 0;
-  height: 15.75rem;
-  clip-path: polygon(0 53%, 33% 50%, 100% 8%, 100% 100%, 0 100%);
-}
-
-.audit__media[data-placeholder] {
-  background:
-    radial-gradient(90% 120% at 75% 30%, rgb(255 255 255 / 0.16), transparent 60%),
-    linear-gradient(200deg, #b9b2a7 0%, #8e877c 45%, #5d5852 100%);
-}
-
-.audit__media .media-slot__caption {
-  inset-inline: auto var(--gutter);
-  color: rgb(250 249 245 / 0.6);
 }
 
 /* ---------- 03 Selected work ---------- */
@@ -1104,7 +1156,13 @@ a {
 /* ---------- 05 About ---------- */
 
 .about {
-  padding-block-end: 0;
+  overflow: clip;
+  padding-block-end: 13rem;
+}
+
+.about__body {
+  position: relative;
+  z-index: 1;
 }
 
 .display--about {
@@ -1149,15 +1207,10 @@ a {
   color: color-mix(in srgb, var(--ink) 66%, var(--paper));
 }
 
-.about__media {
-  margin-block-start: 1.5rem;
-  aspect-ratio: 393 / 420;
-}
-
 /* ---------- 06 Final CTA ---------- */
 
 .contact {
-  padding-block-end: 15rem;
+  padding-block-end: 13rem;
   overflow: clip;
 }
 
@@ -1193,18 +1246,12 @@ a {
   letter-spacing: 0.02em;
 }
 
-.contact__media {
-  position: absolute;
-  inset-inline: 0;
-  inset-block-end: 0;
-  height: 18rem;
-  clip-path: polygon(0 55.6%, 100% 0, 100% 100%, 0 100%);
-}
-
 /* ---------- Footer ---------- */
 
 .site-footer {
-  padding-block: 0.75rem 1.5rem;
+  padding-block: 0 1.5rem;
+  background: var(--dark);
+  color: var(--white);
 }
 
 .site-footer__inner {
@@ -1212,7 +1259,12 @@ a {
   justify-content: space-between;
   gap: 1rem;
   padding-block-start: 1.125rem;
-  border-block-start: 1px solid var(--rule);
+  border-block-start: 1px solid var(--rule-inverse);
+}
+
+.site-footer ::selection {
+  background: var(--white);
+  color: var(--ink);
 }
 
 .site-footer .mono-label {
@@ -1229,9 +1281,12 @@ a {
     --gutter: 2.5rem;
   }
 
-  .hero__media,
-  .about__media {
-    aspect-ratio: 16 / 10;
+  .hero {
+    padding-block-end: 22rem;
+  }
+
+  .hero__backdrop {
+    inset-block-start: 27rem;
   }
 
   .work__track {
@@ -1374,10 +1429,6 @@ a {
     transition:
       width var(--reveal-duration) var(--ease-editorial),
       background-color var(--hover-duration) var(--ease-editorial);
-  }
-
-  .site-header[data-theme="top"]::after {
-    width: var(--hero-split);
   }
 
   .site-header__inner {
@@ -1525,20 +1576,27 @@ a {
     font-size: 1rem;
   }
 
-  .hero__media {
-    height: 100%;
-    aspect-ratio: auto;
+  .hero {
+    padding-block-end: 0;
   }
 
-  .hero__media .media-slot__caption {
-    inset-inline: auto 2rem;
+  .hero__backdrop {
+    inset-block-start: 0;
+    opacity: 0.88;
+    -webkit-mask-image: linear-gradient(90deg, transparent 40%, #000 74%);
+    mask-image: linear-gradient(90deg, transparent 40%, #000 74%);
+  }
+
+  .hero__backdrop img {
+    object-position: 100% 50%;
   }
 
   .hero__coords {
     position: absolute;
+    z-index: 1;
     inset-block-end: 2.75rem;
-    inset-inline-start: 2.625rem;
-    color: rgb(250 249 245 / 0.86);
+    inset-inline-start: calc(var(--hero-split) + 2.625rem);
+    color: color-mix(in srgb, var(--ink) 62%, transparent);
     font-family: var(--font-mono);
     font-size: 0.75rem;
     line-height: 1.45;
@@ -1634,20 +1692,15 @@ a {
     }
   }
 
-  .audit__media {
-    inset-block: 0;
-    inset-inline: auto 0;
-    width: 31%;
-    height: auto;
-    clip-path: none;
-    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 38%);
-    mask-image: linear-gradient(90deg, transparent 0, #000 38%);
+  .audit__backdrop {
+    inset-inline-start: 30%;
+    opacity: 0.85;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 45%);
+    mask-image: linear-gradient(90deg, transparent 0, #000 45%);
   }
 
-  .audit__media[data-placeholder] {
-    background:
-      linear-gradient(115deg, transparent 40%, rgb(255 255 255 / 0.14) 52%, transparent 64%),
-      linear-gradient(200deg, #57524b 0%, #34312d 45%, #1d1b19 100%);
+  .audit__backdrop img {
+    object-position: 100% 50%;
   }
 
   /* ---------- 03 Selected work ---------- */
@@ -2009,6 +2062,19 @@ a {
     padding-block: 5rem 0;
   }
 
+  .about__backdrop {
+    inset-block-start: 0;
+    inset-inline-start: 42%;
+    height: auto;
+    opacity: 0.95;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 50%);
+    mask-image: linear-gradient(90deg, transparent 0, #000 50%);
+  }
+
+  .about__backdrop img {
+    object-position: 100% 50%;
+  }
+
   .about__body {
     width: auto;
     margin-inline: var(--gutter) 19.45%;
@@ -2075,23 +2141,23 @@ a {
     line-height: 1.5;
   }
 
-  .about__media {
-    position: absolute;
-    inset-block: 0;
-    inset-inline-end: 0;
-    width: 19.45%;
-    margin: 0;
-    aspect-ratio: auto;
-  }
-
-  .about__media .media-slot__caption {
-    inset-inline-start: 1.25rem;
-  }
-
   /* ---------- 06 Final CTA ---------- */
 
   .contact {
     padding-block: 4.5rem 6rem;
+  }
+
+  .contact__backdrop {
+    inset-block-start: 0;
+    inset-inline-start: 34%;
+    height: auto;
+    opacity: 0.9;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 45%);
+    mask-image: linear-gradient(90deg, transparent 0, #000 45%);
+  }
+
+  .contact__backdrop img {
+    object-position: 100% 50%;
   }
 
   .contact__body {
@@ -2135,18 +2201,6 @@ a {
     letter-spacing: 0.01em;
   }
 
-  .contact__media {
-    inset-block: 0;
-    inset-inline: auto 0;
-    width: 38.2%;
-    height: auto;
-    clip-path: polygon(30% 0, 100% 0, 100% 100%, 0 100%);
-  }
-
-  .contact__media .media-slot__caption {
-    inset-inline: auto 2rem;
-  }
-
   /* ---------- Footer ---------- */
 
   .site-footer {
@@ -2165,8 +2219,19 @@ a {
 
 /* Small desktop (64–80rem): stack the denser rows */
 @media (min-width: 64rem) and (max-width: 79.999rem) {
-  .audit__media {
-    width: 24%;
+  .hero__backdrop {
+    -webkit-mask-image: linear-gradient(90deg, transparent 50%, #000 82%);
+    mask-image: linear-gradient(90deg, transparent 50%, #000 82%);
+  }
+
+  .audit__backdrop {
+    inset-inline-start: 62%;
+    opacity: 0.55;
+  }
+
+  .about__backdrop {
+    inset-inline-start: 62%;
+    opacity: 0.75;
   }
 
   .about__intro {
@@ -2226,6 +2291,25 @@ a {
 
   .hero__body > :nth-child(3) {
     animation-delay: 140ms;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .backdrop img {
+      scale: 1.06;
+      animation: backdrop-drift linear both;
+      animation-timeline: view();
+    }
+  }
+}
+
+@keyframes backdrop-drift {
+  from {
+    translate: 0 -2.5%;
+  }
+  to {
+    translate: 0 2.5%;
   }
 }
 

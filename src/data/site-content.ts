@@ -6,6 +6,14 @@ export const site = Object.freeze({
   coordinates: ["28.0167° S", "153.4000° E"],
 });
 
+/** Subtle glass/acrylic backgrounds, one per section that carries one. */
+export const backdrops = Object.freeze({
+  hero: "/images/bg/glass-analytics-sunlight.png",
+  audit: "/images/bg/glass-dashboards-dark.png",
+  about: "/images/bg/glass-laptop-soft.png",
+  contact: "/images/bg/glass-interface-dark.png",
+});
+
 export const plannedProjectCount = 8;
 
 export const projects: readonly Project[] = [

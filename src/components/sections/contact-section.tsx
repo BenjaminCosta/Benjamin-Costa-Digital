@@ -1,11 +1,22 @@
 import { ButtonLink } from "@/components/ui/button-link";
-import { MediaSlot } from "@/components/ui/media-slot";
+import { Backdrop } from "@/components/ui/backdrop";
 import { SectionHead } from "@/components/ui/section-head";
-import { pricing } from "@/data/site-content";
+import { backdrops, pricing } from "@/data/site-content";
 
 export function ContactSection() {
   return (
-    <section id="contact" className="section contact" aria-labelledby="contact-title">
+    <section
+      id="contact"
+      className="section section--dark contact"
+      aria-labelledby="contact-title"
+      data-header-theme="dark"
+    >
+      <Backdrop
+        src={backdrops.contact}
+        className="contact__backdrop"
+        sizes="(min-width: 64rem) 65vw, 180vw"
+      />
+
       <div className="page-container indexed contact__body" data-reveal>
         <SectionHead index="06" title="Final CTA" desktopTitle="Contact" />
 
@@ -15,7 +26,9 @@ export function ContactSection() {
         </h2>
 
         <div className="contact__actions">
-          <ButtonLink pendingLabel="Contact link coming soon">Talk to me</ButtonLink>
+          <ButtonLink tone="light" pendingLabel="Contact link coming soon">
+            Talk to me
+          </ButtonLink>
 
           <p className="contact__note lines">
             <span>Most projects start around {pricing.startingFrom}.</span>{" "}
@@ -24,11 +37,6 @@ export function ContactSection() {
         </div>
       </div>
 
-      <MediaSlot
-        slot="contact image"
-        className="contact__media"
-        sizes="(min-width: 64rem) 38vw, 100vw"
-      />
     </section>
   );
 }

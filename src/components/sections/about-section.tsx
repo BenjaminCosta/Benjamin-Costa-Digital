@@ -1,10 +1,16 @@
-import { MediaSlot } from "@/components/ui/media-slot";
+import { Backdrop } from "@/components/ui/backdrop";
 import { SectionHead } from "@/components/ui/section-head";
-import { principles, site } from "@/data/site-content";
+import { backdrops, principles, site } from "@/data/site-content";
 
 export function AboutSection() {
   return (
     <section id="about" className="section about" aria-labelledby="about-title">
+      <Backdrop
+        src={backdrops.about}
+        className="about__backdrop"
+        sizes="(min-width: 64rem) 60vw, 180vw"
+      />
+
       <div className="page-container indexed about__body" data-reveal>
         <div className="about__intro">
           <div className="about__main">
@@ -36,11 +42,6 @@ export function AboutSection() {
         </ul>
       </div>
 
-      <MediaSlot
-        slot="about image"
-        className="about__media"
-        sizes="(min-width: 64rem) 20vw, 100vw"
-      />
     </section>
   );
 }

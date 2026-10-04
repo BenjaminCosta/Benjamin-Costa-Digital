@@ -1,7 +1,8 @@
 import { ArrowIcon } from "@/components/ui/arrow-icon";
 import { ButtonLink } from "@/components/ui/button-link";
-import { MediaSlot } from "@/components/ui/media-slot";
+import { Backdrop } from "@/components/ui/backdrop";
 import { SectionHead } from "@/components/ui/section-head";
+import { backdrops } from "@/data/site-content";
 
 export function AuditSection() {
   return (
@@ -11,6 +12,12 @@ export function AuditSection() {
       aria-labelledby="audit-title"
       data-header-theme="dark"
     >
+      <Backdrop
+        src={backdrops.audit}
+        className="audit__backdrop"
+        sizes="(min-width: 64rem) 70vw, 180vw"
+      />
+
       <div className="page-container indexed audit__body" data-reveal>
         <div className="audit__main">
           <SectionHead
@@ -62,11 +69,6 @@ export function AuditSection() {
         </div>
       </div>
 
-      <MediaSlot
-        slot="audit texture"
-        className="audit__media"
-        sizes="(min-width: 64rem) 32vw, 100vw"
-      />
     </section>
   );
 }
