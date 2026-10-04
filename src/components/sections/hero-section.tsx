@@ -36,7 +36,7 @@ export function HeroSection() {
           </p>
 
           <div className="hero__actions">
-            <ButtonLink href="#audit">Check your website</ButtonLink>
+            <ButtonLink href="#ideas">Check your website</ButtonLink>
             <div className="hero__secondary">
               <a className="text-link text-link--underlined" href="#work">
                 <span className="text-link__label">See my work</span>

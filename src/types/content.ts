@@ -32,3 +32,50 @@ export type ProfileLink = Readonly<{
   value: string;
   href?: string;
 }>;
+
+export type IdeaIconName =
+  | "calendar"
+  | "gear"
+  | "monitor"
+  | "bulb"
+  | "compass"
+  | "search"
+  | "chart"
+  | "users"
+  | "flow"
+  | "grid"
+  | "sparkle"
+  | "pin"
+  | "cube"
+  | "phone"
+  | "bag";
+
+export type IdeaAnswer = Readonly<{
+  icon: IdeaIconName;
+  title: string;
+  text: string;
+}>;
+
+/** One of the starting options in the Business Ideas tool. */
+export type IdeaOption = Readonly<{
+  id: string;
+  label: string;
+  icon: IdeaIconName;
+  /** Line shown above the instant answers (or on its own when there are none). */
+  intro: string;
+  answers: readonly IdeaAnswer[];
+  /** Options that skip the instant answers and go straight to the form. */
+  direct?: boolean;
+}>;
+
+/** Where a generated idea comes from. */
+export type IdeaBasis = "public" | "owner" | "explore";
+
+/** A personalised opportunity returned by the ideas generator. */
+export type BusinessIdea = Readonly<{
+  id: string;
+  title: string;
+  summary: string;
+  build: string;
+  basis?: IdeaBasis;
+}>;
