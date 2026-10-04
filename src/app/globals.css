@@ -420,24 +420,44 @@ a {
   backdrop-filter: blur(18px);
 }
 
-/* Glass/acrylic photography behind a section: present, never loud */
+/* Glass/acrylic photography behind a section: present, never loud.
+   The image is blended into the section colour (multiply on paper, screen
+   on dark) and feathered on every edge, so its own background disappears
+   and only the glass reads. */
 .backdrop {
+  --backdrop-opacity: 0.55;
+  --backdrop-mask: radial-gradient(100% 80% at 70% 70%, #000 20%, transparent 70%);
+
   position: absolute;
   inset: 0;
   z-index: 0;
   overflow: hidden;
   pointer-events: none;
+  opacity: var(--backdrop-opacity);
+  mix-blend-mode: multiply;
+  -webkit-mask-image: var(--backdrop-mask);
+  mask-image: var(--backdrop-mask);
+}
+
+.section--dark .backdrop {
+  mix-blend-mode: screen;
 }
 
 .backdrop img {
   object-fit: cover;
+  filter: saturate(0.6);
+}
+
+.hero,
+.section {
+  isolation: isolate;
 }
 
 .hero__backdrop {
-  inset-block-start: 22rem;
-  opacity: 0.92;
-  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 42%);
-  mask-image: linear-gradient(180deg, transparent 0, #000 42%);
+  --backdrop-opacity: 0.6;
+  --backdrop-mask: radial-gradient(120% 75% at 70% 80%, #000 22%, transparent 72%);
+
+  inset-block-start: 20rem;
 }
 
 .hero__backdrop img {
@@ -445,9 +465,8 @@ a {
 }
 
 .audit__backdrop {
-  opacity: 0.5;
-  -webkit-mask-image: linear-gradient(200deg, #000 18%, transparent 62%);
-  mask-image: linear-gradient(200deg, #000 18%, transparent 62%);
+  --backdrop-opacity: 0.35;
+  --backdrop-mask: radial-gradient(90% 55% at 88% 8%, #000 8%, transparent 70%);
 }
 
 .audit__backdrop img {
@@ -455,11 +474,11 @@ a {
 }
 
 .about__backdrop {
+  --backdrop-opacity: 0.55;
+  --backdrop-mask: radial-gradient(110% 85% at 78% 88%, #000 18%, transparent 70%);
+
   inset-block-start: auto;
   height: 24rem;
-  opacity: 0.85;
-  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 55%);
-  mask-image: linear-gradient(180deg, transparent 0, #000 55%);
 }
 
 .about__backdrop img {
@@ -467,11 +486,11 @@ a {
 }
 
 .contact__backdrop {
+  --backdrop-opacity: 0.45;
+  --backdrop-mask: radial-gradient(110% 85% at 82% 82%, #000 12%, transparent 70%);
+
   inset-block-start: auto;
   height: 26rem;
-  opacity: 0.7;
-  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 60%);
-  mask-image: linear-gradient(180deg, transparent 0, #000 60%);
 }
 
 .contact__backdrop img {
@@ -1581,10 +1600,10 @@ a {
   }
 
   .hero__backdrop {
+    --backdrop-opacity: 0.62;
+    --backdrop-mask: radial-gradient(62% 95% at 84% 55%, #000 22%, transparent 74%);
+
     inset-block-start: 0;
-    opacity: 0.88;
-    -webkit-mask-image: linear-gradient(90deg, transparent 40%, #000 74%);
-    mask-image: linear-gradient(90deg, transparent 40%, #000 74%);
   }
 
   .hero__backdrop img {
@@ -1693,10 +1712,10 @@ a {
   }
 
   .audit__backdrop {
+    --backdrop-opacity: 0.5;
+    --backdrop-mask: radial-gradient(70% 105% at 86% 45%, #000 12%, transparent 72%);
+
     inset-inline-start: 30%;
-    opacity: 0.85;
-    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 45%);
-    mask-image: linear-gradient(90deg, transparent 0, #000 45%);
   }
 
   .audit__backdrop img {
@@ -2063,12 +2082,12 @@ a {
   }
 
   .about__backdrop {
+    --backdrop-opacity: 0.6;
+    --backdrop-mask: radial-gradient(68% 105% at 90% 55%, #000 14%, transparent 72%);
+
     inset-block-start: 0;
     inset-inline-start: 42%;
     height: auto;
-    opacity: 0.95;
-    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 50%);
-    mask-image: linear-gradient(90deg, transparent 0, #000 50%);
   }
 
   .about__backdrop img {
@@ -2148,12 +2167,12 @@ a {
   }
 
   .contact__backdrop {
+    --backdrop-opacity: 0.5;
+    --backdrop-mask: radial-gradient(70% 100% at 86% 55%, #000 12%, transparent 72%);
+
     inset-block-start: 0;
     inset-inline-start: 34%;
     height: auto;
-    opacity: 0.9;
-    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 45%);
-    mask-image: linear-gradient(90deg, transparent 0, #000 45%);
   }
 
   .contact__backdrop img {
@@ -2220,18 +2239,19 @@ a {
 /* Small desktop (64–80rem): stack the denser rows */
 @media (min-width: 64rem) and (max-width: 79.999rem) {
   .hero__backdrop {
-    -webkit-mask-image: linear-gradient(90deg, transparent 50%, #000 82%);
-    mask-image: linear-gradient(90deg, transparent 50%, #000 82%);
+    --backdrop-mask: radial-gradient(52% 90% at 90% 55%, #000 18%, transparent 74%);
   }
 
   .audit__backdrop {
-    inset-inline-start: 62%;
-    opacity: 0.55;
+    --backdrop-opacity: 0.4;
+
+    inset-inline-start: 58%;
   }
 
   .about__backdrop {
-    inset-inline-start: 62%;
-    opacity: 0.75;
+    --backdrop-opacity: 0.5;
+
+    inset-inline-start: 60%;
   }
 
   .about__intro {
