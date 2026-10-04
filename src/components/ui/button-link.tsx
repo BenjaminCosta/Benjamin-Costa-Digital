@@ -4,7 +4,7 @@ import { ArrowIcon } from "@/components/ui/arrow-icon";
 type ButtonLinkProps = Readonly<{
   href?: string;
   children: ReactNode;
-  tone?: "dark" | "light";
+  tone?: "dark" | "light" | "glass";
   arrow?: "right" | "up-right";
   className?: string;
   pendingLabel?: string;

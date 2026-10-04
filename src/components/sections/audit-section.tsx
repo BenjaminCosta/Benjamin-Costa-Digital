@@ -63,7 +63,7 @@ export function AuditSection() {
             </p>
           </div>
 
-          <ButtonLink tone="light" href="#contact">
+          <ButtonLink tone="glass" href="#contact">
             Send it on WhatsApp
           </ButtonLink>
         </div>

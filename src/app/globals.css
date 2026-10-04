@@ -35,6 +35,8 @@
   /* Motion */
   --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
   --hover-duration: 220ms;
+  --ease-sweep: cubic-bezier(0.7, 0, 0.2, 1);
+  --duration-sweep: 380ms;
   --reveal-duration: 520ms;
 
   /* Layout */
@@ -240,6 +242,9 @@ a {
   justify-content: space-between;
   gap: 1.25rem;
   padding-inline: 1.25rem;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   border: 1px solid var(--button-border, var(--button-bg));
   border-radius: var(--radius-control);
   background: var(--button-bg);
@@ -251,23 +256,75 @@ a {
   line-height: 1;
   text-transform: uppercase;
   white-space: nowrap;
+  /* The label flips colour around the moment the fill reaches the middle */
   transition:
-    background-color var(--hover-duration) var(--ease-editorial),
-    border-color var(--hover-duration) var(--ease-editorial),
-    color var(--hover-duration) var(--ease-editorial),
-    transform var(--hover-duration) var(--ease-editorial);
+    color 180ms ease 110ms,
+    border-color 280ms ease,
+    transform 160ms ease;
 }
 
+/*
+ * Sweep: on hover a layer wipes in from the left with the button's colours
+ * inverted, and wipes out to the right on leave. Touch devices get it on
+ * press, keyboard users on focus.
+ */
+.button::before,
+.round-button::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--sweep-bg);
+  content: "";
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform var(--duration-sweep) var(--ease-sweep);
+}
+
+.button:focus-visible,
+.button:active {
+  border-color: var(--sweep-border, var(--button-border, var(--button-bg)));
+  color: var(--sweep-fg);
+}
+
+.button:focus-visible::before,
+.button:active::before {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+.button:active,
+.round-button:not(:disabled):active {
+  transform: scale(0.985);
+}
+
+/* Solid ink on paper -> paper fill, ink label */
 .button--dark {
   --button-bg: var(--ink);
-  --button-bg-hover: #222222;
   --button-fg: var(--paper);
+  --sweep-bg: var(--paper);
+  --sweep-fg: var(--ink);
 }
 
+/* Solid paper on dark -> dark fill, paper label */
 .button--light {
   --button-bg: var(--paper);
-  --button-bg-hover: #e4e1d9;
   --button-fg: var(--ink);
+  --sweep-bg: var(--dark);
+  --sweep-fg: var(--paper);
+}
+
+/* Semi-transparent frosted control on dark -> solid paper fill */
+.button--glass {
+  --button-bg: rgb(250 249 245 / 0.06);
+  --button-border: rgb(250 249 245 / 0.42);
+  --button-fg: var(--white);
+  --sweep-bg: var(--paper);
+  --sweep-border: var(--paper);
+  --sweep-fg: var(--ink);
+
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
 }
 
 .button[data-pending] {
@@ -304,19 +361,44 @@ a {
 }
 
 .round-button {
+  --round-bg: transparent;
+  --round-fg: var(--ink);
+  --round-border: var(--ink);
+  --sweep-bg: var(--ink);
+  --sweep-fg: var(--paper);
+
+  position: relative;
+  isolation: isolate;
   display: grid;
   width: 2.25rem;
   height: 2.25rem;
   place-items: center;
-  border: 1px solid currentColor;
+  overflow: hidden;
+  border: 1px solid var(--round-border);
   border-radius: 50%;
-  background: transparent;
-  color: var(--ink);
+  background: var(--round-bg);
+  color: var(--round-fg);
   cursor: pointer;
   transition:
-    background-color var(--hover-duration) var(--ease-editorial),
-    color var(--hover-duration) var(--ease-editorial),
-    border-color var(--hover-duration) var(--ease-editorial);
+    color 160ms ease 90ms,
+    border-color 280ms ease,
+    transform 160ms ease;
+}
+
+/* Round controls fill from the centre */
+.round-button::before {
+  transform: scale(0);
+  transform-origin: center;
+}
+
+.round-button:not(:disabled):focus-visible,
+.round-button:not(:disabled):active {
+  color: var(--sweep-fg);
+}
+
+.round-button:not(:disabled):focus-visible::before,
+.round-button:not(:disabled):active::before {
+  transform: scale(1);
 }
 
 .round-button .arrow-icon {
@@ -325,16 +407,21 @@ a {
 }
 
 .round-button:disabled {
-  border-color: var(--line);
-  color: color-mix(in srgb, var(--muted) 55%, var(--paper));
+  --round-border: var(--line);
+  --round-fg: color-mix(in srgb, var(--muted) 55%, var(--paper));
+
   cursor: default;
 }
 
 @media (hover: hover) {
-  .button:not([data-pending]):hover {
-    border-color: var(--button-border-hover, var(--button-bg-hover));
-    background: var(--button-bg-hover);
-    transform: translateY(-1px);
+  .button:hover {
+    border-color: var(--sweep-border, var(--button-border, var(--button-bg)));
+    color: var(--sweep-fg);
+  }
+
+  .button:hover::before {
+    transform: scaleX(1);
+    transform-origin: left center;
   }
 
   .button:hover .arrow-icon[data-direction="right"],
@@ -357,8 +444,11 @@ a {
   }
 
   .round-button:not(:disabled):hover {
-    background: var(--ink);
-    color: var(--paper);
+    color: var(--sweep-fg);
+  }
+
+  .round-button:not(:disabled):hover::before {
+    transform: scale(1);
   }
 
   .round-button:not(:disabled):hover .arrow-icon[data-direction="right"] {
@@ -1402,7 +1492,6 @@ a {
   .site-header {
     --header-cta-bg: var(--ink);
     --header-cta-fg: var(--paper);
-    --header-cta-hover: #222222;
 
     margin-block-end: calc(var(--header-height) * -1);
   }
@@ -1414,7 +1503,6 @@ a {
   .site-header[data-theme="dark"] {
     --header-cta-bg: var(--paper);
     --header-cta-fg: var(--ink);
-    --header-cta-hover: #e4e1d9;
   }
 
   .site-header::after {
@@ -1471,18 +1559,42 @@ a {
   }
 
   .site-header__cta {
+    position: relative;
+    isolation: isolate;
     min-height: 2.875rem;
     gap: 0.75rem;
+    overflow: hidden;
     padding-inline: 1.375rem;
+    border: 1px solid var(--header-cta-bg);
     border-radius: var(--radius-control);
     background: var(--header-cta-bg);
     color: var(--header-cta-fg);
     font-size: 0.9375rem;
     font-weight: 500;
     transition:
-      background-color var(--hover-duration) var(--ease-editorial),
-      color var(--hover-duration) var(--ease-editorial),
-      transform var(--hover-duration) var(--ease-editorial);
+      color 180ms ease 110ms,
+      border-color 280ms ease,
+      background-color var(--hover-duration) var(--ease-editorial);
+  }
+
+  .site-header__cta::before {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--header-cta-fg);
+    content: "";
+    transform: scaleX(0);
+    transform-origin: right center;
+    transition: transform var(--duration-sweep) var(--ease-sweep);
+  }
+
+  .site-header__cta:focus-visible {
+    color: var(--header-cta-bg);
+  }
+
+  .site-header__cta:focus-visible::before {
+    transform: scaleX(1);
+    transform-origin: left center;
   }
 
   .site-header__cta .text-link__label {
@@ -1496,8 +1608,12 @@ a {
     }
 
     .site-header__cta:hover {
-      background: var(--header-cta-hover);
-      transform: translateY(-1px);
+      color: var(--header-cta-bg);
+    }
+
+    .site-header__cta:hover::before {
+      transform: scaleX(1);
+      transform-origin: left center;
     }
 
     .site-header__cta:hover .text-link__label {
@@ -1684,12 +1800,6 @@ a {
 
   /* Secondary action on dark: outline */
   .audit .button {
-    --button-bg: transparent;
-    --button-bg-hover: rgb(250 249 245 / 0.08);
-    --button-border: rgb(250 249 245 / 0.72);
-    --button-border-hover: var(--white);
-    --button-fg: var(--white);
-
     margin-block-start: auto;
   }
 
@@ -1731,20 +1841,26 @@ a {
   }
 
   .round-button {
+    --round-bg: color-mix(in srgb, var(--ink) 6%, var(--paper));
+    --round-border: transparent;
+
     width: 4.5rem;
     height: 4.5rem;
-    border: 0;
-    background: color-mix(in srgb, var(--ink) 6%, var(--paper));
   }
 
+  /* Solid ink -> paper fill with an ink edge, the same inversion as buttons */
   .round-button--primary {
-    background: var(--ink);
-    color: var(--paper);
+    --round-bg: var(--ink);
+    --round-fg: var(--paper);
+    --round-border: var(--ink);
+    --sweep-bg: var(--paper);
+    --sweep-fg: var(--ink);
   }
 
   .round-button:disabled {
-    background: color-mix(in srgb, var(--ink) 4%, var(--paper));
-    color: color-mix(in srgb, var(--muted) 70%, var(--paper));
+    --round-bg: color-mix(in srgb, var(--ink) 4%, var(--paper));
+    --round-border: transparent;
+    --round-fg: color-mix(in srgb, var(--muted) 70%, var(--paper));
   }
 
   .round-button .arrow-icon {
@@ -1843,6 +1959,9 @@ a {
 
   .work__current .work__cta {
     --button-bg: transparent;
+    --sweep-bg: transparent;
+    --sweep-border: currentColor;
+    --sweep-fg: var(--ink);
 
     min-height: 0;
     margin-block-start: 3rem;
@@ -1860,13 +1979,6 @@ a {
     height: 0.875rem;
   }
 
-  @media (hover: hover) {
-    .work__current .work__cta:not([data-pending]):hover {
-      border-color: currentColor;
-      background: transparent;
-      transform: none;
-    }
-  }
 
   .work__next {
     align-self: stretch;
