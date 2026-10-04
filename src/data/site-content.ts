@@ -10,6 +10,7 @@ export const site = Object.freeze({
 export const backdrops = Object.freeze({
   hero: "/images/bg/glass-analytics-sunlight.png",
   audit: "/images/bg/glass-dashboards-dark.png",
+  work: "/images/bg/glass-devices-sunlight.png",
   about: "/images/bg/glass-laptop-soft.png",
   contact: "/images/bg/glass-interface-dark.png",
 });
@@ -23,7 +24,7 @@ export const projects: readonly Project[] = [
     category: "Barbershop",
     location: "Gold Coast, AU",
     services: ["Website", "Bookings", "Automations"],
-    summary: "Two locations, one digital experience.",
+    summary: "Two shops, one digital experience.",
     description:
       "Two shops, bookings spread across platforms and no site that sold the place. Now one site, Square bookings connected, and the follow-ups go out on their own.",
   },

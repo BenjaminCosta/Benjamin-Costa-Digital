@@ -66,6 +66,33 @@ export function WorkShowcase({ projects, total }: WorkShowcaseProps) {
     .map((offset) => (active + offset) % projects.length)
     .filter((index, position, list) => index !== active && list.indexOf(index) === position);
 
+  const controls = (
+    <div className="work__controls">
+      <button
+        type="button"
+        className="round-button"
+        onClick={() => goTo(active - 1)}
+        disabled={active === 0}
+        aria-label="Previous project"
+      >
+        <ArrowIcon direction="left" />
+      </button>
+      <button
+        type="button"
+        className="round-button round-button--primary"
+        onClick={() => goTo(active + 1)}
+        disabled={active === projects.length - 1}
+        aria-label="Next project"
+      >
+        <ArrowIcon direction="right" />
+      </button>
+      <p className="work__counter only-desktop" aria-live="polite" aria-atomic="true">
+        <span className="visually-hidden">Project </span>
+        {pad(active + 1)} / {pad(total)}
+      </p>
+    </div>
+  );
+
   return (
     <>
       <div className="page-container indexed work__head">
@@ -83,35 +110,9 @@ export function WorkShowcase({ projects, total }: WorkShowcaseProps) {
           </p>
         </div>
 
-        <div className="work__intro">
-          <h2 id="work-title" className="display display--work">
-            <span>A few things</span> <span>I’ve built.</span>
-          </h2>
-          <div className="work__controls">
-            <button
-              type="button"
-              className="round-button"
-              onClick={() => goTo(active - 1)}
-              disabled={active === 0}
-              aria-label="Previous project"
-            >
-              <ArrowIcon direction="left" />
-            </button>
-            <button
-              type="button"
-              className="round-button round-button--primary"
-              onClick={() => goTo(active + 1)}
-              disabled={active === projects.length - 1}
-              aria-label="Next project"
-            >
-              <ArrowIcon direction="right" />
-            </button>
-            <p className="work__counter only-desktop" aria-live="polite" aria-atomic="true">
-              <span className="visually-hidden">Project </span>
-              {pad(active + 1)} / {pad(total)}
-            </p>
-          </div>
-        </div>
+        <h2 id="work-title" className="display display--work">
+          <span>A few things</span> <span>I’ve built.</span>
+        </h2>
       </div>
 
       <div className="work__stage">
@@ -126,7 +127,7 @@ export function WorkShowcase({ projects, total }: WorkShowcaseProps) {
                 slot={project.name}
                 image={project.image}
                 className="work__media"
-                sizes="(min-width: 64rem) 56vw, 80vw"
+                sizes="(min-width: 64rem) 56vw, 100vw"
               />
             </li>
           ))}
@@ -138,9 +139,7 @@ export function WorkShowcase({ projects, total }: WorkShowcaseProps) {
               {current.name}
             </h3>
             <p className="work__location">
-              {current.category ? (
-                <span className="only-desktop">{current.category} — </span>
-              ) : null}
+              {current.category ? `${current.category} — ` : null}
               {current.location}
             </p>
             <ul className="work__services" aria-label="Services">
@@ -148,14 +147,6 @@ export function WorkShowcase({ projects, total }: WorkShowcaseProps) {
                 <li key={service}>{service}</li>
               ))}
             </ul>
-            <div className="work__progress only-desktop" aria-hidden="true">
-              <span
-                style={{
-                  width: `${100 / projects.length}%`,
-                  transform: `translateX(${active * 100}%)`,
-                }}
-              />
-            </div>
             <p className="work__summary">
               {current.description ? (
                 <>
@@ -166,17 +157,20 @@ export function WorkShowcase({ projects, total }: WorkShowcaseProps) {
                 current.summary
               )}
             </p>
-            <ButtonLink
-              href={current.href}
-              arrow="up-right"
-              className="work__cta"
-              pendingLabel="Case study coming soon"
-            >
-              View project
-            </ButtonLink>
+            <div className="work__actions">
+              <ButtonLink
+                href={current.href}
+                arrow="up-right"
+                className="work__cta"
+                pendingLabel="Case study coming soon"
+              >
+                View project
+              </ButtonLink>
+              {controls}
+            </div>
           </article>
 
-          <ol className="work__next" aria-label="More projects">
+          <ol className="work__next only-desktop" aria-label="More projects">
             {upcoming.map((index) => {
               const project = projects[index];
               return (
@@ -185,11 +179,10 @@ export function WorkShowcase({ projects, total }: WorkShowcaseProps) {
                     <MediaSlot
                       slot={project.name}
                       image={project.image}
-                      className="work__next-media only-desktop"
+                      className="work__next-media"
                       sizes="16rem"
                       as="span"
                     />
-                    <span className="work__next-index">{pad(index + 1)}</span>
                     <span className="work__next-name">{project.name}</span>
                     <span className="work__next-location">{project.location}</span>
                     <span className="work__next-services">
