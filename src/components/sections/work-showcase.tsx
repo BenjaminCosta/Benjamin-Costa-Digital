@@ -69,7 +69,7 @@ export function WorkShowcase({ projects, total }: WorkShowcaseProps) {
   return (
     <>
       <div className="page-container indexed work__head">
-        <div className="section-head section-head--ruled">
+        <div className="section-head">
           <p className="mono-label section-head__label">
             <span className="section-head__index">03</span>
             <span className="section-head__sep" aria-hidden="true">

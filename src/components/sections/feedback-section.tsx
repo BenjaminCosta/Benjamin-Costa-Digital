@@ -57,7 +57,7 @@ export function FeedbackSection() {
       data-header-theme="dark"
     >
       <div className="page-container indexed feedback__head" data-reveal>
-        <SectionHead index="04" title="Client feedback" aside="Workana" ruled={false} />
+        <SectionHead index="04" title="Client feedback" aside="Workana" />
 
         <div className="feedback__intro">
           <h2 id="feedback-title" className="display display--feedback">
@@ -90,11 +90,8 @@ export function FeedbackSection() {
 
       <div className="page-container feedback__list">
         <ol className="testimonials">
-          {testimonials.map((testimonial, index) => (
+          {testimonials.map((testimonial) => (
             <li key={testimonial.id} className="testimonial">
-              <span className="testimonial__index" aria-hidden="true">
-                {String(index + 1).padStart(2, "0")}
-              </span>
               <figure className="testimonial__body">
                 <Stars />
                 <blockquote className="testimonial__quote">

@@ -6,18 +6,11 @@ type SectionHeadProps = Readonly<{
   /** Replaces the title on desktop, where the index sits in its own column. */
   desktopTitle?: string;
   aside?: ReactNode;
-  ruled?: boolean;
 }>;
 
-export function SectionHead({
-  index,
-  title,
-  desktopTitle,
-  aside,
-  ruled = true,
-}: SectionHeadProps) {
+export function SectionHead({ index, title, desktopTitle, aside }: SectionHeadProps) {
   return (
-    <div className={ruled ? "section-head section-head--ruled" : "section-head"}>
+    <div className="section-head">
       <p className="mono-label section-head__label">
         <span className="section-head__index">{index}</span>
         <span className="section-head__sep" aria-hidden="true">

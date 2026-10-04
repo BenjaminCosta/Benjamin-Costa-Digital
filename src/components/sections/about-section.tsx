@@ -1,6 +1,7 @@
 import { Backdrop } from "@/components/ui/backdrop";
+import { ButtonLink } from "@/components/ui/button-link";
 import { SectionHead } from "@/components/ui/section-head";
-import { backdrops, principles, site } from "@/data/site-content";
+import { backdrops, site } from "@/data/site-content";
 
 export function AboutSection() {
   return (
@@ -12,36 +13,34 @@ export function AboutSection() {
       />
 
       <div className="page-container indexed about__body" data-reveal>
-        <div className="about__intro">
-          <div className="about__main">
-            <SectionHead index="05" title="How I work" aside="Since 2023" />
-            <h2 id="about-title" className="display display--about">
-              <span>Directly with you.</span> <span>Start to finish.</span>
-            </h2>
-          </div>
+        <div className="about__main">
+          <SectionHead index="05" title="About" />
+          <h2 id="about-title" className="display display--about">
+            <span>I work with</span> <span>local businesses</span>{" "}
+            <span>to build what</span> <span>actually helps.</span>
+          </h2>
+        </div>
 
+        <div className="about__aside">
           <div className="about__bio">
             <p>
               I’m {site.name}, an independent developer and designer based on the
               Gold Coast.
             </p>
             <p>
-              I work directly with business owners, from figuring out what matters
-              to designing, building and launching the solution.
+              Since 2023 I’ve been working with businesses — from barbershops and
+              dive centres to e-commerce stores — building websites, booking
+              systems and automations that save time and bring in more customers.
+            </p>
+            <p>
+              I use modern tools and AI to move fast, keep things simple and focus
+              on what actually makes a difference for your business.
             </p>
           </div>
+
+          <ButtonLink href="#contact">Let’s talk</ButtonLink>
         </div>
-
-        <ul className="principles">
-          {principles.map((principle) => (
-            <li key={principle.id}>
-              <h3>{principle.title}</h3>
-              <p>{principle.text}</p>
-            </li>
-          ))}
-        </ul>
       </div>
-
     </section>
   );
 }

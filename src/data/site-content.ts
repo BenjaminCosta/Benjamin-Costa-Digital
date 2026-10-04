@@ -1,4 +1,4 @@
-import type { Principle, ProfileLink, Project, Testimonial } from "@/types/content";
+import type { ProfileLink, Project, Testimonial } from "@/types/content";
 
 export const site = Object.freeze({
   name: "Benjamin Costa",
@@ -79,24 +79,6 @@ export const testimonials: readonly Testimonial[] = [
 export const profileLinks: readonly ProfileLink[] = [
   { id: "workana", label: "Workana", value: "5.0 average" },
   { id: "linkedin", label: "LinkedIn", value: "Benjamin Costa" },
-];
-
-export const principles: readonly Principle[] = [
-  {
-    id: "direct",
-    title: "Direct",
-    text: "You work with me, not through an account manager.",
-  },
-  {
-    id: "end-to-end",
-    title: "End to end",
-    text: "Strategy, design, development and launch.",
-  },
-  {
-    id: "independent",
-    title: "Independent",
-    text: "Small enough to move fast. Experienced enough to build properly.",
-  },
 ];
 
 export const pricing = Object.freeze({

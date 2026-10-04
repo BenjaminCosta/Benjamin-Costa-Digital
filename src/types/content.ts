@@ -32,9 +32,3 @@ export type ProfileLink = Readonly<{
   value: string;
   href?: string;
 }>;
-
-export type Principle = Readonly<{
-  id: string;
-  title: string;
-  text: string;
-}>;
