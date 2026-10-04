@@ -1586,220 +1586,230 @@ a {
   gap: 0.625rem;
 }
 
-/* ---------- 04 Client feedback ---------- */
+/* ---------- 04 Client feedback (Workana) ---------- */
 
+/* Workana's own type and palette inside this block, our grid around it */
 .feedback {
-  --workana: #6656ff;
+  --wk-font: var(--font-poppins), "Poppins", system-ui, sans-serif;
+  --wk-navy: #12295a;
+  --wk-purple: #7243e6;
+  --wk-text: #26262b;
+  --wk-muted: #85858c;
+  --soft: color-mix(in srgb, var(--ink) 62%, var(--paper));
 
-  padding-block-end: 3rem;
+  overflow: clip;
+  padding-block-end: 3.5rem;
+  background:
+    linear-gradient(118deg, transparent 56%, rgb(255 226 240 / 0.3) 61%, rgb(222 236 255 / 0.3) 64%, transparent 69%),
+    radial-gradient(70% 40% at 100% 0%, rgb(255 255 255 / 0.85), transparent 70%),
+    radial-gradient(60% 35% at 0% 100%, rgb(255 255 255 / 0.6), transparent 70%),
+    var(--paper);
+}
+
+.feedback__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 1.125rem;
+  margin-block-start: 1.25rem;
+}
+
+.feedback__verified {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--soft);
+}
+
+.verified-badge {
+  width: 0.9375rem;
+  height: 0.9375rem;
+  flex: none;
+  color: var(--wk-purple);
 }
 
 .display--feedback {
-  margin-block-start: 0.25rem;
-  font-size: min(12.5vw, 4.5rem);
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.05em;
+  margin-block-start: 0.625rem;
+  font-size: min(9.8vw, 4.5rem);
+  font-weight: 500;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
 }
 
-.rating {
+.workana-rating {
   display: grid;
-  grid-template-columns: 56.3% minmax(0, 1fr);
-  margin-block-start: 1.5rem;
-}
-
-.rating__score {
-  padding-block: 0.25rem 0.125rem;
-}
-
-.rating__value {
-  display: flex;
-  align-items: baseline;
-  gap: 0.375rem;
-  line-height: 1;
-}
-
-.rating__value strong {
-  font-size: 3.375rem;
-  font-weight: 700;
-  letter-spacing: -0.05em;
-}
-
-.rating__out-of {
-  font-size: 2.0625rem;
-  font-weight: 400;
-  letter-spacing: -0.02em;
-  color: color-mix(in srgb, var(--fg) 80%, var(--bg));
-}
-
-.rating__meta {
-  margin-block-start: 0;
-  font-size: 1rem;
-  letter-spacing: -0.005em;
-}
-
-.rating__source {
-  display: grid;
-  align-content: space-between;
   justify-items: start;
-  padding-inline-start: 1.375rem;
-  border-inline-start: 1px solid var(--rule-color);
+  gap: 0.375rem;
+  padding-block-end: 0.25rem;
+  padding-inline-start: 1.125rem;
+  border-inline-start: 1px solid var(--line);
+  font-family: var(--wk-font);
+  transition: opacity var(--hover-duration) var(--ease-editorial);
 }
 
-.rating__verified {
-  font-family: var(--font-mono);
-  font-size: 0.65625rem;
-  line-height: 0.875rem;
-  letter-spacing: 0;
-  color: color-mix(in srgb, var(--fg) 78%, var(--bg));
+@media (hover: hover) {
+  .workana-rating:hover {
+    opacity: 0.78;
+  }
 }
 
-.rating__brand {
+/* Workana wordmark: navy lowercase with the multicolour "o" */
+.workana-logo {
+  display: inline-flex;
+  align-items: baseline;
+  color: var(--wk-navy);
+  font-family: var(--wk-font);
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.workana-logo__o {
+  display: inline-block;
+  width: 0.6em;
+  height: 0.6em;
+  margin-inline: 0.03em 0.02em;
+  border-radius: 50%;
+  background: conic-gradient(from 200deg, #2f80ff, #7243e6, #d946ef, #ff5c5c, #ffb020, #22c55e, #2f80ff);
+  -webkit-mask: radial-gradient(circle, transparent 0 34%, #000 36%);
+  mask: radial-gradient(circle, transparent 0 34%, #000 36%);
+}
+
+.workana-rating__score {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  margin-block-start: 1.25rem;
-  font-size: min(5.6vw, 1.375rem);
-  font-weight: 700;
-  letter-spacing: -0.03em;
+  gap: 0.5rem;
+}
+
+.workana-rating__score strong {
+  color: var(--wk-text);
+  font-size: 1.5rem;
+  font-weight: 500;
   line-height: 1;
+  letter-spacing: -0.02em;
 }
 
-/* Placeholder for the official Workana mark */
-.workana-mark {
-  flex: none;
-  width: 1.9375rem;
-  height: 1.9375rem;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 62% 64%, #23338f 0 22%, transparent 23%),
-    conic-gradient(from 200deg, #ff4f8b, #ff8a3c, #ffd23f, #3ddc84, #2bb3ff, #6a3cf5, #ff4f8b);
-}
-
-.testimonials {
-  display: grid;
-  gap: 0.75rem;
-  margin-block-start: 1.75rem;
-}
-
-/* Smoked glass card: a physical object, so it takes the glass radius */
-.testimonial {
-  padding: 1.25rem 1.25rem 1.125rem;
-  border: 1px solid rgb(250 249 245 / 0.1);
-  border-radius: var(--radius-glass);
-  background: linear-gradient(155deg, rgb(250 249 245 / 0.07), rgb(250 249 245 / 0.02) 65%);
-  box-shadow: inset 0 1px 0 rgb(250 249 245 / 0.08);
-}
-
-.testimonial__body {
-  display: grid;
-  justify-items: start;
+.workana-rating__count {
+  color: var(--wk-muted);
+  font-size: 0.8125rem;
+  white-space: nowrap;
 }
 
 .stars {
   display: flex;
-  gap: 0.25rem;
-  color: var(--workana);
+  gap: 0.1875rem;
+  color: var(--wk-purple);
 }
 
 .stars svg {
-  width: 1rem;
-  height: 1rem;
+  width: 0.9375rem;
+  height: 0.9375rem;
   fill: currentColor;
 }
 
-.testimonial__quote {
-  max-width: 18rem;
-  margin-block-start: 0.625rem;
-  font-size: 1.28125rem;
-  line-height: 1.15;
-  letter-spacing: -0.015em;
+.reviews {
+  display: grid;
+  gap: 0.875rem;
+  margin-block-start: 1.75rem;
 }
 
-.testimonial__author {
+/* Frosted card, set in Workana's type */
+.review {
+  display: flex;
+  padding: 1.5rem 1.375rem 1.375rem;
+  border: 1px solid rgb(255 255 255 / 0.95);
+  border-radius: 16px;
+  background: linear-gradient(160deg, rgb(255 255 255 / 0.8), rgb(255 255 255 / 0.5));
+  box-shadow:
+    0 1px 2px rgb(10 10 10 / 0.04),
+    0 14px 36px rgb(10 10 10 / 0.05);
+  font-family: var(--wk-font);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+
+.review figure {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.review__stars svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.review__quote {
+  margin-block-start: 0.875rem;
+  color: var(--wk-text);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+.review__author {
   display: flex;
   align-items: center;
-  gap: 0.8125rem;
-  margin-block-start: 0.875rem;
+  gap: 0.875rem;
+  margin-block-start: auto;
+  padding-block-start: 1.125rem;
 }
 
-.avatar {
+.review__avatar {
   display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
   flex: none;
-  width: 2rem;
-  height: 2rem;
   place-items: center;
   border-radius: 50%;
-  background: var(--fg);
-  color: var(--bg);
-  font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-}
-
-.testimonial__person {
-  display: grid;
-  gap: 0.0625rem;
-}
-
-.testimonial__name {
-  font-size: 0.84375rem;
+  background: #efeee9;
+  color: color-mix(in srgb, var(--wk-text) 75%, transparent);
+  font-size: 0.875rem;
   font-weight: 500;
-  line-height: 1.3;
-  letter-spacing: -0.01em;
 }
 
-.testimonial__project {
+.review__name {
+  display: block;
+  color: var(--wk-text);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.review__project {
+  display: block;
+  color: var(--wk-muted);
   font-size: 0.8125rem;
-  line-height: 1.3;
-  color: color-mix(in srgb, var(--fg) 55%, var(--bg));
+  line-height: 1.4;
 }
 
-.profiles {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.5rem;
-  padding-block-start: 1.75rem;
+.feedback__foot {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-block-start: 1.75rem;
+  padding-block-start: 1.125rem;
+  border-block-start: 1px solid var(--line);
 }
 
-.profiles__item {
-  display: grid;
-  justify-items: start;
-  gap: 0.25rem;
+.feedback__note {
+  order: 2;
+  font-size: 0.75rem;
+  color: var(--soft);
 }
 
-.profiles__item .mono-label {
-  font-size: 0.625rem;
-  letter-spacing: 0.12em;
-  line-height: 1;
-}
-
-.profiles__value {
-  font-size: 0.84375rem;
-  line-height: 1.3;
-}
-
-.profiles__cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: color-mix(in srgb, var(--fg) 70%, var(--bg));
+.feedback__profile {
+  order: 1;
   font-family: var(--font-mono);
-  font-size: 0.59375rem;
-  letter-spacing: 0.16em;
-  line-height: 1;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-}
-
-.profiles__cta .arrow-icon {
-  width: 0.5625rem;
-  height: 0.5625rem;
-}
-
-@media (hover: hover) {
-  a.profiles__item:hover .arrow-icon {
-    transform: translate(3px, -3px);
-  }
 }
 
 /* ---------- 05 About ---------- */
@@ -1924,8 +1934,8 @@ a {
     max-width: 34rem;
   }
 
-  .testimonial__quote {
-    max-width: 24rem;
+  .reviews {
+    max-width: 36rem;
   }
 }
 
@@ -2566,127 +2576,78 @@ a {
     color: color-mix(in srgb, var(--ink) 62%, var(--paper));
   }
 
-  /* ---------- 04 Client feedback ---------- */
+  /* ---------- 04 Client feedback (Workana) ---------- */
 
   .feedback {
-    padding-block: 3.75rem 4.5rem;
-    overflow: clip;
+    padding-block: 4.5rem 5rem;
   }
 
-  .feedback__intro {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto auto;
-    align-items: end;
-    column-gap: 3rem;
-    margin-block-start: 1rem;
-  }
-
-  .display--feedback {
-    margin: 0;
-    font-size: min(5.6vw, 6.5rem);
-    font-weight: 450;
-    letter-spacing: -0.02em;
-    line-height: 1.05;
-  }
-
-  .rating {
-    display: grid;
-    grid-template-columns: auto;
-    gap: 0.625rem;
-    margin: 0;
-    padding: 0.25rem 0 0.25rem 2.875rem;
-    border: 0;
-    border-inline-start: 1px solid var(--rule-color);
-  }
-
-  .rating__score,
-  .rating__source {
-    display: contents;
-  }
-
-  .rating__verified {
-    display: none;
-  }
-
-  .rating__brand {
-    order: -1;
-    margin: 0;
-    font-size: 1.75rem;
-  }
-
-  .rating__value {
-    gap: 1rem;
-    align-items: center;
-  }
-
-  .rating__value strong {
-    font-size: 2.625rem;
-    font-weight: 600;
-    letter-spacing: -0.03em;
-  }
-
-  .rating__value .stars svg {
-    width: 1.5rem;
-    height: 1.5rem;
-  }
-
-  .rating__meta {
-    font-size: 1.0625rem;
-    color: color-mix(in srgb, var(--fg) 75%, var(--bg));
-  }
-
-  .feedback__profile {
-    gap: 2.5rem;
-    margin-block-end: 0.25rem;
-    padding-block-end: 0.5rem;
-    border-block-end: 1px solid currentColor;
-    font-family: var(--font-mono);
-    font-size: 0.8125rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-  }
-
-  .feedback__list {
-    margin-block-start: 2.5rem;
-  }
-
-  .testimonials {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1rem;
-    margin: 0;
-    padding-inline-start: var(--index-offset);
-  }
-
-  .testimonial {
-    padding: 1.75rem 2rem 1.625rem;
-  }
-
-  .testimonial__quote {
-    max-width: 20rem;
-    margin-block-start: 1.5rem;
-    font-size: 1.21875rem;
-    line-height: 1.45;
-    letter-spacing: -0.005em;
-  }
-
-  .testimonial__author {
-    gap: 1.125rem;
+  .feedback__head {
+    gap: 3rem;
     margin-block-start: 1.75rem;
   }
 
-  .avatar {
-    width: 3.25rem;
-    height: 3.25rem;
-    font-size: 0.875rem;
-    font-weight: 500;
+  .display--feedback {
+    margin-block-start: 1rem;
+    font-size: min(5.6vw, 6.5rem);
+    font-weight: 450;
+    letter-spacing: -0.02em;
+    line-height: 1.04;
   }
 
-  .testimonial__name {
+  .display--feedback span {
+    display: inline;
+  }
+
+  .workana-rating {
+    gap: 0.5rem;
+    padding-inline-start: 2.75rem;
+  }
+
+  .workana-logo {
+    font-size: 1.75rem;
+  }
+
+  .workana-rating__score strong {
+    font-size: 2.375rem;
+  }
+
+  .workana-rating__score .stars svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .workana-rating__count {
+    font-size: 0.9375rem;
+  }
+
+  .reviews {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    margin-block-start: 2.75rem;
+  }
+
+  .review {
+    padding: 1.875rem 1.75rem 1.75rem;
+  }
+
+  .review__quote {
     font-size: 1rem;
   }
 
-  .testimonial__project {
-    font-size: 0.875rem;
+  .feedback__foot {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-block-start: 2.5rem;
+  }
+
+  .feedback__note {
+    order: 0;
+  }
+
+  .feedback__profile {
+    order: 1;
   }
 
   /* ---------- 05 About ---------- */

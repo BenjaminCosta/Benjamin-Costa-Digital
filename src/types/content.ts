@@ -26,13 +26,6 @@ export type Testimonial = Readonly<{
   source: "Workana";
 }>;
 
-export type ProfileLink = Readonly<{
-  id: string;
-  label: string;
-  value: string;
-  href?: string;
-}>;
-
 export type IdeaIconName =
   | "calendar"
   | "gear"

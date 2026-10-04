@@ -1,10 +1,4 @@
-import type {
-  BusinessIdea,
-  IdeaOption,
-  ProfileLink,
-  Project,
-  Testimonial,
-} from "@/types/content";
+import type { BusinessIdea, IdeaOption, Project, Testimonial } from "@/types/content";
 
 export const site = Object.freeze({
   name: "Benjamin Costa",
@@ -50,41 +44,42 @@ export const projects: readonly Project[] = [
   },
 ];
 
-// Copy below follows the approved mobile mockups. Verify every quote and
-// figure against the live Workana profile before launch.
-export const workanaRating = Object.freeze({
+/**
+ * Public Workana profile. Figures and reviews were transcribed from the
+ * profile (reviews are in Spanish there, shown here in English); confirm the
+ * wording against the live page before launch.
+ */
+export const workana = Object.freeze({
+  profileUrl: "https://www.workana.com/freelancer/6525bdbaa3b696218eb9e38608f3ea03",
   score: "5.0",
-  outOf: "5",
-  completedProjects: 18,
+  reviewCount: 10,
 });
 
 export const testimonials: readonly Testimonial[] = [
   {
     id: "maria-rujano",
-    quote: "Excellent communication and quality of work.",
-    author: "Maria Rujano",
-    project: "Shopify Store Development",
+    quote:
+      "I recommend him 1000%. He was always willing to help beyond what had been proposed, solved difficult problems very quickly, and was incredibly patient with me.",
+    author: "María Rujano",
+    project: "Shopify store development",
     source: "Workana",
   },
   {
-    id: "daniel-castro",
-    quote: "Very professional and easy to work with.",
-    author: "Daniel Castro",
-    project: "Automation & Integrations",
+    id: "maria-laura-rodriguez",
+    quote:
+      "A genius. He understood the essence of what we wanted straight away and delivered within a few days. Then we polished the details. Very happy with the final result.",
+    author: "María Laura Rodríguez",
+    project: "Shopify store improvements",
     source: "Workana",
   },
   {
-    id: "laura-sanchez",
-    quote: "Delivered everything on time and exactly as discussed.",
-    author: "Laura Sánchez",
-    project: "Web Design & Development",
+    id: "matias-c",
+    quote:
+      "Super professional. He delivered much faster than agreed and even helped with extra sections for my e-commerce. Highly recommended.",
+    author: "Matías C.",
+    project: "Shopify landing page integration",
     source: "Workana",
   },
-];
-
-export const profileLinks: readonly ProfileLink[] = [
-  { id: "workana", label: "Workana", value: "5.0 average" },
-  { id: "linkedin", label: "LinkedIn", value: "Benjamin Costa" },
 ];
 
 export const pricing = Object.freeze({

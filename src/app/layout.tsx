@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { IBM_Plex_Mono, Inter_Tight } from "next/font/google";
+import { IBM_Plex_Mono, Inter_Tight, Poppins } from "next/font/google";
 import type { ReactNode } from "react";
 import { env } from "@/lib/env";
 import "./globals.css";
@@ -15,6 +15,15 @@ const plexMono = IBM_Plex_Mono({
   weight: ["400", "500"],
   variable: "--font-plex-mono",
   display: "swap",
+});
+
+// Workana's own typeface, used only inside the Workana reviews block.
+const poppins = Poppins({
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500", "600"],
+  variable: "--font-poppins",
+  display: "swap",
+  preload: false,
 });
 
 const siteName = "Benjamin Costa";
@@ -58,7 +67,7 @@ type RootLayoutProps = Readonly<{
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" className={`${interTight.variable} ${plexMono.variable}`}>
+    <html lang="en" className={`${interTight.variable} ${plexMono.variable} ${poppins.variable}`}>
       <body>
         <a className="skip-link" href="#main-content">
           Skip to content
