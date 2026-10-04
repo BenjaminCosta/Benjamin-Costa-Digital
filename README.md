@@ -45,4 +45,8 @@ public/         Static editorial and project assets
 
 The project is configured for Vercel. Set `SITE_URL` to the canonical production URL in the Vercel project settings before launch.
 
-No external integrations, analytics, working contact actions, or final visual design are implemented yet.
+## Design system
+
+Tokens live at the top of `src/app/globals.css`: Inter Tight for display and body copy, IBM Plex Mono for labels, a paper/ink palette with no accent colour, and editorial motion timings. The mobile layout follows the approved mockups; image areas render neutral placeholders (`MediaSlot`) until final photography is added.
+
+Desktop layouts, final imagery, external integrations, analytics and working contact actions are not implemented yet.

@@ -1,28 +1,39 @@
+import { ArrowIcon } from "@/components/ui/arrow-icon";
+import { ButtonLink } from "@/components/ui/button-link";
+import { MediaSlot } from "@/components/ui/media-slot";
+
 export function HeroSection() {
   return (
-    <section className="site-section hero-section" aria-labelledby="hero-title">
-      <div className="container-page section-stack">
-        <div>
-          <p className="section-kicker">01 / Hero</p>
-          <h1 id="hero-title" className="display-heading">
-            <span>More customers,</span>
-            <span>fewer things</span>
-            <span>done by hand.</span>
-          </h1>
-        </div>
+    <section className="hero" aria-labelledby="hero-title">
+      <div className="container hero__body">
+        <h1 id="hero-title" className="display display--hero">
+          <span>More</span> <span>customers,</span> <span>fewer things</span>{" "}
+          <span>done by hand.</span>
+        </h1>
 
-        <p className="section-copy">
-          I build websites, booking flows and automations for local businesses
-          on the Gold Coast.
+        <p className="hero__lede lines">
+          <span>I build websites, booking flows and</span>{" "}
+          <span>automations for local businesses</span>{" "}
+          <span>on the Gold Coast.</span>
         </p>
 
-        <div className="cta-row" aria-label="Hero actions">
-          <a href="#audit">Check your website →</a>
-          <a href="#work">See my work ↓</a>
+        <div className="hero__actions">
+          <ButtonLink href="#audit">Check your website</ButtonLink>
+          <div className="hero__secondary">
+            <a className="text-link text-link--underlined" href="#work">
+              <span className="text-link__label">See my work</span>
+              <ArrowIcon direction="down" />
+            </a>
+          </div>
         </div>
-
-        <div className="media-slot" data-media="gold-coast-business" aria-hidden="true" />
       </div>
+
+      <MediaSlot
+        slot="hero image"
+        className="hero__media"
+        sizes="100vw"
+        preload
+      />
     </section>
   );
 }

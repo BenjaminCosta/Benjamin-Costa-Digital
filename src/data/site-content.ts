@@ -1,4 +1,4 @@
-import type { Project, Testimonial } from "@/types/content";
+import type { ProfileLink, Project, Testimonial } from "@/types/content";
 
 export const plannedProjectCount = 8;
 
@@ -27,13 +27,46 @@ export const projects: readonly Project[] = [
   },
 ];
 
+// Copy below follows the approved mobile mockups. Verify every quote and
+// figure against the live Workana profile before launch.
+export const workanaRating = Object.freeze({
+  score: "5.0",
+  outOf: "5",
+  completedProjects: 18,
+});
+
 export const testimonials: readonly Testimonial[] = [
   {
     id: "maria-rujano",
-    quote:
-      "I recommend him 1000%. He was always willing to help beyond what had been proposed, solved difficult problems very quickly, and was incredibly patient with me.",
+    quote: "Excellent communication and quality of work.",
     author: "Maria Rujano",
     project: "Shopify Store Development",
     source: "Workana",
+    avatar: { background: "#EC4690", foreground: "#FFFFFF" },
+  },
+  {
+    id: "daniel-castro",
+    quote: "Very professional and easy to work with.",
+    author: "Daniel Castro",
+    project: "Automation & Integrations",
+    source: "Workana",
+    avatar: { background: "#E3BCF6", foreground: "#7B2FB8" },
+  },
+  {
+    id: "laura-sanchez",
+    quote: "Delivered everything on time and exactly as discussed.",
+    author: "Laura Sánchez",
+    project: "Web Design & Development",
+    source: "Workana",
+    avatar: { background: "#96E0BC", foreground: "#14532D" },
   },
 ];
+
+export const profileLinks: readonly ProfileLink[] = [
+  { id: "workana", label: "Workana", value: "5.0 average" },
+  { id: "linkedin", label: "LinkedIn", value: "Benjamin Costa" },
+];
+
+export const pricing = Object.freeze({
+  startingFrom: "A$5,000",
+});

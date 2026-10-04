@@ -1,51 +1,59 @@
+import { ArrowIcon } from "@/components/ui/arrow-icon";
+import { ButtonLink } from "@/components/ui/button-link";
+import { MediaSlot } from "@/components/ui/media-slot";
+import { SectionHead } from "@/components/ui/section-head";
+
 export function AuditSection() {
   return (
     <section
       id="audit"
-      className="site-section section-inverse deferred-section"
+      className="section section--dark audit"
       aria-labelledby="audit-title"
+      data-header-theme="dark"
     >
-      <div className="container-page section-stack">
-        <div>
-          <p className="section-kicker">02 / Audit</p>
-          <p>Free website check</p>
-        </div>
+      <div className="container audit__body" data-reveal>
+        <SectionHead index="02" title="Audit" aside="Free website check" />
 
-        <h2 id="audit-title" className="section-heading">
-          <span>Got a website?</span>
-          <span>Let&apos;s see what&apos;s slowing it down.</span>
+        <h2 id="audit-title" className="display display--audit">
+          <span>Got a</span> <span>website?</span> <span>Let’s see</span>{" "}
+          <span>what’s slowing</span> <span>it down.</span>
         </h2>
 
-        <div className="audit-control" aria-label="Future website audit input">
-          <label htmlFor="website-url">Website URL</label>
-          <div className="audit-control__row">
-            <input
-              id="website-url"
-              type="url"
-              inputMode="url"
-              placeholder="Paste your website here"
-              autoComplete="url"
-              disabled
-            />
-            <button type="button" disabled aria-label="Website audit coming soon">
-              →
-            </button>
-          </div>
+        <form className="audit-field" aria-label="Free website check">
+          <label className="visually-hidden" htmlFor="website-url">
+            Website URL
+          </label>
+          <input
+            id="website-url"
+            name="url"
+            type="url"
+            inputMode="url"
+            placeholder="[ paste your website here ]"
+            autoComplete="url"
+            disabled
+          />
+          <button type="button" disabled aria-label="Website check coming soon">
+            <ArrowIcon />
+          </button>
+        </form>
+
+        <div className="audit__copy">
+          <p className="audit__statement lines">
+            <span>AI picks up the obvious</span> <span>stuff. I can look at</span>{" "}
+            <span>the business.</span>
+          </p>
+          <p className="audit__note lines">
+            <span>Send it over and I’ll tell you what</span>{" "}
+            <span>I’d actually change — free, no catch.</span>
+          </p>
         </div>
 
-        <div className="split-copy">
-          <h3>AI picks up the obvious stuff.</h3>
-          <h3>I can look at the business.</h3>
-        </div>
-
-        <p className="section-copy">
-          Send it over and I&apos;ll tell you what I&apos;d actually change — free, no
-          catch.
-        </p>
-
-        <a href="#contact">Send it on WhatsApp →</a>
-        <div className="media-slot" data-media="audit-texture" aria-hidden="true" />
+        <ButtonLink tone="light" href="#contact">
+          Send it on WhatsApp
+        </ButtonLink>
       </div>
+
+      <MediaSlot slot="audit texture" className="audit__media" sizes="100vw" />
     </section>
   );
 }
