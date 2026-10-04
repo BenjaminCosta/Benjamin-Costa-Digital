@@ -2,7 +2,6 @@ import type { Principle, ProfileLink, Project, Testimonial } from "@/types/conte
 
 export const site = Object.freeze({
   name: "Benjamin Costa",
-  tagline: "Web & Automation — Gold Coast, AU",
   location: "Gold Coast, AU",
   coordinates: ["28.0167° S", "153.4000° E"],
 });

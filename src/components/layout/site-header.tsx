@@ -4,13 +4,6 @@ import { useEffect, useRef } from "react";
 import { ArrowIcon } from "@/components/ui/arrow-icon";
 import { site } from "@/data/site-content";
 
-const menu = [
-  { href: "#work", label: "Work" },
-  { href: "#feedback", label: "Reviews" },
-  { href: "#about", label: "About" },
-  { href: "#contact", label: "Contact" },
-];
-
 export function SiteHeader() {
   const headerRef = useRef<HTMLElement>(null);
 
@@ -56,23 +49,14 @@ export function SiteHeader() {
   return (
     <header ref={headerRef} className="site-header" data-theme="top">
       <div className="site-header__inner">
-        <p className="site-header__tagline only-mobile">{site.tagline}</p>
+        <a className="site-header__brand" href="#main-content">
+          <span className="site-header__name">{site.name}</span>
+          <span className="site-header__place"> — {site.location}</span>
+        </a>
         <nav className="site-header__nav" aria-label="Primary navigation">
-          <div className="site-header__primary only-desktop">
-            <a className="site-header__brand" href="#main-content">
-              {site.name}
-            </a>
-            <ul className="site-header__menu">
-              {menu.map((item) => (
-                <li key={item.href}>
-                  <a className="site-header__link" href={item.href}>
-                    {item.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <p className="site-header__location only-desktop">{site.location}</p>
+          <a className="site-header__link only-desktop" href="#work">
+            Work
+          </a>
           <a className="text-link site-header__cta" href="#contact">
             <span className="text-link__label">Let’s talk</span>
             <ArrowIcon direction="up-right" />
