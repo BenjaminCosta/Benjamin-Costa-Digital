@@ -1,29 +1,41 @@
 import { ArrowIcon } from "@/components/ui/arrow-icon";
 import { ButtonLink } from "@/components/ui/button-link";
 import { MediaSlot } from "@/components/ui/media-slot";
+import { site } from "@/data/site-content";
 
 export function HeroSection() {
   return (
     <section className="hero" aria-labelledby="hero-title">
-      <div className="container hero__body">
-        <h1 id="hero-title" className="display display--hero">
-          <span>More</span> <span>customers,</span> <span>fewer things</span>{" "}
-          <span>done by hand.</span>
-        </h1>
+      <div className="hero__panel">
+        <div className="page-container indexed hero__body">
+          <span className="indexed__index only-desktop" aria-hidden="true">
+            01
+          </span>
+          <p className="mono-label hero__kicker only-desktop">
+            Digital systems
+            <br />
+            for local businesses
+          </p>
 
-        <p className="hero__lede lines">
-          <span>I build websites, booking flows and</span>{" "}
-          <span>automations for local businesses</span>{" "}
-          <span>on the Gold Coast.</span>
-        </p>
+          <h1 id="hero-title" className="display display--hero">
+            <span>More</span> <span>customers,</span> <span>fewer things</span>{" "}
+            <span>done by hand.</span>
+          </h1>
 
-        <div className="hero__actions">
-          <ButtonLink href="#audit">Check your website</ButtonLink>
-          <div className="hero__secondary">
-            <a className="text-link text-link--underlined" href="#work">
-              <span className="text-link__label">See my work</span>
-              <ArrowIcon direction="down" />
-            </a>
+          <p className="hero__lede lines">
+            <span>I build websites, booking flows and</span>{" "}
+            <span>automations for local businesses</span>{" "}
+            <span>on the Gold Coast.</span>
+          </p>
+
+          <div className="hero__actions">
+            <ButtonLink href="#audit">Check your website</ButtonLink>
+            <div className="hero__secondary">
+              <a className="text-link text-link--underlined" href="#work">
+                <span className="text-link__label">See my work</span>
+                <ArrowIcon direction="down" />
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -31,9 +43,15 @@ export function HeroSection() {
       <MediaSlot
         slot="hero image"
         className="hero__media"
-        sizes="100vw"
+        sizes="(min-width: 64rem) 40vw, 100vw"
         preload
-      />
+      >
+        <p className="hero__coords only-desktop" aria-hidden="true">
+          {site.coordinates[0]}
+          <br />
+          {site.coordinates[1]}
+        </p>
+      </MediaSlot>
     </section>
   );
 }

@@ -6,16 +6,16 @@ export type ImageAsset = Readonly<{
 export type Project = Readonly<{
   id: string;
   name: string;
+  /** Business type, e.g. "Barbershop". Shown with the location on desktop. */
+  category?: string;
   location: string;
   services: readonly string[];
+  /** One-line summary used on small screens. */
   summary: string;
+  /** Longer case-study blurb used where there is room for it. */
+  description?: string;
   href?: string;
   image?: ImageAsset;
-}>;
-
-export type AvatarTone = Readonly<{
-  background: string;
-  foreground: string;
 }>;
 
 export type Testimonial = Readonly<{
@@ -24,7 +24,6 @@ export type Testimonial = Readonly<{
   author: string;
   project: string;
   source: "Workana";
-  avatar: AvatarTone;
 }>;
 
 export type ProfileLink = Readonly<{
@@ -32,4 +31,10 @@ export type ProfileLink = Readonly<{
   label: string;
   value: string;
   href?: string;
+}>;
+
+export type Principle = Readonly<{
+  id: string;
+  title: string;
+  text: string;
 }>;

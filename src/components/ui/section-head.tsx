@@ -3,17 +3,36 @@ import type { ReactNode } from "react";
 type SectionHeadProps = Readonly<{
   index: string;
   title: string;
+  /** Replaces the title on desktop, where the index sits in its own column. */
+  desktopTitle?: string;
   aside?: ReactNode;
   ruled?: boolean;
 }>;
 
-export function SectionHead({ index, title, aside, ruled = true }: SectionHeadProps) {
+export function SectionHead({
+  index,
+  title,
+  desktopTitle,
+  aside,
+  ruled = true,
+}: SectionHeadProps) {
   return (
     <div className={ruled ? "section-head section-head--ruled" : "section-head"}>
-      <p className="mono-label">
-        {index} / {title}
+      <p className="mono-label section-head__label">
+        <span className="section-head__index">{index}</span>
+        <span className="section-head__sep" aria-hidden="true">
+          {" / "}
+        </span>
+        {desktopTitle ? (
+          <>
+            <span className="only-mobile">{title}</span>
+            <span className="only-desktop">{desktopTitle}</span>
+          </>
+        ) : (
+          title
+        )}
       </p>
-      {aside ? <div className="mono-label">{aside}</div> : null}
+      {aside ? <div className="mono-label section-head__aside">{aside}</div> : null}
     </div>
   );
 }

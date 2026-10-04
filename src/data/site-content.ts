@@ -1,4 +1,11 @@
-import type { ProfileLink, Project, Testimonial } from "@/types/content";
+import type { Principle, ProfileLink, Project, Testimonial } from "@/types/content";
+
+export const site = Object.freeze({
+  name: "Benjamin Costa",
+  tagline: "Web & Automation — Gold Coast, AU",
+  location: "Gold Coast, AU",
+  coordinates: ["28.0167° S", "153.4000° E"],
+});
 
 export const plannedProjectCount = 8;
 
@@ -6,9 +13,12 @@ export const projects: readonly Project[] = [
   {
     id: "mr-moustache",
     name: "Mr Moustache",
+    category: "Barbershop",
     location: "Gold Coast, AU",
     services: ["Website", "Bookings", "Automations"],
     summary: "Two locations, one digital experience.",
+    description:
+      "Two shops, bookings spread across platforms and no site that sold the place. Now one site, Square bookings connected, and the follow-ups go out on their own.",
   },
   {
     id: "kirra-dive",
@@ -42,7 +52,6 @@ export const testimonials: readonly Testimonial[] = [
     author: "Maria Rujano",
     project: "Shopify Store Development",
     source: "Workana",
-    avatar: { background: "#EC4690", foreground: "#FFFFFF" },
   },
   {
     id: "daniel-castro",
@@ -50,7 +59,6 @@ export const testimonials: readonly Testimonial[] = [
     author: "Daniel Castro",
     project: "Automation & Integrations",
     source: "Workana",
-    avatar: { background: "#E3BCF6", foreground: "#7B2FB8" },
   },
   {
     id: "laura-sanchez",
@@ -58,13 +66,30 @@ export const testimonials: readonly Testimonial[] = [
     author: "Laura Sánchez",
     project: "Web Design & Development",
     source: "Workana",
-    avatar: { background: "#96E0BC", foreground: "#14532D" },
   },
 ];
 
 export const profileLinks: readonly ProfileLink[] = [
   { id: "workana", label: "Workana", value: "5.0 average" },
   { id: "linkedin", label: "LinkedIn", value: "Benjamin Costa" },
+];
+
+export const principles: readonly Principle[] = [
+  {
+    id: "direct",
+    title: "Direct",
+    text: "You work with me, not through an account manager.",
+  },
+  {
+    id: "end-to-end",
+    title: "End to end",
+    text: "Strategy, design, development and launch.",
+  },
+  {
+    id: "independent",
+    title: "Independent",
+    text: "Small enough to move fast. Experienced enough to build properly.",
+  },
 ];
 
 export const pricing = Object.freeze({

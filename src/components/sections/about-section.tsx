@@ -1,41 +1,46 @@
-import { ArrowIcon } from "@/components/ui/arrow-icon";
 import { MediaSlot } from "@/components/ui/media-slot";
 import { SectionHead } from "@/components/ui/section-head";
+import { principles, site } from "@/data/site-content";
 
 export function AboutSection() {
   return (
     <section id="about" className="section about" aria-labelledby="about-title">
-      <div className="container" data-reveal>
-        <SectionHead index="05" title="About" aside="Since 2023" />
+      <div className="page-container indexed about__body" data-reveal>
+        <div className="about__intro">
+          <div className="about__main">
+            <SectionHead index="05" title="How I work" aside="Since 2023" />
+            <h2 id="about-title" className="display display--about">
+              <span>Directly with you.</span> <span>Start to finish.</span>
+            </h2>
+          </div>
 
-        <h2 id="about-title" className="display display--about">
-          <span>I work with</span> <span>local businesses</span>{" "}
-          <span>to build what</span> <span>actually helps.</span>
-        </h2>
-
-        <div className="about__copy">
-          <p>
-            I’m Benjamin Costa, an independent developer and designer based on
-            the Gold Coast.
-          </p>
-          <p>
-            Since 2023 I’ve been working with businesses — from barbershops and
-            dive centres to e-commerce stores — building websites, booking
-            systems and automations that save time and bring in more customers.
-          </p>
-          <p>
-            I use modern tools and AI to move fast, keep things simple and focus
-            on what actually makes a difference for your business.
-          </p>
+          <div className="about__bio">
+            <p>
+              I’m {site.name}, an independent developer and designer based on the
+              Gold Coast.
+            </p>
+            <p>
+              I work directly with business owners, from figuring out what matters
+              to designing, building and launching the solution.
+            </p>
+          </div>
         </div>
 
-        <a className="text-link text-link--underlined" href="#contact">
-          <span className="text-link__label">Let’s talk</span>
-          <ArrowIcon />
-        </a>
+        <ul className="principles">
+          {principles.map((principle) => (
+            <li key={principle.id}>
+              <h3>{principle.title}</h3>
+              <p>{principle.text}</p>
+            </li>
+          ))}
+        </ul>
       </div>
 
-      <MediaSlot slot="about image" className="about__media" sizes="100vw" />
+      <MediaSlot
+        slot="about image"
+        className="about__media"
+        sizes="(min-width: 64rem) 20vw, 100vw"
+      />
     </section>
   );
 }

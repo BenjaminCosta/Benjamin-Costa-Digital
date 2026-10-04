@@ -47,6 +47,6 @@ The project is configured for Vercel. Set `SITE_URL` to the canonical production
 
 ## Design system
 
-Tokens live at the top of `src/app/globals.css`: Inter Tight for display and body copy, IBM Plex Mono for labels, a paper/ink palette with no accent colour, and editorial motion timings. The mobile layout follows the approved mockups; image areas render neutral placeholders (`MediaSlot`) until final photography is added.
+Tokens live at the top of `src/app/globals.css`: Inter Tight for display and body copy, IBM Plex Mono for labels, a paper/ink palette with no accent colour, and editorial motion timings. Layouts follow the approved mobile and desktop mockups (desktop from 64rem, with a numbered index column); image areas render neutral placeholders (`MediaSlot`) until final photography is added.
 
-Desktop layouts, final imagery, external integrations, analytics and working contact actions are not implemented yet.
+Final imagery, external integrations, analytics and working contact actions are not implemented yet.

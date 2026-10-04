@@ -68,10 +68,16 @@ export function WorkShowcase({ projects, total }: WorkShowcaseProps) {
 
   return (
     <>
-      <div className="container">
+      <div className="page-container indexed work__head">
         <div className="section-head section-head--ruled">
-          <p className="mono-label">03 / Selected work</p>
-          <p className="mono-label" aria-live="polite" aria-atomic="true">
+          <p className="mono-label section-head__label">
+            <span className="section-head__index">03</span>
+            <span className="section-head__sep" aria-hidden="true">
+              {" / "}
+            </span>
+            Selected work
+          </p>
+          <p className="mono-label section-head__aside" aria-live="polite" aria-atomic="true">
             <span className="visually-hidden">Project </span>
             {pad(active + 1)} / {pad(total)}
           </p>
@@ -81,7 +87,7 @@ export function WorkShowcase({ projects, total }: WorkShowcaseProps) {
           <h2 id="work-title" className="display display--work">
             <span>A few things</span> <span>I’ve built.</span>
           </h2>
-          <div className="work__arrows">
+          <div className="work__controls">
             <button
               type="button"
               className="round-button"
@@ -93,70 +99,110 @@ export function WorkShowcase({ projects, total }: WorkShowcaseProps) {
             </button>
             <button
               type="button"
-              className="round-button"
+              className="round-button round-button--primary"
               onClick={() => goTo(active + 1)}
               disabled={active === projects.length - 1}
               aria-label="Next project"
             >
               <ArrowIcon direction="right" />
             </button>
+            <p className="work__counter only-desktop" aria-live="polite" aria-atomic="true">
+              <span className="visually-hidden">Project </span>
+              {pad(active + 1)} / {pad(total)}
+            </p>
           </div>
         </div>
       </div>
 
-      <ol ref={trackRef} className="work__track" aria-label="Project images">
-        {projects.map((project, index) => (
-          <li
-            key={project.id}
-            className="work__slide"
-            aria-label={`${project.name}, ${index + 1} of ${projects.length}`}
-          >
-            <MediaSlot
-              slot={project.name}
-              image={project.image}
-              className="work__media"
-              sizes="(max-width: 48rem) 80vw, 56rem"
-            />
-          </li>
-        ))}
-      </ol>
-
-      <div className="container work__details">
-        <article className="work__current" aria-labelledby="work-current-title">
-          <h3 id="work-current-title" className="work__name">
-            {current.name}
-          </h3>
-          <p className="work__location">{current.location}</p>
-          <p className="mono-label mono-label--wide work__services">
-            {current.services.join(" / ")}
-          </p>
-          <p className="work__summary">{current.summary}</p>
-          <ButtonLink
-            href={current.href}
-            arrow="up-right"
-            pendingLabel="Case study coming soon"
-          >
-            View project
-          </ButtonLink>
-        </article>
-
-        <ol className="work__next" aria-label="More projects">
-          {upcoming.map((index) => {
-            const project = projects[index];
-            return (
-              <li key={project.id}>
-                <button type="button" onClick={() => goTo(index)}>
-                  <span className="work__next-index">{pad(index + 1)}</span>
-                  <span className="work__next-name">{project.name}</span>
-                  <span className="work__next-location">{project.location}</span>
-                  <span className="work__next-services">
-                    {project.services.join(" / ")}
-                  </span>
-                </button>
-              </li>
-            );
-          })}
+      <div className="work__stage">
+        <ol ref={trackRef} className="work__track" aria-label="Project images">
+          {projects.map((project, index) => (
+            <li
+              key={project.id}
+              className="work__slide"
+              aria-label={`${project.name}, ${index + 1} of ${projects.length}`}
+            >
+              <MediaSlot
+                slot={project.name}
+                image={project.image}
+                className="work__media"
+                sizes="(min-width: 64rem) 56vw, 80vw"
+              />
+            </li>
+          ))}
         </ol>
+
+        <div className="page-container work__details">
+          <article className="work__current" aria-labelledby="work-current-title">
+            <h3 id="work-current-title" className="work__name">
+              {current.name}
+            </h3>
+            <p className="work__location">
+              {current.category ? (
+                <span className="only-desktop">{current.category} — </span>
+              ) : null}
+              {current.location}
+            </p>
+            <ul className="work__services" aria-label="Services">
+              {current.services.map((service) => (
+                <li key={service}>{service}</li>
+              ))}
+            </ul>
+            <div className="work__progress only-desktop" aria-hidden="true">
+              <span
+                style={{
+                  width: `${100 / projects.length}%`,
+                  transform: `translateX(${active * 100}%)`,
+                }}
+              />
+            </div>
+            <p className="work__summary">
+              {current.description ? (
+                <>
+                  <span className="only-mobile">{current.summary}</span>
+                  <span className="only-desktop">{current.description}</span>
+                </>
+              ) : (
+                current.summary
+              )}
+            </p>
+            <ButtonLink
+              href={current.href}
+              arrow="up-right"
+              className="work__cta"
+              pendingLabel="Case study coming soon"
+            >
+              View project
+            </ButtonLink>
+          </article>
+
+          <ol className="work__next" aria-label="More projects">
+            {upcoming.map((index) => {
+              const project = projects[index];
+              return (
+                <li key={project.id}>
+                  <button type="button" onClick={() => goTo(index)}>
+                    <MediaSlot
+                      slot={project.name}
+                      image={project.image}
+                      className="work__next-media only-desktop"
+                      sizes="16rem"
+                      as="span"
+                    />
+                    <span className="work__next-index">{pad(index + 1)}</span>
+                    <span className="work__next-name">{project.name}</span>
+                    <span className="work__next-location">{project.location}</span>
+                    <span className="work__next-services">
+                      {project.services.map((service) => (
+                        <span key={service}>{service}</span>
+                      ))}
+                    </span>
+                  </button>
+                </li>
+              );
+            })}
+          </ol>
+        </div>
       </div>
     </>
   );
