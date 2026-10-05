@@ -254,21 +254,64 @@ test("cancelled requests stop before generation", async () => {
 });
 
 test("production configuration and firewall checks fail closed on absent rules", async () => {
-  const names = ["NODE_ENV", "VERCEL", "VERCEL_URL", "BUSINESS_IDEAS_ENABLED", "OPENAI_API_KEY", "BUSINESS_IDEAS_IP_RULE", "BUSINESS_IDEAS_GLOBAL_RULE"];
+  const names = ["NODE_ENV", "VERCEL", "VERCEL_URL", "BUSINESS_IDEAS_ENABLED", "OPENAI_API_KEY", "BUSINESS_IDEAS_RATE_LIMIT_RULE"];
   const saved = Object.fromEntries(names.map((name) => [name, process.env[name]]));
   try {
-    Object.assign(process.env, { NODE_ENV: "production", VERCEL: "1", VERCEL_URL: "deployment.vercel.app", BUSINESS_IDEAS_ENABLED: "true", OPENAI_API_KEY: "test-only-unused", BUSINESS_IDEAS_IP_RULE: "ideas-ip", BUSINESS_IDEAS_GLOBAL_RULE: "ideas-global" });
-    delete process.env.BUSINESS_IDEAS_GLOBAL_RULE;
+    Object.assign(process.env, { NODE_ENV: "production", VERCEL: "1", VERCEL_URL: "deployment.vercel.app", BUSINESS_IDEAS_ENABLED: "true", OPENAI_API_KEY: "test-only-unused", BUSINESS_IDEAS_RATE_LIMIT_RULE: "business-ideas" });
+    delete process.env.BUSINESS_IDEAS_RATE_LIMIT_RULE;
     assert.equal(getIdeasConfig().available, false);
-    process.env.BUSINESS_IDEAS_GLOBAL_RULE = "ideas-global";
+    process.env.BUSINESS_IDEAS_RATE_LIMIT_RULE = "business-ideas";
     assert.equal(getIdeasConfig().available, true);
     await assert.rejects(enforceRateLimit(request(input), async () => ({ rateLimited: false, error: "not-found" })), (error: unknown) => error instanceof IdeasError && error.code === "unavailable");
     await assert.rejects(enforceRateLimit(request(input), async () => ({ rateLimited: true })), (error: unknown) => error instanceof IdeasError && error.code === "rate-limited");
     const keys: (string | undefined)[] = [];
-    await enforceRateLimit(request(input), async (_id, options) => { keys.push(options?.rateLimitKey); assert.equal(new Headers(options?.headers as Headers).get("host"), "deployment.vercel.app"); return { rateLimited: false }; });
+    await enforceRateLimit(request(input), async (id, options) => { assert.equal(id, "business-ideas"); keys.push(options?.rateLimitKey); assert.equal(new Headers(options?.headers as Headers).get("host"), "deployment.vercel.app"); return { rateLimited: false }; });
     assert.deepEqual(keys, [undefined, "business-ideas-budget"]);
+    let calls = 0;
+    await assert.rejects(enforceRateLimit(request(input), async () => {
+      calls++;
+      return calls === 1 ? { rateLimited: false } : { rateLimited: false, error: "not-found" };
+    }), (error: unknown) => error instanceof IdeasError && error.code === "unavailable");
+    assert.equal(calls, 2);
+    await assert.rejects(enforceRateLimit(request(input), async () => { throw new Error("SDK unavailable"); }),
+      (error: unknown) => error instanceof IdeasError && error.code === "unavailable");
     process.env.VERCEL = "0";
     assert.equal(getIdeasConfig().available, false);
+  } finally {
+    for (const name of names) { if (saved[name] === undefined) delete process.env[name]; else process.env[name] = saved[name]; }
+  }
+});
+
+test("one Hobby rule keeps independent IP and shared buckets, stopping before paid work", async () => {
+  const names = ["NODE_ENV", "VERCEL", "VERCEL_URL", "BUSINESS_IDEAS_ENABLED", "OPENAI_API_KEY", "BUSINESS_IDEAS_RATE_LIMIT_RULE"];
+  const saved = Object.fromEntries(names.map((name) => [name, process.env[name]]));
+  try {
+    Object.assign(process.env, { NODE_ENV: "production", VERCEL: "1", VERCEL_URL: "deployment.vercel.app", BUSINESS_IDEAS_ENABLED: "true", OPENAI_API_KEY: "test-only-unused", BUSINESS_IDEAS_RATE_LIMIT_RULE: "business-ideas" });
+    const buckets = new Map<string, number>();
+    const check: Parameters<typeof enforceRateLimit>[1] = async (id, options) => {
+      assert.equal(id, "business-ideas");
+      const key = options?.rateLimitKey ?? new Headers(options?.headers as Headers).get("x-real-ip")!;
+      const count = (buckets.get(key) ?? 0) + 1;
+      buckets.set(key, count);
+      return { rateLimited: count > 2 }; // Small deterministic SDK simulation, never a live rule.
+    };
+    const first = request(input, { "x-real-ip": "203.0.113.1" });
+    await enforceRateLimit(first, check);
+    await enforceRateLimit(first, check);
+    await assert.rejects(enforceRateLimit(first, check), /ten minutes/);
+    assert.equal(buckets.get("business-ideas-budget"), 2); // IP rejection must not consume global capacity.
+    const second = request(input, { "x-real-ip": "203.0.113.2" });
+    const response = await handleIdeasRequest(second, {
+      ...defaults, available: () => getIdeasConfig().available,
+      limit: (req) => enforceRateLimit(req, check),
+      resolve: async () => { throw new Error("Must not read a website after global rejection"); },
+      generate: async () => { throw new Error("Must not call OpenAI after global rejection"); },
+    });
+    assert.equal(response.status, 429);
+    assert.equal(response.headers.get("retry-after"), "600");
+    assert.match((await response.json()).message, /tool is busy/);
+    assert.equal(buckets.get("203.0.113.2"), 1);
+    assert.equal(buckets.get("business-ideas-budget"), 3);
   } finally {
     for (const name of names) { if (saved[name] === undefined) delete process.env[name]; else process.env[name] = saved[name]; }
   }

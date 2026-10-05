@@ -36,16 +36,20 @@ En desarrollo local se permiten diez solicitudes por diez minutos para todo el p
 
 ## Protección de producción en Vercel
 
-Mantener `BUSINESS_IDEAS_ENABLED=false` hasta completar la configuración y las pruebas en preview. Crear dos reglas de tipo `@vercel/firewall`, con estos Rate limit IDs:
+Mantener `BUSINESS_IDEAS_ENABLED=false` hasta completar la configuración y las pruebas en preview. Hobby admite una regla de rate limit por proyecto: usar una única regla de tipo `@vercel/firewall`, con Rate limit ID `business-ideas` y `BUSINESS_IDEAS_RATE_LIMIT_RULE=business-ideas`.
 
-| Variable / ID | Bucket | Límite inicial conservador |
+| Comprobación (mismo ID) | Bucket independiente | Límite/ventana compartidos |
 | --- | --- | --- |
-| `BUSINESS_IDEAS_IP_RULE=business-ideas-ip` | IP de la solicitud, determinada por Vercel | 5 solicitudes / 600 segundos |
-| `BUSINESS_IDEAS_GLOBAL_RULE=business-ideas-global` | Clave compartida `business-ideas-budget` | 100 solicitudes / 3600 segundos |
+| Primera | IP de la solicitud, determinada por Vercel | 50 solicitudes / 600 segundos |
+| Segunda | Clave compartida `business-ideas-budget` | 50 solicitudes / 600 segundos |
 
-Los números son una propuesta inicial, no reglas ya creadas. Revisar disponibilidad/coste según el plan y ajustar con tráfico real. No añadir condiciones que excluyan invocaciones del SDK. Revisar los cambios y publicar las reglas en Vercel. En preview configurar Protection Bypass for Automation y System Environment Variables conforme a la documentación oficial.
+El borrador comienza con 50 solicitudes/10 minutos y acción de exceso `log` para observar tráfico sin bloquear. **Log no aplica el límite**: no activar generación con esa acción. La regla debe ser revisada/publicada por el usuario, comprobada en preview con respuesta 429 y finalmente publicada con acción de exceso `rate_limit` antes de activar IA en producción. Ajustar el umbral con tráfico real. Con una sola regla, ambos buckets comparten límite y ventana; no son cinco por IP y cien por hora. Dos consultas al SDK no consumen dos unidades del mismo contador: usan claves distintas. Si se supera el límite por IP, no se consulta el global.
 
-Las variables `VERCEL` y `VERCEL_URL` son las variables de sistema de Vercel; no simularlas para activar producción fuera de Vercel. La aplicación rechaza generación si falta configuración, si no existen las reglas o si falla el comprobador. No se apoya en contadores en memoria en producción. Los contadores del WAF son por región: el bucket compartido no constituye un límite económico absoluto entre regiones. Añadir límites de gasto/créditos en el proveedor y revisar consumo antes de abrir públicamente.
+El ID del SDK no es el ID interno `rule_...` del borrador. No añadir condiciones que excluyan invocaciones del SDK. En preview configurar Protection Bypass for Automation y System Environment Variables conforme a la documentación oficial; no desactivar la protección del deployment. Las antiguas variables `BUSINESS_IDEAS_IP_RULE` y `BUSINESS_IDEAS_GLOBAL_RULE` ya no son usadas: pueden conservarse temporalmente para rollback del deploy anterior, sin efecto en el código nuevo. No hace falta Redis, otra base de datos ni cambiar de plan.
+
+Documentación verificada: [límites de Hobby](https://vercel.com/docs/vercel-firewall/vercel-waf/rate-limiting#limits) y [claves personalizadas del SDK](https://vercel.com/docs/vercel-firewall/vercel-waf/rate-limiting-sdk#custom-rate-limit-keys).
+
+Las variables `VERCEL` y `VERCEL_URL` son las variables de sistema de Vercel; no simularlas para activar producción fuera de Vercel. La aplicación rechaza generación si falta configuración, si no existe la regla o si falla cualquiera de las dos comprobaciones. No se apoya en contadores en memoria en producción. Los contadores del WAF son por región: el bucket compartido no constituye un límite económico absoluto entre regiones. Añadir límites de gasto/créditos en el proveedor y revisar consumo antes de abrir públicamente.
 
 Primero probar las reglas en preview y revisar que no bloquean visitas legítimas. La API solo usa límites después de validar solicitudes pequeñas y antes de leer páginas o llamar a IA. Origin se comprueba para evitar posts desde otras webs, pero no sustituye los límites ni es autenticación: un cliente automatizado puede fabricar cabeceras.
 
