@@ -94,6 +94,7 @@ export function BusinessIdeas() {
   const sectionTitleRef = useRef<HTMLHeadingElement>(null);
   const contextRef = useRef<HTMLTextAreaElement>(null);
   const flipFrom = useRef<DOMRect | null>(null);
+  const sheenFrame = useRef(0);
   const timers = useRef(new Set<number>());
   const shownView = useRef<View>("select");
 
@@ -115,7 +116,13 @@ export function BusinessIdeas() {
     timers.current.clear();
   }, []);
 
-  useEffect(() => clearTimers, [clearTimers]);
+  useEffect(
+    () => () => {
+      clearTimers();
+      cancelAnimationFrame(sheenFrame.current);
+    },
+    [clearTimers],
+  );
 
   // The block eases to the height of whatever it currently holds.
   useEffect(() => {
@@ -246,14 +253,19 @@ export function BusinessIdeas() {
     if (next) requestAnimationFrame(() => contextRef.current?.focus({ preventScroll: true }));
   };
 
-  // A faint reflection follows the pointer across glass cards (desktop).
+  // A faint reflection follows the pointer across glass cards (desktop),
+  // updated at most once per frame.
   const trackSheen = (event: PointerEvent<HTMLDivElement>) => {
-    if (event.pointerType !== "mouse") return;
+    if (event.pointerType !== "mouse" || sheenFrame.current) return;
     const card = (event.target as HTMLElement).closest<HTMLElement>("[data-sheen]");
     if (!card) return;
-    const rect = card.getBoundingClientRect();
-    card.style.setProperty("--mx", `${event.clientX - rect.left}px`);
-    card.style.setProperty("--my", `${event.clientY - rect.top}px`);
+    const { clientX, clientY } = event;
+    sheenFrame.current = requestAnimationFrame(() => {
+      sheenFrame.current = 0;
+      const rect = card.getBoundingClientRect();
+      card.style.setProperty("--mx", `${clientX - rect.left}px`);
+      card.style.setProperty("--my", `${clientY - rect.top}px`);
+    });
   };
 
   const intro = selected ? splitIntro(selected.intro) : null;

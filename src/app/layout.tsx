@@ -4,8 +4,10 @@ import type { ReactNode } from "react";
 import { env } from "@/lib/env";
 import "./globals.css";
 
+// Latin only: the copy (including á, é, í) sits in the basic subset, and each
+// extra subset is another font file preloaded on every visit.
 const interTight = Inter_Tight({
-  subsets: ["latin", "latin-ext"],
+  subsets: ["latin"],
   variable: "--font-inter-tight",
   display: "swap",
 });
@@ -19,7 +21,7 @@ const plexMono = IBM_Plex_Mono({
 
 // Workana's own typeface, used only inside the Workana reviews block.
 const poppins = Poppins({
-  subsets: ["latin", "latin-ext"],
+  subsets: ["latin"],
   weight: ["400", "500", "600"],
   variable: "--font-poppins",
   display: "swap",

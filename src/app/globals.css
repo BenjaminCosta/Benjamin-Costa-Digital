@@ -714,6 +714,82 @@ a {
   color: color-mix(in srgb, var(--fg) 62%, var(--bg));
 }
 
+/*
+ * Below-the-fold sections skip layout and paint until they near the viewport.
+ * The reserved sizes are measured content heights (padding excluded, as
+ * contain-intrinsic-size expects); `auto` remembers the real size once a
+ * section has rendered. Work scales with the viewport because of its images.
+ */
+.work,
+.feedback,
+.about,
+.contact {
+  content-visibility: auto;
+  contain-intrinsic-block-size: auto var(--section-estimate);
+}
+
+.work {
+  --section-estimate: calc(95vw + 354px);
+}
+
+.feedback {
+  --section-estimate: 1045px;
+}
+
+.about {
+  --section-estimate: 620px;
+}
+
+.contact {
+  --section-estimate: calc(50vw + 232px);
+}
+
+@media (min-width: 48rem) {
+  .work {
+    --section-estimate: 940px;
+  }
+
+  .feedback {
+    --section-estimate: 1000px;
+  }
+
+  .about {
+    --section-estimate: 640px;
+  }
+
+  .contact {
+    --section-estimate: 517px;
+  }
+}
+
+@media (min-width: 64rem) {
+  .work {
+    --section-estimate: max(654px, calc(46vw + 105px));
+  }
+
+  .feedback {
+    --section-estimate: calc(625px - 4.8vw);
+  }
+
+  .about {
+    --section-estimate: 548px;
+  }
+
+  .contact {
+    --section-estimate: max(535px, calc(22vw + 235px));
+  }
+}
+
+@media (min-width: 64rem) and (max-width: 79.999rem) {
+  .feedback {
+    --section-estimate: calc(997px - 33.2vw);
+  }
+
+  .about {
+    --section-estimate: 710px;
+  }
+}
+
 /* ---------- 01 Hero ---------- */
 
 .hero__body {
@@ -795,9 +871,11 @@ a {
 
   overflow: clip;
   padding-block-end: 3.5rem;
+  /* Fixed-size glow anchored top-right: it doesn't depend on the section's
+     height, so the tool can resize without repainting the whole section. */
   background:
-    radial-gradient(90% 45% at 100% 0%, rgb(255 255 255 / 0.7), transparent 70%),
-    radial-gradient(70% 40% at 0% 100%, rgb(255 255 255 / 0.55), transparent 70%),
+    radial-gradient(40rem 26rem at 100% 0%, rgb(255 255 255 / 0.7), transparent 70%)
+      no-repeat,
     var(--paper);
 }
 
@@ -1354,8 +1432,6 @@ a {
   box-shadow:
     inset 0 1px 0 rgb(255 255 255 / 0.95),
     0 24px 50px rgb(10 10 10 / 0.07);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
 }
 
 .glass-stack span:nth-child(1) {

@@ -14,7 +14,14 @@ type BackdropProps = Readonly<{
 export function Backdrop({ src, sizes, className, eager = false }: BackdropProps) {
   return (
     <div className={className ? `backdrop ${className}` : "backdrop"} aria-hidden="true">
-      <Image src={src} alt="" fill sizes={sizes} loading={eager ? "eager" : "lazy"} />
+      <Image
+        src={src}
+        alt=""
+        fill
+        sizes={sizes}
+        quality={50}
+        loading={eager ? "eager" : "lazy"}
+      />
     </div>
   );
 }

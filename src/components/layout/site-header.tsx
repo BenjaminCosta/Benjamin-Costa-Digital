@@ -14,6 +14,9 @@ export function SiteHeader() {
     const header = headerRef.current;
     if (!header) return;
 
+    const darkSections = Array.from(
+      document.querySelectorAll<HTMLElement>("[data-header-theme='dark']"),
+    );
     let frame = 0;
     const update = () => {
       frame = 0;
@@ -23,10 +26,7 @@ export function SiteHeader() {
       }
       // Sample the content just below the header's bottom edge.
       const probe = header.getBoundingClientRect().bottom + 1;
-      const darkSections = document.querySelectorAll<HTMLElement>(
-        "[data-header-theme='dark']",
-      );
-      const isDark = Array.from(darkSections).some((section) => {
+      const isDark = darkSections.some((section) => {
         const { top, bottom } = section.getBoundingClientRect();
         return top <= probe && bottom > probe;
       });
