@@ -7,7 +7,12 @@ export const site = Object.freeze({
 
 /** Subtle glass/acrylic backgrounds, one per section that carries one. */
 export const backdrops = Object.freeze({
-  hero: "/images/bg/glass-analytics-sunlight.png",
+  // *-soft.jpg: hero.png / reviews.png pre-toned (desaturated, lifted) so the
+  // browser doesn't have to filter them on every paint.
+  hero: "/images/bg/hero-soft.jpg",
+  heroDesktop: "/images/bg/hero-dp-soft.jpg",
+  reviews: "/images/bg/reviews-soft.jpg",
+  reviewsDesktop: "/images/bg/reviews-dp-soft.jpg",
   work: "/images/bg/glass-devices-sunlight.png",
   about: "/images/bg/glass-laptop-soft.png",
   contact: "/images/bg/glass-interface-dark.png",
