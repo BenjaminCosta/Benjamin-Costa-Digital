@@ -91,7 +91,8 @@ La portada y el contenedor de sección seguirán siendo Server Components. Solo 
 src/
   components/
     sections/business-ideas-section.tsx    Contenedor estático de la sección 02
-    business-ideas/business-ideas-tool.tsx Selector, input y estados interactivos
+    sections/business-ideas.tsx            Diseño interactivo y estados visuales
+    business-ideas/use-business-ideas.ts    Solicitud, validación, cancelación y WhatsApp
   data/
     business-goals.ts                      Opciones y respuestas preparadas
     service-catalog.ts                     Servicios aprobados para el servidor

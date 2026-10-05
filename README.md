@@ -1,6 +1,6 @@
 # Benjamin Costa Digital
 
-Production-ready foundation for Benjamin Costa's personal and business website. The semantic landing-page structure and initial content are in place; final art direction, imagery, integrations, and interaction design are intentionally deferred.
+Benjamin Costa's personal and business website. The design from main is integrated with the server-only business ideas tool; final content and production activation remain to be completed.
 
 ## Stack
 
@@ -54,4 +54,9 @@ The economical default is `gpt-6-luna`, with reasoning disabled, standard servic
 
 `npm run check` includes lint, type checking and deterministic security/API tests. Tests use a mock model only inside test files; production never returns simulated business ideas. One real local OpenAI request has also been verified end-to-end with a hypothetical business description. Broader model-quality evaluation and live Vercel Firewall enforcement are still required before public launch.
 
-No database, authentication, CMS, analytics, new animation library or generic component library was added. The rest of the site is intentionally still at the foundation stage. Final visual design remains deferred. The original plan is in [business ideas plan](docs/business-ideas-plan.md).
+No database, authentication, CMS, analytics or new animation library was added. The original plan is in [business ideas plan](docs/business-ideas-plan.md).
+## Design system
+
+Tokens live at the top of `src/app/globals.css`: Inter Tight for display and body copy, IBM Plex Mono for labels, a paper/ink palette with no accent colour, and editorial motion timings. Layouts follow the approved mobile and desktop mockups (desktop from 64rem, with a numbered index column); section backgrounds use the glass/acrylic photography in `public/images/bg` through the decorative `Backdrop` component, and project image areas render neutral placeholders (`MediaSlot`) until final photography is added.
+
+The section 02 design now uses the real OpenAI endpoint, source/evidence validation and contextual WhatsApp links, not preview results. Broader production evaluation and Vercel protections remain required before launch.

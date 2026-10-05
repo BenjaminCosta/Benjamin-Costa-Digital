@@ -1,5 +1,6 @@
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
+import { RevealObserver } from "@/components/motion/reveal-observer";
 import { AboutSection } from "@/components/sections/about-section";
 import { BusinessIdeasSection } from "@/components/sections/business-ideas-section";
 import { ContactSection } from "@/components/sections/contact-section";
@@ -20,6 +21,7 @@ export default function Home() {
         <ContactSection />
       </main>
       <SiteFooter />
+      <RevealObserver />
     </>
   );
 }

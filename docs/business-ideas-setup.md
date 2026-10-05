@@ -1,6 +1,6 @@
 # Business ideas: activación y operación
 
-Implementación en la rama `feat/business-ideas-tool`. Solo la sección 02 cambia de comportamiento; no se define el diseño final de la landing.
+Implementación en la rama `feat/business-ideas-tool`. El diseño existente de `origin/main` se integró sin cambiar el backend ni el proveedor de IA.
 
 ## Qué funciona
 
@@ -66,6 +66,15 @@ La portada puede seguir mostrando el formulario aun si una regla deja de existir
 - El texto enviado se procesa por proveedores externos; revisar sus políticas de privacidad/retención antes del lanzamiento. La UI informa del envío y pide evitar información sensible.
 
 ## Pruebas y evaluación
+
+### Integración del diseño de main — 5 de octubre
+
+- Se integró `origin/main` (`4a17ff6`) en `feat/business-ideas-tool`, conservando el backend del commit `defd5a3` sin modificaciones.
+- El bloque visual usa el hook `use-business-ideas.ts` para solicitudes reales, validación, cancelación y WhatsApp. Se eliminaron los resultados de muestra y el progreso simulado de la versión exclusivamente visual. Las opciones se derivan del catálogo canónico para evitar IDs incompatibles.
+- Lint, TypeScript, 39 pruebas y build correctos; la portada sigue estática. Una nueva prueba verifica las cinco opciones y todas sus respuestas preparadas.
+- En Chrome se verificaron URL local rechazada, fallback `needs-context` con foco en el error, generación real de tres oportunidades para una barbería hipotética, acordeón, reinicio y cancelación. WhatsApp conserva contexto y oportunidades; no se envió ningún mensaje.
+- Resultado y formulario comprobados a 375 px, sin desbordamiento horizontal. Se conservó el diseño existente, sin dependencias nuevas. La advertencia de hidratación de la extensión `cz-shortcut-listen` continúa siendo ajena a la aplicación; no se ocultó.
+- Este merge es local: no publica ni despliega, no modifica la rama main ni activa Google Places.
 
 ### Verificación de la opción elegida — 5 de octubre
 
