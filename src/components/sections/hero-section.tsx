@@ -17,7 +17,7 @@ export function HeroSection() {
         </p>
 
         <div className="cta-row" aria-label="Hero actions">
-          <a href="#audit">Check your website →</a>
+          <a href="#business-ideas">Find ideas for your business →</a>
           <a href="#work">See my work ↓</a>
         </div>
 
