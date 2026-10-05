@@ -3,7 +3,6 @@ import type { BusinessIdea, IdeaOption, Project, Testimonial } from "@/types/con
 export const site = Object.freeze({
   name: "Benjamin Costa",
   location: "Gold Coast, AU",
-  coordinates: ["28.0167° S", "153.4000° E"],
 });
 
 /** Subtle glass/acrylic backgrounds, one per section that carries one. */

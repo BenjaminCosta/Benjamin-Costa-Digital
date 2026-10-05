@@ -1,7 +1,7 @@
 import { ArrowIcon } from "@/components/ui/arrow-icon";
 import { ButtonLink } from "@/components/ui/button-link";
 import { Backdrop } from "@/components/ui/backdrop";
-import { backdrops, site } from "@/data/site-content";
+import { backdrops } from "@/data/site-content";
 
 export function HeroSection() {
   return (
@@ -18,12 +18,6 @@ export function HeroSection() {
           <span className="indexed__index only-desktop" aria-hidden="true">
             01
           </span>
-          <p className="mono-label hero__kicker only-desktop">
-            Digital systems
-            <br />
-            for local businesses
-          </p>
-
           <h1 id="hero-title" className="display display--hero">
             <span>More</span> <span>customers,</span> <span>fewer things</span>{" "}
             <span>done by hand.</span>
@@ -46,12 +40,6 @@ export function HeroSection() {
           </div>
         </div>
       </div>
-
-      <p className="hero__coords only-desktop" aria-hidden="true">
-        {site.coordinates[0]}
-        <br />
-        {site.coordinates[1]}
-      </p>
     </section>
   );
 }

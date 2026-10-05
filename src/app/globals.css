@@ -2425,15 +2425,6 @@ a {
     inset-block-start: calc(var(--header-height) + 4.25rem);
   }
 
-  .hero__kicker {
-    position: absolute;
-    inset-block-start: calc(var(--header-height) + 3.125rem);
-    inset-inline-end: 0;
-    font-size: 0.8125rem;
-    line-height: 1.6;
-    color: color-mix(in srgb, var(--ink) 78%, var(--paper));
-  }
-
   .display--hero {
     margin: 0;
     font-size: min(6.4vw, 7.5rem);
@@ -2490,18 +2481,6 @@ a {
 
   .hero__backdrop img {
     object-position: 100% 50%;
-  }
-
-  .hero__coords {
-    position: absolute;
-    z-index: 1;
-    inset-block-end: 2.75rem;
-    inset-inline-start: calc(var(--hero-split) + 2.625rem);
-    color: color-mix(in srgb, var(--ink) 62%, transparent);
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    line-height: 1.45;
-    letter-spacing: 0.04em;
   }
 
   /* ---------- 02 Business ideas ---------- */
