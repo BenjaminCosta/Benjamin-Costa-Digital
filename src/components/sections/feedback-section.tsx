@@ -1,8 +1,9 @@
 import { ArrowIcon } from "@/components/ui/arrow-icon";
+import { Backdrop } from "@/components/ui/backdrop";
 import { SectionHead } from "@/components/ui/section-head";
 import { VerifiedBadge } from "@/components/ui/verified-badge";
 import { WorkanaLogo } from "@/components/ui/workana-logo";
-import { testimonials, workana } from "@/data/site-content";
+import { backdrops, testimonials, workana } from "@/data/site-content";
 
 const initials = (name: string) =>
   name
@@ -33,6 +34,13 @@ export function FeedbackSection() {
       aria-labelledby="feedback-title"
       data-brand="workana"
     >
+      <Backdrop
+        src={backdrops.reviews}
+        sizes="160vw"
+        desktopSrc={backdrops.reviewsDesktop}
+        className="feedback__backdrop"
+      />
+
       <div className="page-container indexed feedback__body" data-reveal>
         <SectionHead index="04" title="Client feedback" />
 

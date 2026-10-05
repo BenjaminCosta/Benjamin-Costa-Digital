@@ -8,8 +8,9 @@ export function HeroSection() {
     <section className="hero" aria-labelledby="hero-title">
       <Backdrop
         src={backdrops.hero}
+        sizes="100vw"
+        desktopSrc={backdrops.heroDesktop}
         className="hero__backdrop"
-        sizes="(min-width: 64rem) 100vw, 220vw"
         eager
       />
 

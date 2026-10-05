@@ -567,15 +567,34 @@ a {
   isolation: isolate;
 }
 
+/* Hero: lifted and desaturated so it melts into the paper behind the copy */
 .hero__backdrop {
-  --backdrop-opacity: 0.6;
-  --backdrop-mask: radial-gradient(120% 75% at 70% 80%, #000 22%, transparent 72%);
+  --backdrop-opacity: 0.4;
+  --backdrop-mask: linear-gradient(180deg, transparent 0%, #000 48%, #000 62%, transparent 94%);
 
-  inset-block-start: 20rem;
+  inset-block-start: 19rem;
 }
 
+/* Toning is baked into the image files */
 .hero__backdrop img {
-  object-position: 62% 100%;
+  object-position: 50% 78%;
+  filter: none;
+}
+
+/* Reviews: near-white prism light, so only the colour streaks remain */
+.feedback__backdrop {
+  --backdrop-opacity: 0.75;
+  --backdrop-mask: linear-gradient(180deg, #000 70%, transparent 100%);
+}
+
+.feedback__backdrop img {
+  object-position: 60% 30%;
+  filter: none;
+}
+
+.feedback__body {
+  position: relative;
+  z-index: 1;
 }
 
 .about__backdrop {
@@ -1909,11 +1928,6 @@ a {
 
   overflow: clip;
   padding-block-end: 3.5rem;
-  background:
-    linear-gradient(118deg, transparent 56%, rgb(255 226 240 / 0.3) 61%, rgb(222 236 255 / 0.3) 64%, transparent 69%),
-    radial-gradient(70% 40% at 100% 0%, rgb(255 255 255 / 0.85), transparent 70%),
-    radial-gradient(60% 35% at 0% 100%, rgb(255 255 255 / 0.6), transparent 70%),
-    var(--paper);
 }
 
 .feedback__head {
@@ -2233,7 +2247,7 @@ a {
   }
 
   .hero__backdrop {
-    inset-block-start: 27rem;
+    inset-block-start: 24rem;
   }
 
   .work__media {
@@ -2549,14 +2563,23 @@ a {
   }
 
   .hero__backdrop {
-    --backdrop-opacity: 0.62;
-    --backdrop-mask: radial-gradient(62% 95% at 84% 55%, #000 22%, transparent 74%);
+    --backdrop-opacity: 0.55;
+    --backdrop-mask: radial-gradient(70% 110% at 88% 55%, #000 25%, transparent 78%);
 
     inset-block-start: 0;
   }
 
   .hero__backdrop img {
     object-position: 100% 50%;
+  }
+
+  .feedback__backdrop {
+    --backdrop-opacity: 0.8;
+    --backdrop-mask: none;
+  }
+
+  .feedback__backdrop img {
+    object-position: 50% 50%;
   }
 
   /* ---------- 02 Business ideas ---------- */
