@@ -1,6 +1,6 @@
 import type { IdeaIconName } from "@/types/content";
 
-type IconName = IdeaIconName | "link" | "plus" | "check" | "whatsapp" | "restart" | "back";
+type IconName = IdeaIconName | "link" | "plus" | "check" | "whatsapp" | "restart" | "back" | "close";
 
 const paths: Record<IconName, string> = {
   calendar: "M4 6.5h16v13H4zM4 10.5h16M8.5 4v4M15.5 4v4",
@@ -25,6 +25,7 @@ const paths: Record<IconName, string> = {
     "M4.5 19.5l1.1-3.9A8 8 0 1 1 8.6 18.4ZM9.2 8.2c.3-.5.6-.5.9-.5h.5c.2 0 .4.1.5.4l.7 1.6c.1.2 0 .5-.1.7l-.5.6c-.1.1-.1.3 0 .5.6 1 1.4 1.8 2.5 2.4.2.1.4.1.5 0l.6-.6c.2-.2.4-.2.7-.1l1.5.7c.3.1.4.3.4.5v.5c0 .4-.2.9-.7 1.2-.6.4-1.6.5-3-.1-1.8-.8-3.4-2.4-4.2-4.2-.6-1.3-.4-2.4 0-3.1Z",
   restart: "M5 12a7 7 0 1 0 2.05-4.95M5 4.5V8h3.5",
   back: "M19 12H5M10.5 6.5 5 12l5.5 5.5",
+  close: "M6.5 6.5l11 11M17.5 6.5l-11 11",
 };
 
 type IdeaIconProps = Readonly<{
