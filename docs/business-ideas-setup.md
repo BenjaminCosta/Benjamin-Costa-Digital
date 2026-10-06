@@ -38,6 +38,8 @@ En desarrollo local se permiten diez solicitudes por diez minutos para todo el p
 
 Mantener `BUSINESS_IDEAS_ENABLED=false` hasta completar la configuración y las pruebas en preview. Hobby admite una regla de rate limit por proyecto: usar una única regla de tipo `@vercel/firewall`, con Rate limit ID `business-ideas` y `BUSINESS_IDEAS_RATE_LIMIT_RULE=business-ideas`.
 
+Configurar la clave de conteo de esta regla SDK como `header:x-vercel-rate-limit-key`, que el SDK prepara para cada bucket. No usar la clave genérica `ip` del WAF ni dejar las claves vacías: las pruebas reales mostraron que ambas consultas caían en el mismo contador con esas configuraciones. La regla específica de SDK fue aceptada como válida en este proyecto Hobby; no extrapolarlo a reglas arbitrarias de headers.
+
 | Comprobación (mismo ID) | Bucket independiente | Límite/ventana compartidos |
 | --- | --- | --- |
 | Primera | IP de la solicitud, determinada por Vercel | 50 solicitudes / 600 segundos |
@@ -49,7 +51,7 @@ El ID del SDK no es el ID interno `rule_...` del borrador. No añadir condicione
 
 Documentación verificada: [límites de Hobby](https://vercel.com/docs/vercel-firewall/vercel-waf/rate-limiting#limits) y [claves personalizadas del SDK](https://vercel.com/docs/vercel-firewall/vercel-waf/rate-limiting-sdk#custom-rate-limit-keys).
 
-Las variables `VERCEL` y `VERCEL_URL` son las variables de sistema de Vercel; no simularlas para activar producción fuera de Vercel. La aplicación rechaza generación si falta configuración, si no existe la regla o si falla cualquiera de las dos comprobaciones. No se apoya en contadores en memoria en producción. Los contadores del WAF son por región: el bucket compartido no constituye un límite económico absoluto entre regiones. Añadir límites de gasto/créditos en el proveedor y revisar consumo antes de abrir públicamente.
+En producción, `SITE_URL` debe ser el origen HTTPS público del proyecto (sin credenciales, puerto, ruta ni query). El SDK consulta ese hostname configurado, nunca el Host enviado por el visitante: las URLs únicas del deployment pueden estar protegidas por SSO y redirigir al login aunque el alias público funcione. Preview conserva `VERCEL_URL` y la protección del deployment. Las variables `VERCEL`, `VERCEL_ENV` y `VERCEL_URL` son las variables de sistema de Vercel; no simularlas para activar producción fuera de Vercel. La aplicación rechaza generación si falta configuración, si no existe la regla o si falla cualquiera de las dos comprobaciones. No se apoya en contadores en memoria en producción. Los contadores del WAF son por región: el bucket compartido no constituye un límite económico absoluto entre regiones. Añadir límites de gasto/créditos en el proveedor y revisar consumo antes de abrir públicamente.
 
 Primero probar las reglas en preview y revisar que no bloquean visitas legítimas. La API solo usa límites después de validar solicitudes pequeñas y antes de leer páginas o llamar a IA. Origin se comprueba para evitar posts desde otras webs, pero no sustituye los límites ni es autenticación: un cliente automatizado puede fabricar cabeceras.
 

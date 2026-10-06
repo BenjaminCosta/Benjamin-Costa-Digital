@@ -282,6 +282,31 @@ test("production configuration and firewall checks fail closed on absent rules",
   }
 });
 
+test("production firewall uses the configured public origin, not a protected deployment or caller host", async () => {
+  const names = ["NODE_ENV", "VERCEL", "VERCEL_ENV", "VERCEL_URL", "SITE_URL", "BUSINESS_IDEAS_RATE_LIMIT_RULE"];
+  const saved = Object.fromEntries(names.map((name) => [name, process.env[name]]));
+  try {
+    Object.assign(process.env, { NODE_ENV: "production", VERCEL: "1", VERCEL_ENV: "production", VERCEL_URL: "protected.vercel.app", SITE_URL: "https://public.vercel.app", BUSINESS_IDEAS_RATE_LIMIT_RULE: "business-ideas" });
+    const hosts: (string | null)[] = [];
+    const check: Parameters<typeof enforceRateLimit>[1] = async (_id, options) => {
+      hosts.push(new Headers(options?.headers as Headers).get("host"));
+      return { rateLimited: false };
+    };
+    await enforceRateLimit(request(input, { host: "attacker.example" }), check);
+    assert.deepEqual(hosts, ["public.vercel.app", "public.vercel.app"]);
+    for (const origin of ["", "http://public.vercel.app", "https://user:pass@public.vercel.app", "https://public.vercel.app/path", "https://public.vercel.app?query=1"]) {
+      process.env.SITE_URL = origin;
+      await assert.rejects(enforceRateLimit(request(input), check), (error: unknown) => error instanceof IdeasError && error.code === "unavailable");
+    }
+    assert.equal(hosts.length, 2);
+    process.env.VERCEL_ENV = "preview";
+    await enforceRateLimit(request(input), check);
+    assert.deepEqual(hosts.slice(2), ["protected.vercel.app", "protected.vercel.app"]);
+  } finally {
+    for (const name of names) { if (saved[name] === undefined) delete process.env[name]; else process.env[name] = saved[name]; }
+  }
+});
+
 test("one Hobby rule keeps independent IP and shared buckets, stopping before paid work", async () => {
   const names = ["NODE_ENV", "VERCEL", "VERCEL_URL", "BUSINESS_IDEAS_ENABLED", "OPENAI_API_KEY", "BUSINESS_IDEAS_RATE_LIMIT_RULE"];
   const saved = Object.fromEntries(names.map((name) => [name, process.env[name]]));

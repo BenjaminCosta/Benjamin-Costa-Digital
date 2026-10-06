@@ -16,8 +16,15 @@ export async function enforceRateLimit(request: Request, check = checkRateLimit)
   }
   if (!config.rateLimitRule) throw new IdeasError("unavailable", "Personalised ideas are temporarily unavailable. You can still talk to Ben.", 503);
   try {
-    // The SDK uses Host to contact its API. Use deployment configuration, not a caller-supplied Host.
-    const host = process.env.VERCEL_URL;
+    // Unique deployment URLs can be SSO-protected even when the production alias is public.
+    // Use only trusted server configuration, never a caller-supplied Host.
+    let host = process.env.VERCEL_URL;
+    if (process.env.VERCEL_ENV === "production") {
+      const site = new URL(process.env.SITE_URL ?? "");
+      if (site.protocol !== "https:" || site.username || site.password || site.port ||
+          site.pathname !== "/" || site.search || site.hash) throw new Error("Invalid production origin");
+      host = site.hostname;
+    }
     if (!host || !/^[a-z\d.-]+$/i.test(host)) throw new Error("Missing deployment hostname");
     const headers = new Headers(request.headers);
     headers.set("host", host);
