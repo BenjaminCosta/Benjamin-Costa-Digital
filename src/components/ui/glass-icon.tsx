@@ -3,7 +3,7 @@ import type { GlassIconName } from "@/types/content";
 
 // Every glass icon is requested at one size, so the same file serves the row,
 // the large heading icon and the cards: once loaded, a step never waits on it.
-const SOURCE_SIZE = 128;
+const SOURCE_SIZE = 192;
 const props = (name: GlassIconName) =>
   ({ src: `/images/icons/${name}.png`, alt: "", width: SOURCE_SIZE, height: SOURCE_SIZE, quality: 75 }) as const;
 

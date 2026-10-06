@@ -15,6 +15,7 @@ import { ArrowIcon } from "@/components/ui/arrow-icon";
 import { BrandLogo } from "@/components/ui/brand-logo";
 import { GlassIcon, prefetchGlassIcons } from "@/components/ui/glass-icon";
 import { IdeaIcon } from "@/components/ui/idea-icon";
+import { SectionHead } from "@/components/ui/section-head";
 import { areaIcons, ideaOptions, ideasCopy } from "@/data/site-content";
 import { brandIn, buildSteps } from "@/components/business-ideas/presentation";
 import { useBusinessIdeas, type BusinessIdeasProps } from "@/components/business-ideas/use-business-ideas";
@@ -80,7 +81,7 @@ function IdeaMark({ idea }: Readonly<{ idea: Opportunity }>) {
     </span>
   ) : (
     <span className="idea-result__mark" aria-hidden="true">
-      <GlassIcon name={areaIcons[idea.area]} size={64} />
+      <GlassIcon name={areaIcons[idea.area]} size={84} />
     </span>
   );
 }
@@ -163,9 +164,11 @@ export function BusinessIdeas(props: BusinessIdeasProps) {
     flipFrom.current = null;
 
     if (view === "answers" && topRef.current) {
-      const limit = headerBottom() + 16;
-      const top = topRef.current.getBoundingClientRect().top;
-      if (top < limit) window.scrollBy({ top: top - limit, behavior: "instant" });
+      // Start the step at the top of the section, right under the header.
+      const section = topRef.current.closest("section") ?? topRef.current;
+      const limit = headerBottom();
+      const top = section.getBoundingClientRect().top;
+      if (Math.abs(top - limit) > 1) window.scrollBy({ top: top - limit, behavior: "instant" });
 
       const mark = markRef.current;
       if (from && mark && !reducedMotion()) {
@@ -313,302 +316,321 @@ export function BusinessIdeas(props: BusinessIdeasProps) {
     index < loadingStep ? "done" : index === loadingStep ? "active" : "pending";
 
   return (
-    <div className="ideas__tool" data-view={view}>
-      <div className="ideas__intro">
-        <h2 ref={sectionTitleRef} id="ideas-title" className="display display--ideas">
-          {ideasCopy.title}
-        </h2>
-        <p className="ideas__lede">{ideasCopy.lede}</p>
+    <>
+      {/* On phones the way back sits beside the section label, as in an app */}
+      <div ref={topRef} className="ideas__head" data-view={view}>
+        {view === "answers" ? (
+          <button
+            type="button"
+            className="ideas-back ideas-back--head ideas-enter"
+            onClick={restart}
+            aria-label={ideasCopy.changeOption}
+          >
+            <IdeaIcon name="back" />
+          </button>
+        ) : null}
+        <SectionHead index="02" title="Business ideas" />
       </div>
 
-      <div ref={stageRef} className="ideas-stage">
-        <div ref={innerRef} className="ideas-stage__inner" onPointerMove={trackSheen}>
-          <div
-            key={view}
-            className="ideas-stage__body"
-            data-leaving={(exitTo && exitTo !== "answers") || undefined}
-          >
-            {view === "select" ? (
-              <ul className="idea-options" data-choosing={exitTo === "answers" || undefined}>
-                {ideaOptions.map((option, index) => (
-                  <li
-                    key={option.id}
-                    style={vars({ "--i": index })}
-                    data-chosen={(exitTo === "answers" && option.id === selectedId) || undefined}
-                  >
+      <div className="ideas__tool" data-view={view}>
+        <div className="ideas__intro">
+          <h2 ref={sectionTitleRef} id="ideas-title" className="display display--ideas">
+            {ideasCopy.title}
+          </h2>
+          <p className="ideas__lede">{ideasCopy.lede}</p>
+        </div>
+
+        <div ref={stageRef} className="ideas-stage">
+          <div ref={innerRef} className="ideas-stage__inner" onPointerMove={trackSheen}>
+            <div
+              key={view}
+              className="ideas-stage__body"
+              data-leaving={(exitTo && exitTo !== "answers") || undefined}
+            >
+              {view === "select" ? (
+                <ul className="idea-options" data-choosing={exitTo === "answers" || undefined}>
+                  {ideaOptions.map((option, index) => (
+                    <li
+                      key={option.id}
+                      style={vars({ "--i": index })}
+                      data-chosen={(exitTo === "answers" && option.id === selectedId) || undefined}
+                    >
+                      <button
+                        type="button"
+                        className="idea-option"
+                        data-sheen
+                        onPointerEnter={() => prefetchAnswers(option)}
+                        onPointerDown={() => prefetchAnswers(option)}
+                        onFocus={() => prefetchAnswers(option)}
+                        onClick={(event) => choose(option, event)}
+                      >
+                        <GlassIcon name={option.icon} size={84} />
+                        <span className="idea-option__label">{option.label}</span>
+                        <ArrowIcon />
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+
+              {view === "answers" && selected ? (
+                <>
+                  <div className="ideas-top ideas-enter">
                     <button
                       type="button"
-                      className="idea-option"
-                      data-sheen
-                      onPointerEnter={() => prefetchAnswers(option)}
-                      onPointerDown={() => prefetchAnswers(option)}
-                      onFocus={() => prefetchAnswers(option)}
-                      onClick={(event) => choose(option, event)}
+                      className="ideas-back"
+                      onClick={restart}
+                      aria-label={ideasCopy.changeOption}
                     >
-                      <GlassIcon name={option.icon} size={60} />
-                      <span className="idea-option__label">{option.label}</span>
-                      <ArrowIcon />
+                      <IdeaIcon name="back" />
                     </button>
-                  </li>
-                ))}
-              </ul>
-            ) : null}
+                  </div>
 
-            {view === "answers" && selected ? (
-              <>
-                <div ref={topRef} className="ideas-top ideas-enter">
-                  <button
-                    type="button"
-                    className="ideas-back"
-                    onClick={restart}
-                    aria-label={ideasCopy.changeOption}
+                  <span ref={markRef} className="ideas-answers__mark" aria-hidden="true">
+                    <GlassIcon name={selected.icon} size={176} />
+                  </span>
+                  <h3 ref={headingRef} tabIndex={-1} className="ideas-step__title ideas-enter">
+                    {selected.label}
+                  </h3>
+                  <p className="ideas-step__intro ideas-enter">{selected.intro}</p>
+
+                  {selected.answers.length > 0 ? (
+                    <ol className="idea-opps">
+                      {selected.answers.map((answer, index) => (
+                        <li
+                          key={answer.title}
+                          className="idea-opp"
+                          data-sheen
+                          style={vars({ "--i": index })}
+                        >
+                          <span className="idea-opp__num">{pad(index + 1)}</span>
+                          <GlassIcon name={answer.icon} size={112} />
+                          <div>
+                            <h4>{answer.title}</h4>
+                            <p>{answer.text}</p>
+                          </div>
+                        </li>
+                      ))}
+                    </ol>
+                  ) : null}
+
+                  <form
+                    className="ideas-form"
+                    onSubmit={handleSubmit}
+                    noValidate
+                    aria-busy={submitting}
+                    style={vars({ "--i": selected.answers.length })}
                   >
-                    <IdeaIcon name="back" />
+                    {direct ? null : <h4 className="ideas-form__title">{ideasCopy.formTitle}</h4>}
+
+                    <label className="visually-hidden" htmlFor="ideas-link">
+                      {ideasCopy.linkLabel}
+                    </label>
+                    <div className="ideas-form__field" data-busy={submitting || undefined}>
+                      <IdeaIcon name="link" />
+                      <input
+                        id="ideas-link"
+                        name="link"
+                        type="text"
+                        inputMode="url"
+                        autoComplete="url"
+                        autoCapitalize="none"
+                        spellCheck={false}
+                        placeholder={ideasCopy.linkPlaceholder}
+                        maxLength={2048}
+                        value={tool.businessLink}
+                        onChange={(event) => { tool.resetRequest(); tool.setBusinessLink(event.target.value); }}
+                        aria-invalid={tool.invalidLink}
+                        aria-describedby={`ideas-link-note${tool.invalidLink ? " ideas-error" : ""}`}
+                      />
+                      <button
+                        type="submit"
+                        className="ideas-form__go"
+                        disabled={submitting || !props.available}
+                        aria-label={submitLabel}
+                        aria-describedby="ideas-privacy ideas-availability"
+                      >
+                        {submitting ? <span className="ideas-form__spinner" aria-hidden="true" /> : <ArrowIcon />}
+                      </button>
+                    </div>
+                    <p id="ideas-link-note" className="ideas-form__note">
+                      {ideasCopy.linkNote}
+                    </p>
+                    {tool.state.status === "error" ? (
+                      <p id="ideas-error" ref={errorRef} tabIndex={-1} role="alert" className="ideas-form__error">
+                        {tool.state.message}
+                      </p>
+                    ) : null}
+
+                    <div className="ideas-context" data-open={contextOpen || undefined}>
+                      <button
+                        type="button"
+                        className="ideas-context__toggle"
+                        aria-expanded={contextOpen}
+                        aria-controls="ideas-context-panel"
+                        onClick={toggleContext}
+                      >
+                        <span>{tool.needsContext ? "Add a little context (needed to continue)" : ideasCopy.contextToggle}</span>
+                        <IdeaIcon name="plus" />
+                      </button>
+                      <div id="ideas-context-panel" className="expand" inert={!contextOpen}>
+                        <div className="expand__inner">
+                          <div className="ideas-context__body">
+                            <label htmlFor="ideas-context">{ideasCopy.contextLabel}</label>
+                            <textarea
+                              ref={contextRef}
+                              id="ideas-context"
+                              name="context"
+                              rows={3}
+                              maxLength={ideasCopy.contextMax}
+                              value={tool.description}
+                              onChange={(event) => { tool.resetRequest(); tool.setDescription(event.target.value); }}
+                              placeholder={ideasCopy.contextPlaceholder}
+                              aria-invalid={tool.needsContext}
+                              aria-describedby={`ideas-context-help${tool.needsContext ? " ideas-error" : ""}`}
+                            />
+                            <p id="ideas-context-help" className="ideas-form__note">
+                              {ideasCopy.contextHelp}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <p id="ideas-privacy" className="ideas-form__note ideas-form__privacy">
+                      Submitting sends public website text and your description to OpenAI for three suggestions. We don’t store submissions in this app. Don’t include sensitive information. These are ideas, not a verified audit.
+                    </p>
+
+                    <div className="ideas-form__aside">
+                      {tool.contactHref ? <a className="text-link text-link--underlined" href={tool.contactHref} target="_blank" rel="noopener noreferrer">
+                        <span className="text-link__label">{ideasCopy.talkInstead}</span>
+                        <ArrowIcon direction="up-right" />
+                      </a> : null}
+                      <p id="ideas-availability" className="ideas-form__micro">{props.available ? ideasCopy.microcopy : "Personalised ideas aren’t available right now. The instant starting points still work."}</p>
+                    </div>
+                  </form>
+                </>
+              ) : null}
+
+              {view === "loading" ? (
+                <div ref={loadingRef} className="ideas-loading">
+                  <div className="ideas-loading__glass ideas-enter">
+                    <span className="ideas-loading__layer" aria-hidden="true" />
+                    <span className="ideas-loading__layer" aria-hidden="true" />
+                    <div className="ideas-loading__card">
+                      <h3 ref={headingRef} tabIndex={-1} className="ideas-loading__title">
+                        {ideasCopy.loadingTitle}
+                      </h3>
+                      <ol className="ideas-loading__steps">
+                        {steps.map((step, index) => (
+                          <li key={step.title} data-state={stepState(index)}>
+                            <span className="ideas-loading__mark" aria-hidden="true">
+                              <IdeaIcon name="check" />
+                            </span>
+                            <span>
+                              <span className="ideas-loading__step">{step.title}</span>
+                              <span className="ideas-loading__detail">{step.detail}</span>
+                            </span>
+                          </li>
+                        ))}
+                      </ol>
+                    </div>
+                  </div>
+                  <p className="visually-hidden" role="status">
+                    {steps[Math.min(loadingStep, steps.length - 1)].title}
+                  </p>
+                  <button type="button" className="ideas-restart" onClick={cancelLoading}>
+                    Cancel
                   </button>
                 </div>
+              ) : null}
 
-                <span ref={markRef} className="ideas-answers__mark" aria-hidden="true">
-                  <GlassIcon name={selected.icon} size={96} />
-                </span>
-                <h3 ref={headingRef} tabIndex={-1} className="ideas-step__title ideas-enter">
-                  {selected.label}
-                </h3>
-                <p className="ideas-step__intro ideas-enter">{selected.intro}</p>
-
-                {selected.answers.length > 0 ? (
-                  <ol className="idea-opps">
-                    {selected.answers.map((answer, index) => (
+              {view === "results" && result ? (
+                <>
+                  <h3 ref={headingRef} tabIndex={-1} className="ideas-step__title ideas-enter">
+                    {ideasCopy.resultsTitle}
+                  </h3>
+                  <p className="ideas-results__lede ideas-enter">
+                    {ideasCopy.resultsLede(result.businessName)}
+                  </p>
+                  <ol className="idea-results">
+                    {result.opportunities.map((idea, index) => (
                       <li
-                        key={answer.title}
-                        className="idea-opp"
+                        key={idea.area}
+                        className="idea-result"
                         data-sheen
                         style={vars({ "--i": index })}
                       >
-                        <span className="idea-opp__num">{pad(index + 1)}</span>
-                        <GlassIcon name={answer.icon} size={64} />
-                        <div>
-                          <h4>{answer.title}</h4>
-                          <p>{answer.text}</p>
+                        <div className="idea-result__head">
+                          <span className="idea-result__num">{pad(index + 1)}</span>
+                          <IdeaMark idea={idea} />
+                          <h4 className="idea-result__title">{idea.title}</h4>
+                        </div>
+                        <div className="idea-result__body">
+                          <p className="idea-result__summary">{idea.explanation}</p>
+                          <p className="idea-result__basis">{basisLabel[idea.basis]}</p>
+                          {idea.evidence ? <blockquote className="idea-result__evidence">“{idea.evidence}”</blockquote> : null}
+                          <div className="idea-result__build">
+                            <p className="idea-result__build-label">{ideasCopy.buildLabel}</p>
+                            <ul>
+                              {buildSteps(idea.build).map((step) => {
+                                const brand = brandIn(step);
+                                return (
+                                  <li key={step}>
+                                    {brand ? <BrandLogo brand={brand} /> : <ArrowIcon />}
+                                    <span>{step}</span>
+                                  </li>
+                                );
+                              })}
+                            </ul>
+                          </div>
                         </div>
                       </li>
                     ))}
                   </ol>
-                ) : null}
 
-                <form
-                  className="ideas-form"
-                  onSubmit={handleSubmit}
-                  noValidate
-                  aria-busy={submitting}
-                  style={vars({ "--i": selected.answers.length })}
-                >
-                  {direct ? null : <h4 className="ideas-form__title">{ideasCopy.formTitle}</h4>}
-
-                  <label className="visually-hidden" htmlFor="ideas-link">
-                    {ideasCopy.linkLabel}
-                  </label>
-                  <div className="ideas-form__field" data-busy={submitting || undefined}>
-                    <IdeaIcon name="link" />
-                    <input
-                      id="ideas-link"
-                      name="link"
-                      type="text"
-                      inputMode="url"
-                      autoComplete="url"
-                      autoCapitalize="none"
-                      spellCheck={false}
-                      placeholder={ideasCopy.linkPlaceholder}
-                      maxLength={2048}
-                      value={tool.businessLink}
-                      onChange={(event) => { tool.resetRequest(); tool.setBusinessLink(event.target.value); }}
-                      aria-invalid={tool.invalidLink}
-                      aria-describedby={`ideas-link-note${tool.invalidLink ? " ideas-error" : ""}`}
-                    />
-                    <button
-                      type="submit"
-                      className="ideas-form__go"
-                      disabled={submitting || !props.available}
-                      aria-label={submitLabel}
-                      aria-describedby="ideas-privacy ideas-availability"
-                    >
-                      {submitting ? <span className="ideas-form__spinner" aria-hidden="true" /> : <ArrowIcon />}
-                    </button>
-                  </div>
-                  <p id="ideas-link-note" className="ideas-form__note">
-                    {ideasCopy.linkNote}
-                  </p>
-                  {tool.state.status === "error" ? (
-                    <p id="ideas-error" ref={errorRef} tabIndex={-1} role="alert" className="ideas-form__error">
-                      {tool.state.message}
+                  <div className="ideas-results__sources" style={vars({ "--i": result.opportunities.length })}>
+                    <p className="ideas-results__source">
+                      <IdeaIcon name="search" />
+                      {result.source === "website" ? "Based on public website text and your context. Internal systems, analytics and performance haven’t been checked." : "Based on your description only. No website or Google profile was analysed."}
                     </p>
-                  ) : null}
-
-                  <div className="ideas-context" data-open={contextOpen || undefined}>
-                    <button
-                      type="button"
-                      className="ideas-context__toggle"
-                      aria-expanded={contextOpen}
-                      aria-controls="ideas-context-panel"
-                      onClick={toggleContext}
-                    >
-                      <span>{tool.needsContext ? "Add a little context (needed to continue)" : ideasCopy.contextToggle}</span>
-                      <IdeaIcon name="plus" />
-                    </button>
-                    <div id="ideas-context-panel" className="expand" inert={!contextOpen}>
-                      <div className="expand__inner">
-                        <div className="ideas-context__body">
-                          <label htmlFor="ideas-context">{ideasCopy.contextLabel}</label>
-                          <textarea
-                            ref={contextRef}
-                            id="ideas-context"
-                            name="context"
-                            rows={3}
-                            maxLength={ideasCopy.contextMax}
-                            value={tool.description}
-                            onChange={(event) => { tool.resetRequest(); tool.setDescription(event.target.value); }}
-                            placeholder={ideasCopy.contextPlaceholder}
-                            aria-invalid={tool.needsContext}
-                            aria-describedby={`ideas-context-help${tool.needsContext ? " ideas-error" : ""}`}
-                          />
-                          <p id="ideas-context-help" className="ideas-form__note">
-                            {ideasCopy.contextHelp}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
+                    {result.sourceLinks?.length ? <div className="ideas-results__pages">
+                      <p>Pages used:</p>
+                      <ul>{result.sourceLinks.map((link) => <li key={link}><a href={link} target="_blank" rel="noopener noreferrer">{link}</a></li>)}</ul>
+                    </div> : null}
                   </div>
 
-                  <p id="ideas-privacy" className="ideas-form__note ideas-form__privacy">
-                    Submitting sends public website text and your description to OpenAI for three suggestions. We don’t store submissions in this app. Don’t include sensitive information. These are ideas, not a verified audit.
-                  </p>
-
-                  <div className="ideas-form__aside">
-                    {tool.contactHref ? <a className="text-link text-link--underlined" href={tool.contactHref} target="_blank" rel="noopener noreferrer">
-                      <span className="text-link__label">{ideasCopy.talkInstead}</span>
-                      <ArrowIcon direction="up-right" />
+                  <div className="ideas-close" style={vars({ "--i": result.opportunities.length + 1 })}>
+                    <h4 className="ideas-close__title">{ideasCopy.closeTitle}</h4>
+                    <p className="ideas-close__text">{ideasCopy.closeText}</p>
+                    {tool.contactHref ? <a className="button button--dark ideas-close__cta" href={tool.contactHref} target="_blank" rel="noopener noreferrer">
+                      <span><BrandLogo brand="whatsapp" />{ideasCopy.closeCta}</span><ArrowIcon direction="up-right" />
                     </a> : null}
-                    <p id="ideas-availability" className="ideas-form__micro">{props.available ? ideasCopy.microcopy : "Personalised ideas aren’t available right now. The instant starting points still work."}</p>
-                  </div>
-                </form>
-              </>
-            ) : null}
-
-            {view === "loading" ? (
-              <div ref={loadingRef} className="ideas-loading">
-                <div className="ideas-loading__glass ideas-enter">
-                  <span className="ideas-loading__layer" aria-hidden="true" />
-                  <span className="ideas-loading__layer" aria-hidden="true" />
-                  <div className="ideas-loading__card">
-                    <h3 ref={headingRef} tabIndex={-1} className="ideas-loading__title">
-                      {ideasCopy.loadingTitle}
-                    </h3>
-                    <ol className="ideas-loading__steps">
-                      {steps.map((step, index) => (
-                        <li key={step.title} data-state={stepState(index)}>
-                          <span className="ideas-loading__mark" aria-hidden="true">
+                    <ul className="ideas-close__points">
+                      {ideasCopy.closePoints.map((point) => (
+                        <li key={point}>
+                          <span className="ideas-close__check" aria-hidden="true">
                             <IdeaIcon name="check" />
                           </span>
-                          <span>
-                            <span className="ideas-loading__step">{step.title}</span>
-                            <span className="ideas-loading__detail">{step.detail}</span>
-                          </span>
+                          {point}
                         </li>
                       ))}
-                    </ol>
+                    </ul>
+                    <p className="ideas-close__note">{ideasCopy.closeNote}</p>
+
+                    <p className="ideas-close__alt">{ideasCopy.tryAnother}</p>
+                    <button type="button" className="ideas-again" data-sheen onClick={restart}>
+                      <IdeaIcon name="restart" />
+                      <span>{ideasCopy.restart}</span>
+                      <ArrowIcon />
+                    </button>
                   </div>
-                </div>
-                <p className="visually-hidden" role="status">
-                  {steps[Math.min(loadingStep, steps.length - 1)].title}
-                </p>
-                <button type="button" className="ideas-restart" onClick={cancelLoading}>
-                  Cancel
-                </button>
-              </div>
-            ) : null}
-
-            {view === "results" && result ? (
-              <>
-                <h3 ref={headingRef} tabIndex={-1} className="ideas-step__title ideas-enter">
-                  {ideasCopy.resultsTitle}
-                </h3>
-                <p className="ideas-results__lede ideas-enter">
-                  {ideasCopy.resultsLede(result.businessName)}
-                </p>
-                <p className="ideas-results__source ideas-enter">
-                  <IdeaIcon name="search" />
-                  {result.source === "website" ? "Based on public website text and your context. Internal systems, analytics and performance haven’t been checked." : "Based on your description only. No website or Google profile was analysed."}
-                </p>
-                {result.sourceLinks?.length ? <div className="ideas-results__pages ideas-enter">
-                  <p>Pages used:</p>
-                  <ul>{result.sourceLinks.map((link) => <li key={link}><a href={link} target="_blank" rel="noopener noreferrer">{link}</a></li>)}</ul>
-                </div> : null}
-
-                <ol className="idea-results">
-                  {result.opportunities.map((idea, index) => (
-                    <li
-                      key={idea.area}
-                      className="idea-result"
-                      data-sheen
-                      style={vars({ "--i": index })}
-                    >
-                      <div className="idea-result__head">
-                        <span className="idea-result__num">{pad(index + 1)}</span>
-                        <IdeaMark idea={idea} />
-                        <h4 className="idea-result__title">{idea.title}</h4>
-                      </div>
-                      <div className="idea-result__body">
-                        <p className="idea-result__summary">{idea.explanation}</p>
-                        <p className="idea-result__basis">{basisLabel[idea.basis]}</p>
-                        {idea.evidence ? <blockquote className="idea-result__evidence">“{idea.evidence}”</blockquote> : null}
-                        <div className="idea-result__build">
-                          <p className="idea-result__build-label">{ideasCopy.buildLabel}</p>
-                          <ul>
-                            {buildSteps(idea.build).map((step) => {
-                              const brand = brandIn(step);
-                              return (
-                                <li key={step}>
-                                  {brand ? <BrandLogo brand={brand} /> : <ArrowIcon />}
-                                  <span>{step}</span>
-                                </li>
-                              );
-                            })}
-                          </ul>
-                        </div>
-                      </div>
-                    </li>
-                  ))}
-                </ol>
-
-                <div className="ideas-close" style={vars({ "--i": result.opportunities.length })}>
-                  <h4 className="ideas-close__title">{ideasCopy.closeTitle}</h4>
-                  <p className="ideas-close__text">{ideasCopy.closeText}</p>
-                  {tool.contactHref ? <a className="button button--dark ideas-close__cta" href={tool.contactHref} target="_blank" rel="noopener noreferrer">
-                    <span><BrandLogo brand="whatsapp" />{ideasCopy.closeCta}</span><ArrowIcon direction="up-right" />
-                  </a> : null}
-                  <ul className="ideas-close__points">
-                    {ideasCopy.closePoints.map((point) => (
-                      <li key={point}>
-                        <span className="ideas-close__check" aria-hidden="true">
-                          <IdeaIcon name="check" />
-                        </span>
-                        {point}
-                      </li>
-                    ))}
-                  </ul>
-                  <p className="ideas-close__note">{ideasCopy.closeNote}</p>
-
-                  <p className="ideas-close__alt">{ideasCopy.tryAnother}</p>
-                  <button type="button" className="ideas-again" data-sheen onClick={restart}>
-                    <IdeaIcon name="restart" />
-                    <span>{ideasCopy.restart}</span>
-                    <ArrowIcon />
-                  </button>
-                </div>
-              </>
-            ) : null}
+                </>
+              ) : null}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

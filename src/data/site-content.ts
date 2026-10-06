@@ -17,6 +17,9 @@ export const heroImage = Object.freeze({
 export const backdrops = Object.freeze({
   // *-soft.jpg: reviews.png pre-toned (desaturated, lifted) so the browser
   // doesn't have to filter it on every paint.
+  // Blurred, warmed light behind the Business Ideas glass cards.
+  ideas: "/images/bg/ideas-soft.jpg",
+  ideasDesktop: "/images/bg/ideas-dp-soft.jpg",
   reviews: "/images/bg/reviews-soft.jpg",
   reviewsDesktop: "/images/bg/reviews-dp-soft.jpg",
   work: "/images/bg/glass-devices-sunlight.png",
