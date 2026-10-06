@@ -41,6 +41,8 @@ const TIMING = Object.freeze({
   steps: [2400, 6000],
   /** A beat with every step ticked before the results replace them. */
   settle: 450,
+  /** After this long, a quiet line says it's still working. */
+  slow: 15000,
 });
 
 const pad = (value: number) => String(value).padStart(2, "0");
@@ -89,6 +91,7 @@ export function BusinessIdeas(props: BusinessIdeasProps) {
   const [submitting, setSubmitting] = useState(false);
   const [contextOpen, setContextOpen] = useState(false);
   const [loadingStep, setLoadingStep] = useState(0);
+  const [slow, setSlow] = useState(false);
 
   const stageRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
@@ -260,10 +263,12 @@ export function BusinessIdeas(props: BusinessIdeasProps) {
       setExitTo(null);
       setSubmitting(false);
       setLoadingStep(0);
+      setSlow(false);
       setView("loading");
       for (const [index, at] of TIMING.steps.entries()) {
         later(() => setLoadingStep((step) => Math.max(step, index + 1)), at, false);
       }
+      later(() => setSlow(true), TIMING.slow, false);
       const response = await tool.submit();
       if (!response) return; // Cancelled or superseded: never resurrect stale UI.
       if (response.status === "success") {
@@ -307,6 +312,7 @@ export function BusinessIdeas(props: BusinessIdeasProps) {
     ideasCopy.loadingSteps.understand,
     ideasCopy.loadingSteps.ideas,
   ];
+  const ready = loadingStep >= steps.length;
   const stepState = (index: number) =>
     index < loadingStep ? "done" : index === loadingStep ? "active" : "pending";
 
@@ -443,7 +449,7 @@ export function BusinessIdeas(props: BusinessIdeasProps) {
                         className="ideas-form__go"
                         disabled={submitting || !props.available}
                         aria-label={submitLabel}
-                        aria-describedby="ideas-privacy ideas-availability"
+                        aria-describedby="ideas-availability"
                       >
                         {submitting ? <span className="ideas-form__spinner" aria-hidden="true" /> : <ArrowIcon />}
                       </button>
@@ -492,10 +498,6 @@ export function BusinessIdeas(props: BusinessIdeasProps) {
                       </div>
                     </div>
 
-                    <p id="ideas-privacy" className="ideas-form__note ideas-form__privacy">
-                      Submitting sends public website text and your description to OpenAI for three suggestions. We don’t store submissions in this app. Don’t include sensitive information. These are ideas, not a verified audit.
-                    </p>
-
                     <div className="ideas-form__aside">
                       {tool.contactHref ? <a className="text-link text-link--underlined" href={tool.contactHref} target="_blank" rel="noopener noreferrer">
                         <span className="text-link__label">{ideasCopy.talkInstead}</span>
@@ -512,7 +514,15 @@ export function BusinessIdeas(props: BusinessIdeasProps) {
                   <div className="ideas-loading__glass ideas-enter">
                     <span className="ideas-loading__layer" aria-hidden="true" />
                     <span className="ideas-loading__layer" aria-hidden="true" />
-                    <div className="ideas-loading__card">
+                    <div className="ideas-loading__card" data-step={loadingStep}>
+                      <div className="ideas-loading__top">
+                        <span className="ideas-orb" aria-hidden="true">
+                          <span />
+                        </span>
+                        <span className="ideas-loading__eyebrow">
+                          {ready ? "Ready" : "Thinking"}
+                        </span>
+                      </div>
                       <h3 ref={headingRef} tabIndex={-1} className="ideas-loading__title">
                         {ideasCopy.loadingTitle}
                       </h3>
@@ -529,8 +539,14 @@ export function BusinessIdeas(props: BusinessIdeasProps) {
                           </li>
                         ))}
                       </ol>
+                      <span className="ideas-loading__bar" aria-hidden="true">
+                        <span />
+                      </span>
                     </div>
                   </div>
+                  <p className="ideas-loading__slow" data-shown={(slow && !ready) || undefined} aria-live="polite">
+                    {slow && !ready ? "Still working — reading a website can take up to half a minute." : ""}
+                  </p>
                   <p className="visually-hidden" role="status">
                     {steps[Math.min(loadingStep, steps.length - 1)].title}
                   </p>

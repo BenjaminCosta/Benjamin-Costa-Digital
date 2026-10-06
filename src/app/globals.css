@@ -1543,15 +1543,11 @@ a {
   outline-offset: 1px;
 }
 
-.ideas-form__privacy {
-  margin-block-start: 1rem;
-}
-
 .ideas-form__aside {
   display: grid;
   justify-items: start;
   gap: 0.75rem;
-  margin-block-start: 1.25rem;
+  margin-block-start: 1.5rem;
   font-size: 0.9375rem;
 }
 
@@ -1615,11 +1611,59 @@ a {
 
 .ideas-loading__card {
   position: relative;
-  padding: 2.25rem 1.75rem 2.5rem;
+  padding: 1.75rem 1.75rem 3rem;
   background: linear-gradient(150deg, rgb(255 255 255 / 0.78), rgb(255 255 255 / 0.5) 75%);
   transform: rotateY(9deg) rotateZ(-1.5deg);
   -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
+}
+
+/* "Thinking" row: a slowly turning glass orb, the way assistants show work */
+.ideas-loading__top {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-block-end: 1.25rem;
+}
+
+.ideas-orb {
+  position: relative;
+  display: block;
+  width: 2.25rem;
+  height: 2.25rem;
+  flex: none;
+  overflow: hidden;
+  border-radius: 50%;
+  background: #f6efe7;
+  box-shadow:
+    inset 0 1px 1px rgb(255 255 255 / 0.9),
+    inset 0 -6px 10px rgb(70 50 30 / 0.12),
+    0 6px 16px rgb(70 50 30 / 0.14);
+}
+
+.ideas-orb span {
+  position: absolute;
+  inset: -35%;
+  background: conic-gradient(#f3c7a0, #fff6ec, #c7ccd4, #e8d2c0, #f3c7a0);
+  filter: blur(5px);
+  will-change: transform;
+}
+
+/* Highlight on the glass */
+.ideas-orb::after {
+  position: absolute;
+  inset: 12% 22% 52% 18%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(255 255 255 / 0.9), transparent);
+  content: "";
+}
+
+.ideas-loading__eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--soft);
 }
 
 .ideas-loading__title {
@@ -1631,20 +1675,20 @@ a {
 
 .ideas-loading__steps {
   display: grid;
-  gap: 1.375rem;
+  gap: 1.25rem;
   margin-block-start: 1.75rem;
 }
 
 .ideas-loading__steps li {
   display: grid;
-  grid-template-columns: 1.625rem minmax(0, 1fr);
+  grid-template-columns: 1.5rem minmax(0, 1fr);
   align-items: start;
   gap: 0.875rem;
-  transition: opacity 240ms ease;
+  transition: opacity 320ms ease;
 }
 
 .ideas-loading__steps li[data-state="pending"] {
-  opacity: 0.5;
+  opacity: 0.4;
 }
 
 .ideas-loading__step {
@@ -1663,11 +1707,12 @@ a {
 }
 
 .ideas-loading__mark {
+  position: relative;
   display: grid;
-  width: 1.625rem;
-  height: 1.625rem;
+  width: 1.5rem;
+  height: 1.5rem;
   place-items: center;
-  border: 1.5px solid rgb(10 10 10 / 0.3);
+  border: 1.5px solid rgb(10 10 10 / 0.18);
   border-radius: 50%;
   color: transparent;
   transition:
@@ -1677,14 +1722,22 @@ a {
 }
 
 .ideas-loading__mark .idea-icon {
-  width: 0.875rem;
-  height: 0.875rem;
+  width: 0.8125rem;
+  height: 0.8125rem;
 }
 
+/* Working: a dot breathing inside the ring */
 [data-state="active"] .ideas-loading__mark {
-  border-color: rgb(10 10 10 / 0.14);
-  border-top-color: var(--ink);
-  animation: mark-spin 900ms linear infinite;
+  border-color: rgb(10 10 10 / 0.35);
+}
+
+[data-state="active"] .ideas-loading__mark::before {
+  position: absolute;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--ink);
+  content: "";
 }
 
 [data-state="done"] .ideas-loading__mark {
@@ -1703,6 +1756,114 @@ a {
 @keyframes mark-pop {
   from {
     transform: scale(0.8);
+  }
+}
+
+/* Progress along the card's foot: quick for the first steps, then a slow
+   creep while the ideas are written, and full once they arrive. */
+.ideas-loading__bar {
+  position: absolute;
+  inset: auto 1.75rem 1.25rem;
+  height: 2px;
+  overflow: hidden;
+  border-radius: 1px;
+  background: rgb(10 10 10 / 0.08);
+}
+
+.ideas-loading__bar span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--ink);
+  transform: scaleX(var(--progress, 0.3));
+  transform-origin: 0 50%;
+  transition: transform var(--bar-time, 2.4s) cubic-bezier(0.3, 0.6, 0.4, 1);
+}
+
+[data-step="0"] .ideas-loading__bar span {
+  --progress: 0.3;
+}
+
+[data-step="1"] .ideas-loading__bar span {
+  --progress: 0.62;
+  --bar-time: 3.6s;
+}
+
+[data-step="2"] .ideas-loading__bar span {
+  --progress: 0.92;
+  --bar-time: 20s;
+}
+
+[data-step="3"] .ideas-loading__bar span {
+  --progress: 1;
+  --bar-time: 300ms;
+}
+
+@starting-style {
+  .ideas-loading__bar span {
+    transform: scaleX(0);
+  }
+}
+
+.ideas-loading__slow {
+  min-height: 1.25rem;
+  margin-block-start: 1.5rem;
+  font-size: 0.8125rem;
+  color: var(--soft);
+  text-align: center;
+  opacity: 0;
+  transition: opacity 400ms ease;
+}
+
+.ideas-loading__slow[data-shown] {
+  opacity: 1;
+}
+
+.ideas-loading__slow + .visually-hidden + .ideas-restart {
+  margin-block-start: 0.5rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ideas-orb span {
+    animation: mark-spin 5s linear infinite;
+  }
+
+  [data-state="active"] .ideas-loading__mark::before {
+    animation: dot-breathe 1.2s ease-in-out infinite alternate;
+  }
+
+  /* The step being worked on reads with light passing through it */
+  [data-state="active"] .ideas-loading__step {
+    background: linear-gradient(
+        90deg,
+        var(--ink) 40%,
+        rgb(10 10 10 / 0.3) 50%,
+        var(--ink) 60%
+      )
+      100% 0 / 250% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: text-shimmer 1.8s linear infinite;
+  }
+}
+
+@keyframes dot-breathe {
+  from {
+    transform: scale(0.55);
+    opacity: 0.55;
+  }
+}
+
+@keyframes text-shimmer {
+  to {
+    background-position: 0 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ideas-loading__bar span {
+    transition: none;
   }
 }
 
