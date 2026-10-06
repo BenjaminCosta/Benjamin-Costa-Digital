@@ -7,17 +7,22 @@ export const site = Object.freeze({
   location: "Gold Coast, AU",
 });
 
+/** Hero photo: beside the copy on desktop, under it on smaller screens. */
+export const heroImage = Object.freeze({
+  portrait: "/images/bg/hero.png",
+  landscape: "/images/bg/hero-dp.png",
+});
+
 /** Subtle glass/acrylic backgrounds, one per section that carries one. */
 export const backdrops = Object.freeze({
-  // *-soft.jpg: hero.png / reviews.png pre-toned (desaturated, lifted) so the
-  // browser doesn't have to filter them on every paint.
-  hero: "/images/bg/hero-soft.jpg",
-  heroDesktop: "/images/bg/hero-dp-soft.jpg",
+  // *-soft.jpg: reviews.png pre-toned (desaturated, lifted) so the browser
+  // doesn't have to filter it on every paint.
   reviews: "/images/bg/reviews-soft.jpg",
   reviewsDesktop: "/images/bg/reviews-dp-soft.jpg",
   work: "/images/bg/glass-devices-sunlight.png",
   about: "/images/bg/glass-laptop-soft.png",
-  contact: "/images/bg/glass-interface-dark.png",
+  contact: "/images/bg/cta.png",
+  contactDesktop: "/images/bg/cta-dp.png",
 });
 
 export const plannedProjectCount = 8;

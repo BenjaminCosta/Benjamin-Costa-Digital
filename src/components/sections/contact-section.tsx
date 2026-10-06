@@ -13,8 +13,11 @@ export function ContactSection() {
     >
       <Backdrop
         src={backdrops.contact}
+        sizes="100vw"
+        desktopSrc={backdrops.contactDesktop}
+        desktopSizes="(min-width: 64rem) 78vw, 100vw"
+        desktopMedia="(min-width: 48rem)"
         className="contact__backdrop"
-        sizes="(min-width: 64rem) 65vw, 180vw"
       />
 
       <div className="page-container indexed contact__body" data-reveal>

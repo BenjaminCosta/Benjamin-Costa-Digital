@@ -562,20 +562,6 @@ a {
   isolation: isolate;
 }
 
-/* Hero: lifted and desaturated so it melts into the paper behind the copy */
-.hero__backdrop {
-  --backdrop-opacity: 0.4;
-  --backdrop-mask: linear-gradient(180deg, transparent 0%, #000 48%, #000 62%, transparent 94%);
-
-  inset-block-start: 19rem;
-}
-
-/* Toning is baked into the image files */
-.hero__backdrop img {
-  object-position: 50% 78%;
-  filter: none;
-}
-
 /* Reviews: near-white prism light, so only the colour streaks remain */
 .feedback__backdrop {
   --backdrop-opacity: 0.75;
@@ -604,16 +590,22 @@ a {
   object-position: 90% 100%;
 }
 
+/* CTA: the photo is already shot on near-#141414, so it sits in the section
+   at full strength. Phones and tablets get it under the copy (the section's
+   bottom padding is its room); its top and bottom edges fade out so it meets
+   the copy and the footer without a seam. */
 .contact__backdrop {
-  --backdrop-opacity: 0.45;
-  --backdrop-mask: radial-gradient(110% 85% at 82% 82%, #000 12%, transparent 70%);
+  --backdrop-opacity: 1;
+  --backdrop-mask: linear-gradient(180deg, transparent 0%, #000 22%, #000 84%, transparent 100%);
 
   inset-block-start: auto;
   height: 26rem;
+  mix-blend-mode: normal;
 }
 
 .contact__backdrop img {
-  object-position: 88% 50%;
+  object-position: 50% 58%;
+  filter: none;
 }
 
 .contact__body {
@@ -861,12 +853,26 @@ a {
 .hero {
   position: relative;
   overflow: clip;
-  padding-block-end: 15.5rem;
 }
 
 .hero__panel {
   position: relative;
   z-index: 1;
+}
+
+/* The photo itself, not a wash behind the copy: under it on phones and
+   tablets, beside it on desktop. */
+.hero__media {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  margin-block-start: 2.25rem;
+  overflow: hidden;
+  background: var(--line);
+}
+
+.hero__media img {
+  object-fit: cover;
+  object-position: 50% 64%;
 }
 
 /* ---------- 02 Business ideas ---------- */
@@ -2165,7 +2171,7 @@ a {
 /* ---------- 06 Final CTA ---------- */
 
 .contact {
-  padding-block-end: 13rem;
+  padding-block-end: 23rem;
   overflow: clip;
 }
 
@@ -2205,6 +2211,10 @@ a {
   padding-block: 0 1.5rem;
   background: var(--dark);
   color: var(--white);
+  /* The contact section above paints on its own (content-visibility) and can
+     land half a pixel short at some widths; cover that row so the paper
+     background never shows through as a light line. */
+  box-shadow: 0 -1px 0 var(--dark);
 }
 
 .site-footer__inner {
@@ -2233,12 +2243,13 @@ a {
     --gutter: 2.5rem;
   }
 
-  .hero {
-    padding-block-end: 22rem;
+  .hero__media {
+    aspect-ratio: 16 / 10;
+    margin-block-start: 3rem;
   }
 
-  .hero__backdrop {
-    inset-block-start: 24rem;
+  .hero__media img {
+    object-position: 100% 60%;
   }
 
   .work__media {
@@ -2251,6 +2262,19 @@ a {
 
   .reviews {
     max-width: 36rem;
+  }
+
+  /* Landscape crop, full width under the copy */
+  .contact {
+    padding-block-end: calc(56vw - 1rem);
+  }
+
+  .contact__backdrop {
+    height: 56vw;
+  }
+
+  .contact__backdrop img {
+    object-position: 50% 50%;
   }
 }
 
@@ -2521,19 +2545,13 @@ a {
     font-size: 1rem;
   }
 
-  .hero {
-    padding-block-end: 0;
+  .hero__media {
+    aspect-ratio: auto;
+    margin: 0;
   }
 
-  .hero__backdrop {
-    --backdrop-opacity: 0.55;
-    --backdrop-mask: radial-gradient(70% 110% at 88% 55%, #000 25%, transparent 78%);
-
-    inset-block-start: 0;
-  }
-
-  .hero__backdrop img {
-    object-position: 100% 50%;
+  .hero__media img {
+    object-position: 40% 62%;
   }
 
   .feedback__backdrop {
@@ -2906,13 +2924,18 @@ a {
     padding-block: 4.5rem 6rem;
   }
 
+  /* Beside the copy: anchored bottom-right and capped in size so the device
+     clears the headline on narrower desktops. */
   .contact__backdrop {
-    --backdrop-opacity: 0.5;
-    --backdrop-mask: radial-gradient(70% 100% at 86% 55%, #000 12%, transparent 72%);
+    --backdrop-mask:
+      linear-gradient(90deg, transparent, #000 30%),
+      linear-gradient(180deg, transparent, #000 25%, #000 86%, transparent);
 
-    inset-block-start: 0;
-    inset-inline-start: 34%;
-    height: auto;
+    inset: auto 0 0 auto;
+    height: min(100%, 40vw);
+    aspect-ratio: 1672 / 941;
+    -webkit-mask-composite: source-in;
+    mask-composite: intersect;
   }
 
   .contact__backdrop img {
@@ -2981,10 +3004,6 @@ a {
     column-gap: 3.5rem;
   }
 
-  .hero__backdrop {
-    --backdrop-mask: radial-gradient(52% 90% at 90% 55%, #000 18%, transparent 74%);
-  }
-
   .about__backdrop {
     --backdrop-opacity: 0.5;
 
@@ -3009,6 +3028,19 @@ a {
 
   .contact__note {
     max-width: 18rem;
+  }
+}
+
+/* Wide desktop: room for the CTA photo at the section's full height */
+@media (min-width: 90rem) {
+  .contact__backdrop {
+    --backdrop-mask:
+      linear-gradient(90deg, transparent, #000 34%),
+      linear-gradient(180deg, #000 86%, transparent);
+
+    inset: 0 0 0 22%;
+    height: auto;
+    aspect-ratio: auto;
   }
 }
 
