@@ -1,4 +1,4 @@
-import type { IdeaIconName, IdeaOption, Project, Testimonial } from "@/types/content";
+import type { GlassIconName, IdeaOption, Project, Testimonial } from "@/types/content";
 import type { BusinessAreaId, BusinessGoalId } from "@/types/business-ideas";
 import { businessGoals } from "@/data/business-goals";
 
@@ -103,14 +103,15 @@ export const pricing = Object.freeze({
    per business once the owner shares a link.
    -------------------------------------------------------------------------- */
 
-const goalIcons: Record<BusinessGoalId, IdeaIconName> = {
-  "more-bookings": "calendar", "less-manual-work": "gear", "better-website": "monitor",
-  "build-an-idea": "bulb", "not-sure": "compass",
+const goalIcons: Record<BusinessGoalId, GlassIconName> = {
+  "more-bookings": "calendar", "less-manual-work": "gear", "better-website": "window-clock",
+  "build-an-idea": "lightbulb", "not-sure": "compass",
 };
-const areaIcons: Record<BusinessAreaId, IdeaIconName> = {
-  "local-presence": "search", conversion: "chart", retention: "users",
-  automation: "flow", "internal-tools": "grid", ai: "sparkle", website: "monitor",
-  "custom-tools": "cube", apps: "phone", "e-commerce": "bag",
+// One icon per area, so no two cards in a view share one.
+export const areaIcons: Record<BusinessAreaId, GlassIconName> = {
+  "local-presence": "search", conversion: "funnel", retention: "sync",
+  automation: "flow", "internal-tools": "window-clock", ai: "sparkle", website: "monitor",
+  "custom-tools": "cubes", apps: "gear", "e-commerce": "bag",
 };
 
 // The design uses the same canonical goals/catalogue mapping as the API.
@@ -145,7 +146,13 @@ export const ideasCopy = Object.freeze({
   talkInstead: "Talk to Ben instead",
   microcopy: "Three starting points, followed by a personal conversation.",
   loadingTitle: "Finding ideas for your business…",
-  loadingSteps: ["Reading the available context and preparing three ideas"],
+  // One request does all three; the steps pace what it is doing.
+  loadingSteps: {
+    website: { title: "Reading your website", detail: "Your public pages and what they say." },
+    description: { title: "Reading your description", detail: "What you told us about your business." },
+    understand: { title: "Understanding your business", detail: "What you do, your customers and opportunities." },
+    ideas: { title: "Finding the best ideas", detail: "Putting everything together…" },
+  },
   resultsTitle: "Here’s where I’d start.",
   resultsLede: (business: string) => `Three ideas for ${business}.`,
   resultsSource: "Based on your website and public information",
@@ -154,8 +161,10 @@ export const ideasCopy = Object.freeze({
   closeText:
     "The ideas above were generated automatically. I’ll personally take a look and tell you what I’d actually do.",
   closeCta: "Talk to Ben",
+  closePoints: ["Custom proposal for your business", "Clear next steps and pricing", "No commitment"],
   closeNote: "WhatsApp opens with your business context, goal and ideas. You decide whether to send the message.",
-  restart: "Start again with another option",
+  tryAnother: "Or try another option",
+  restart: "Start again",
   basis: {
     public: "From public info",
     owner: "From your description",

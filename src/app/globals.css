@@ -879,14 +879,16 @@ a {
 
 /*
  * One block that changes state in place. Structure stays editorial; the
- * tool's pieces are frosted cards.
+ * tool's pieces are frosted cards carrying 3D glass icons, and the results
+ * show the real platforms each idea uses.
  */
 .ideas {
-  --radius-card: 14px;
-  --card-bg: linear-gradient(150deg, rgb(255 255 255 / 0.66), rgb(255 255 255 / 0.3));
+  --radius-card: 16px;
+  --card-bg: linear-gradient(150deg, rgb(255 255 255 / 0.72), rgb(255 255 255 / 0.34));
   --card-border: rgb(255 255 255 / 0.92);
-  --card-shadow: 0 1px 2px rgb(10 10 10 / 0.04), 0 12px 32px rgb(10 10 10 / 0.05);
+  --card-shadow: 0 1px 2px rgb(10 10 10 / 0.04), 0 14px 34px rgb(10 10 10 / 0.06);
   --soft: color-mix(in srgb, var(--ink) 64%, var(--paper));
+  --faint: color-mix(in srgb, var(--ink) 50%, var(--paper));
   --t-press: 180ms;
   --t-swap: 360ms;
   --t-expand: 300ms;
@@ -911,8 +913,7 @@ a {
   padding-block-start: 1.5rem;
 }
 
-.ideas__intro::before,
-.ideas-form__title::before {
+.ideas__intro::before {
   display: block;
   width: 1rem;
   height: 1px;
@@ -956,7 +957,7 @@ a {
 }
 
 .ideas__tool:not([data-view="select"]) .ideas-stage {
-  margin-block-start: 1.25rem;
+  margin-block-start: 1rem;
 }
 
 .ideas-stage__inner {
@@ -997,17 +998,17 @@ a {
 }
 
 .idea-opp {
-  animation-delay: calc(var(--i) * 60ms + 60ms);
+  animation-delay: calc(var(--i) * 70ms + 80ms);
 }
 
 .ideas-form {
-  animation-delay: calc(var(--i) * 60ms + 120ms);
+  animation-delay: calc(var(--i) * 70ms + 140ms);
 }
 
 .idea-result,
 .ideas-close {
   animation: ideas-in-soft var(--t-results) var(--ease-editorial) backwards;
-  animation-delay: calc(var(--i) * 80ms + 120ms);
+  animation-delay: calc(var(--i) * 90ms + 120ms);
 }
 
 /* ---- Frosted cards ---- */
@@ -1016,6 +1017,7 @@ a {
 .idea-opp,
 .idea-result,
 .ideas-context,
+.ideas-again,
 .ideas-results__source {
   border: 1px solid var(--card-border);
   background-color: transparent;
@@ -1054,11 +1056,19 @@ a {
   height: 1.375rem;
 }
 
+/* The PNG carries its own glass tile, padding and shadow */
+.glass-icon {
+  display: block;
+  flex: none;
+  pointer-events: none;
+  user-select: none;
+}
+
 /* ---- 1. Choose ---- */
 
 .idea-options {
   display: grid;
-  gap: 0.625rem;
+  gap: 0.75rem;
 }
 
 .idea-options li {
@@ -1076,71 +1086,61 @@ a {
 .idea-option {
   display: grid;
   width: 100%;
-  min-height: 3.75rem;
-  grid-template-columns: 1.375rem minmax(0, 1fr) 1rem;
+  min-height: 5rem;
+  grid-template-columns: 3.75rem minmax(0, 1fr) 1rem;
   align-items: center;
-  gap: 1rem;
-  padding: 0.875rem 1.125rem;
+  gap: 0.875rem;
+  padding: 0.625rem 1.25rem 0.625rem 0.625rem;
   border-radius: var(--radius-card);
   color: var(--ink);
-  font-size: 0.9375rem;
+  font-size: 1rem;
   line-height: 1.3;
   text-align: start;
   cursor: pointer;
   transition:
     background-color var(--t-press) var(--ease-editorial),
     border-color var(--t-press) var(--ease-editorial),
+    color var(--t-press) var(--ease-editorial),
+    box-shadow var(--t-press) var(--ease-editorial),
     transform var(--t-press) var(--ease-editorial);
 }
 
-.idea-option .arrow-icon,
-.idea-option__check {
-  grid-row: 1;
-  grid-column: 3;
-  justify-self: end;
-  transition:
-    opacity var(--t-press) ease,
-    transform var(--t-press) var(--ease-editorial);
+.idea-option .glass-icon {
+  transition: transform var(--hover-duration) var(--ease-editorial);
 }
 
 .idea-option .arrow-icon {
-  width: 0.875rem;
-  height: 0.875rem;
-}
-
-.idea-option__check.idea-icon {
-  width: 1.125rem;
-  height: 1.125rem;
-  opacity: 0;
-  transform: scale(0.6);
+  width: 1rem;
+  height: 1rem;
+  justify-self: end;
+  transition: transform var(--hover-duration) var(--ease-editorial);
 }
 
 .idea-option:active {
   transform: scale(0.99);
 }
 
+/* Chosen: the card inverts, as in the buttons */
 [data-chosen] .idea-option {
-  border-color: var(--ink);
-  background: var(--ink);
-  color: var(--paper);
+  border-color: var(--dark);
+  background: var(--dark);
+  box-shadow: 0 18px 40px rgb(10 10 10 / 0.22);
+  color: var(--white);
 }
 
 [data-chosen] .idea-option::after {
   display: none;
 }
 
-[data-chosen] .idea-option .arrow-icon {
-  opacity: 0;
-}
-
-[data-chosen] .idea-option__check.idea-icon {
-  opacity: 1;
-  transform: scale(1);
-}
-
 @media (hover: hover) {
   .idea-option:hover {
     background-color: rgb(255 255 255 / 0.55);
+    box-shadow: 0 1px 2px rgb(10 10 10 / 0.04), 0 18px 40px rgb(10 10 10 / 0.08);
+    transform: translateY(-2px);
+  }
+
+  .idea-option:hover .glass-icon {
+    transform: scale(1.05) rotate(-2deg);
   }
 
   .idea-option:hover .arrow-icon {
@@ -1148,80 +1148,64 @@ a {
   }
 }
 
-/* ---- Compact bar: the chosen option, kept as context ---- */
+/* ---- 2. Opportunities ---- */
 
-.ideas-bar {
-  display: grid;
-  min-height: 3.25rem;
-  grid-template-columns: 1.25rem minmax(0, 1fr) 2.25rem;
+.ideas-top {
+  display: flex;
   align-items: center;
-  gap: 0.875rem;
-  padding: 0.375rem 0.375rem 0.375rem 1rem;
-  border: 1px solid rgb(255 255 255 / 0.95);
-  border-radius: 12px;
-  background-color: rgb(255 255 255 / 0.6);
-  box-shadow: 0 1px 2px rgb(10 10 10 / 0.04);
+}
+
+.ideas-back {
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  place-items: center;
+  margin-inline-start: -0.5rem;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
   color: var(--ink);
-  font-size: 0.9375rem;
-  transition: opacity var(--t-press) ease;
+  cursor: pointer;
+  transition:
+    background-color var(--hover-duration) var(--ease-editorial),
+    transform var(--hover-duration) var(--ease-editorial);
 }
 
-.ideas-bar[data-leaving] {
-  opacity: 0;
-}
-
-.ideas-bar .idea-icon {
+.ideas-back .idea-icon {
   width: 1.25rem;
   height: 1.25rem;
 }
 
-.ideas-bar__label {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.ideas-bar__close {
-  display: grid;
-  width: 2.25rem;
-  height: 2.25rem;
-  place-items: center;
-  border: 0;
-  border-radius: 50%;
-  background: transparent;
-  color: var(--soft);
-  cursor: pointer;
-  transition:
-    background-color var(--t-press) ease,
-    color var(--t-press) ease;
-}
-
-.ideas-bar__close .idea-icon {
-  width: 1.125rem;
-  height: 1.125rem;
-}
-
 @media (hover: hover) {
-  .ideas-bar__close:hover {
-    background: rgb(10 10 10 / 0.06);
-    color: var(--ink);
+  .ideas-back:hover {
+    background: rgb(255 255 255 / 0.7);
+    transform: translateX(-2px);
   }
 }
 
-/* ---- Step headings ---- */
+/* The chosen option's icon, flown up from its row */
+.ideas-answers__mark {
+  display: block;
+  width: 6rem;
+  height: 6rem;
+  margin-block-start: 0.75rem;
+  margin-inline-start: -0.5rem;
+  transform-origin: 0 0;
+}
 
 .ideas-step__title {
-  font-size: min(8.2vw, 2.75rem);
+  font-size: min(9vw, 2.75rem);
   font-weight: 450;
   line-height: 1.06;
   letter-spacing: -0.025em;
 }
 
-.ideas-bar + .ideas-stage__body .ideas-step__title {
-  margin-block-start: 1.75rem;
+.ideas-answers__mark + .ideas-step__title {
+  margin-block-start: 0.5rem;
 }
 
-.ideas-step__title:focus {
+.ideas-step__title:focus,
+.ideas-loading__title:focus {
   outline: none;
 }
 
@@ -1232,29 +1216,35 @@ a {
   color: var(--soft);
 }
 
-/* ---- 2. Opportunities ---- */
-
 .idea-opps {
   display: grid;
-  gap: 0.625rem;
-  margin-block-start: 1.5rem;
+  gap: 0.75rem;
+  margin-block-start: 1.75rem;
 }
 
 .idea-opp {
   display: grid;
-  grid-template-columns: 1.5rem minmax(0, 1fr);
-  gap: 1rem;
-  padding: 1.125rem 1.125rem 1.25rem;
+  grid-template-columns: 1.125rem 3.5rem minmax(0, 1fr);
+  align-items: start;
+  gap: 0.625rem;
+  padding: 1.125rem 1.125rem 1.25rem 1rem;
   border-radius: var(--radius-card);
 }
 
-.idea-opp .idea-icon {
-  width: 1.5rem;
-  height: 1.5rem;
+.idea-opp__num {
+  padding-block-start: 0.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--faint);
+}
+
+.idea-opp .glass-icon {
+  margin: -0.375rem -0.25rem;
 }
 
 .idea-opp h4 {
-  font-size: 1rem;
+  padding-block-start: 0.125rem;
+  font-size: 1.0625rem;
   font-weight: 500;
   line-height: 1.3;
 }
@@ -1269,45 +1259,39 @@ a {
 /* ---- Link form ---- */
 
 .ideas-form {
-  margin-block-start: 2.25rem;
+  margin-block-start: 2.5rem;
 }
 
 .ideas-form__title {
-  margin-block-end: 1.25rem;
-  font-size: 1.375rem;
+  margin-block-end: 1.125rem;
+  font-size: min(6vw, 1.5rem);
   font-weight: 450;
   line-height: 1.2;
   letter-spacing: -0.015em;
 }
 
-.ideas-form__label {
-  display: block;
-  margin-block-end: 0.5rem;
-  font-size: 0.875rem;
-  color: var(--soft);
-}
-
+/* Link field with its submit attached */
 .ideas-form__field {
   display: flex;
-  min-height: 3.25rem;
+  min-height: 3.5rem;
   align-items: center;
   gap: 0.75rem;
-  padding-inline: 1rem;
-  border: 1px solid rgb(10 10 10 / 0.16);
-  border-radius: var(--radius-field);
-  background: rgb(255 255 255 / 0.78);
-  box-shadow: 0 1px 2px rgb(10 10 10 / 0.04);
+  padding: 0.3125rem 0.3125rem 0.3125rem 1rem;
+  border: 1px solid rgb(10 10 10 / 0.12);
+  border-radius: 12px;
+  background: rgb(255 255 255 / 0.86);
+  box-shadow: 0 1px 2px rgb(10 10 10 / 0.04), 0 10px 26px rgb(10 10 10 / 0.05);
   transition:
     border-color var(--hover-duration) var(--ease-editorial),
     box-shadow var(--hover-duration) var(--ease-editorial);
 }
 
 .ideas-form__field:focus-within {
-  border-color: rgb(10 10 10 / 0.6);
+  border-color: rgb(10 10 10 / 0.55);
   box-shadow: 0 0 0 3px rgb(10 10 10 / 0.08);
 }
 
-.ideas-form__field .idea-icon {
+.ideas-form__field > .idea-icon {
   width: 1.125rem;
   height: 1.125rem;
   color: var(--soft);
@@ -1316,7 +1300,7 @@ a {
 .ideas-form__field input {
   min-width: 0;
   flex: 1;
-  height: 3.125rem;
+  height: 2.75rem;
   border: 0;
   background: transparent;
   font-size: 1rem;
@@ -1328,11 +1312,82 @@ a {
   color: color-mix(in srgb, var(--ink) 42%, var(--paper));
 }
 
+.ideas-form__go {
+  display: grid;
+  width: 2.875rem;
+  height: 2.875rem;
+  flex: none;
+  place-items: center;
+  border: 0;
+  border-radius: var(--radius-control);
+  background: var(--ink);
+  color: var(--white);
+  cursor: pointer;
+  transition:
+    background-color var(--hover-duration) var(--ease-editorial),
+    transform var(--hover-duration) var(--ease-editorial);
+}
+
+.ideas-form__go .arrow-icon {
+  width: 1rem;
+  height: 1rem;
+  transition: transform var(--hover-duration) var(--ease-editorial);
+}
+
+.ideas-form__go:active {
+  transform: scale(0.96);
+}
+
+.ideas-form__go:disabled {
+  background: color-mix(in srgb, var(--ink) 55%, var(--paper));
+  cursor: not-allowed;
+}
+
+.ideas-form__field[data-busy] .ideas-form__go:disabled {
+  background: var(--ink);
+  cursor: progress;
+}
+
+.ideas-form__go:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+@media (hover: hover) {
+  .ideas-form__go:not(:disabled):hover {
+    background: #222;
+  }
+
+  .ideas-form__go:not(:disabled):hover .arrow-icon {
+    transform: translateX(2px);
+  }
+}
+
+.ideas-form__spinner {
+  width: 1rem;
+  height: 1rem;
+  border: 1.5px solid rgb(250 249 245 / 0.3);
+  border-top-color: var(--white);
+  border-radius: 50%;
+  animation: mark-spin 800ms linear infinite;
+}
+
 .ideas-form__note {
-  margin-block-start: 0.5rem;
+  margin-block-start: 0.625rem;
   font-size: 0.75rem;
   line-height: 1.45;
-  color: color-mix(in srgb, var(--ink) 55%, var(--paper));
+  color: var(--faint);
+}
+
+.ideas-form__error {
+  margin-block-start: 0.75rem;
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  color: var(--ink);
+}
+
+.ideas-form__error:focus {
+  outline: none;
 }
 
 /* Accordion: rows animate from 0fr to 1fr, content fades */
@@ -1359,12 +1414,13 @@ a {
 
 .ideas-context {
   margin-block-start: 1rem;
-  border-radius: var(--radius-field);
+  border-radius: 12px;
 }
 
 .ideas-context__toggle {
   display: flex;
   width: 100%;
+  min-height: 3.25rem;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
@@ -1373,6 +1429,7 @@ a {
   border-radius: inherit;
   background: none;
   font-size: 0.875rem;
+  font-weight: 500;
   text-align: start;
   cursor: pointer;
 }
@@ -1403,7 +1460,7 @@ a {
   margin-block-start: 0.5rem;
   padding: 0.75rem;
   border: 1px solid rgb(10 10 10 / 0.14);
-  border-radius: var(--radius-control);
+  border-radius: var(--radius-field);
   background: rgb(255 255 255 / 0.82);
   font-size: 0.9375rem;
   line-height: 1.45;
@@ -1415,14 +1472,8 @@ a {
   outline-offset: 1px;
 }
 
-.ideas-form__submit.button {
-  width: 100%;
-  min-height: 3.25rem;
-  margin-block-start: 1.25rem;
-}
-
-.ideas-form__submit.button:disabled {
-  cursor: progress;
+.ideas-form__privacy {
+  margin-block-start: 1rem;
 }
 
 .ideas-form__aside {
@@ -1438,98 +1489,105 @@ a {
   color: var(--soft);
 }
 
-/* ---- Glass object ---- */
+/* ---- 3. Finding ideas: a stack of glass with the progress on top ---- */
 
-.glass-stack {
-  position: relative;
-  width: 11rem;
-  aspect-ratio: 5 / 6;
-}
-
-.glass-stack span {
-  position: absolute;
-  inset: 0;
-  border: 1px solid rgb(255 255 255 / 0.9);
-  border-radius: var(--radius-glass);
-  background: linear-gradient(145deg, rgb(255 255 255 / 0.62), rgb(255 255 255 / 0.12) 72%);
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.95),
-    0 24px 50px rgb(10 10 10 / 0.07);
-}
-
-.glass-stack span:nth-child(1) {
-  transform: translate(-16%, 10%) rotate(-11deg);
-}
-
-.glass-stack span:nth-child(2) {
-  transform: translate(-2%, 0) rotate(-7deg);
-}
-
-.glass-stack span:nth-child(3) {
-  transform: translate(12%, -10%) rotate(-3deg);
-}
-
-/* ---- 3. Finding ideas ---- */
-
-.ideas-loading__visual {
+.ideas-loading {
   display: grid;
   justify-items: center;
-  margin-block-start: 2.25rem;
+  padding-block-start: 2.5rem;
 }
 
-.ideas-loading .glass-stack span {
+.ideas-loading__glass {
+  position: relative;
+  width: min(100%, 24rem);
+}
+
+.ideas-loading__layer,
+.ideas-loading__card {
+  border: 1px solid rgb(255 255 255 / 0.9);
+  border-radius: var(--radius-glass);
+  background: linear-gradient(150deg, rgb(255 255 255 / 0.7), rgb(255 255 255 / 0.22) 75%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.95),
+    0 30px 60px rgb(10 10 10 / 0.08);
+}
+
+.ideas-loading__layer {
+  position: absolute;
+  inset: 0;
   animation: glass-float 3.2s ease-in-out infinite alternate;
 }
 
-.ideas-loading .glass-stack span:nth-child(2) {
-  animation-delay: -1s;
+.ideas-loading__layer:nth-child(1) {
+  transform: translateY(-2.25rem) scale(0.86) rotate(-2deg);
+  opacity: 0.55;
 }
 
-.ideas-loading .glass-stack span:nth-child(3) {
-  animation-delay: -2s;
+.ideas-loading__layer:nth-child(2) {
+  transform: translateY(-1.125rem) scale(0.93) rotate(-1deg);
+  opacity: 0.8;
+  animation-delay: -1.2s;
 }
 
 @keyframes glass-float {
   to {
-    translate: 0 -4px;
+    translate: 0 -5px;
   }
 }
 
-.ideas-loading__steps {
+.ideas-loading__card {
   position: relative;
+  padding: 2rem 1.75rem 2.25rem;
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+
+.ideas-loading__title {
+  font-size: min(6.6vw, 1.75rem);
+  font-weight: 450;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.ideas-loading__steps {
   display: grid;
-  gap: 0.875rem;
-  margin-block-start: -5rem;
-  padding: 1.25rem 1.5rem;
-  border: 1px solid var(--card-border);
-  border-radius: var(--radius-card);
-  background: rgb(255 255 255 / 0.55);
-  box-shadow: var(--card-shadow);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  font-size: 0.9375rem;
+  gap: 1.375rem;
+  margin-block-start: 1.75rem;
 }
 
 .ideas-loading__steps li {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  color: var(--ink);
-  opacity: 0.45;
+  display: grid;
+  grid-template-columns: 1.625rem minmax(0, 1fr);
+  align-items: start;
+  gap: 0.875rem;
   transition: opacity 240ms ease;
 }
 
-.ideas-loading__steps li:not([data-state="pending"]) {
-  opacity: 1;
+.ideas-loading__steps li[data-state="pending"] {
+  opacity: 0.5;
+}
+
+.ideas-loading__step {
+  display: block;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.ideas-loading__detail {
+  display: block;
+  margin-block-start: 0.25rem;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--soft);
 }
 
 .ideas-loading__mark {
   display: grid;
-  width: 1.5rem;
-  height: 1.5rem;
-  flex: none;
+  width: 1.625rem;
+  height: 1.625rem;
   place-items: center;
-  border: 1px solid rgb(10 10 10 / 0.25);
+  border: 1.5px solid rgb(10 10 10 / 0.3);
   border-radius: 50%;
   color: transparent;
   transition:
@@ -1552,7 +1610,7 @@ a {
 [data-state="done"] .ideas-loading__mark {
   border-color: var(--ink);
   background: var(--ink);
-  color: var(--paper);
+  color: var(--white);
   animation: mark-pop 260ms var(--ease-editorial);
 }
 
@@ -1584,6 +1642,7 @@ a {
   padding: 0.5rem 0.75rem;
   border-radius: var(--radius-control);
   font-size: 0.75rem;
+  line-height: 1.4;
   color: var(--soft);
 }
 
@@ -1592,63 +1651,86 @@ a {
   height: 0.875rem;
 }
 
+.ideas-results__pages {
+  margin-block-start: 0.75rem;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--faint);
+}
+
+.ideas-results__pages a {
+  overflow-wrap: anywhere;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 .idea-results {
   display: grid;
-  gap: 0.625rem;
-  margin-block-start: 1.5rem;
+  gap: 0.875rem;
+  margin-block-start: 1.75rem;
 }
 
 .idea-result {
+  --idea-indent: 2.875rem;
+
+  padding: 1.25rem 1.125rem 1.125rem 1rem;
   border-radius: var(--radius-card);
-  transition: transform 200ms var(--ease-editorial);
 }
 
-.idea-result__heading button {
+.idea-result__head {
   display: grid;
-  width: 100%;
-  grid-template-columns: 2.25rem minmax(0, 1fr) 1rem;
+  grid-template-columns: 2rem 3.25rem minmax(0, 1fr);
   align-items: center;
-  gap: 0.75rem;
-  padding: 1.125rem 1.25rem;
-  border: 0;
-  border-radius: inherit;
-  background: none;
-  color: var(--ink);
-  text-align: start;
-  cursor: pointer;
-  outline-offset: -3px;
+  gap: 0.875rem;
 }
 
 .idea-result__num {
-  font-size: 1.375rem;
+  align-self: start;
+  padding-block-start: 0.5rem;
+  font-size: 1.25rem;
   line-height: 1;
-  color: color-mix(in srgb, var(--ink) 55%, var(--paper));
+  color: var(--ink);
+}
+
+.idea-result__mark {
+  display: grid;
+  width: 3.25rem;
+  height: 3.25rem;
+  place-items: center;
+}
+
+/* The 3D icon's own padding brings its tile to the same size as a logo tile */
+.idea-result__mark .glass-icon {
+  margin: -0.375rem;
+}
+
+/* A platform's mark sits on a small white tile, like the 3D icons do */
+.idea-result__mark--brand {
+  border: 1px solid rgb(255 255 255 / 0.95);
+  border-radius: 14px;
+  background: linear-gradient(150deg, #fff, rgb(255 255 255 / 0.75));
+  box-shadow: 0 1px 2px rgb(10 10 10 / 0.05), 0 8px 18px rgb(10 10 10 / 0.08);
+}
+
+.idea-result__mark--brand .brand-logo {
+  width: 1.625rem;
+  height: 1.625rem;
 }
 
 .idea-result__title {
-  font-size: 1rem;
+  font-size: 1.0625rem;
   font-weight: 500;
   line-height: 1.3;
 }
 
-.idea-result__heading .idea-icon {
-  width: 1rem;
-  height: 1rem;
-  color: var(--soft);
-  transition: transform var(--t-expand) var(--ease-editorial);
-}
-
-.idea-result[data-open] .idea-result__heading .idea-icon {
-  transform: rotate(45deg);
-}
-
 .idea-result__body {
-  padding: 0 1.25rem 1.25rem calc(1.25rem + 3rem);
+  padding-inline-start: var(--idea-indent);
+  margin-block-start: 0.875rem;
 }
 
 .idea-result__summary {
   font-size: 0.875rem;
-  line-height: 1.5;
+  line-height: 1.55;
   color: var(--soft);
 }
 
@@ -1658,43 +1740,55 @@ a {
   font-size: 0.625rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--ink) 52%, var(--paper));
+  color: var(--faint);
 }
 
-.idea-result__build {
-  display: grid;
-  grid-template-columns: 1.25rem minmax(0, 1fr);
-  align-items: center;
-  gap: 0.75rem;
-  margin-block-start: 1rem;
-  padding: 0.75rem 0.875rem;
-  border: 1px solid var(--card-border);
-  border-radius: 10px;
-  background: rgb(255 255 255 / 0.72);
-}
-
-.idea-result__build .idea-icon {
-  width: 1.25rem;
-  height: 1.25rem;
-  color: var(--soft);
-}
-
-.idea-result__build-label {
-  font-size: 0.8125rem;
-  font-weight: 500;
-}
-
-.idea-result__build-text {
-  margin-block-start: 0.125rem;
+.idea-result__evidence {
+  margin-block-start: 0.375rem;
   font-size: 0.8125rem;
   line-height: 1.45;
   color: var(--soft);
 }
 
-@media (hover: hover) {
-  .idea-result:not([data-open]):hover {
-    transform: translateY(-2px);
-  }
+.idea-result__build {
+  margin-block-start: 1rem;
+  padding: 0.9375rem 1rem 1rem;
+  border: 1px solid rgb(255 255 255 / 0.95);
+  border-radius: 12px;
+  background: rgb(255 255 255 / 0.7);
+}
+
+.idea-result__build-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.idea-result__build ul {
+  display: grid;
+  gap: 0.5rem;
+  margin-block-start: 0.625rem;
+}
+
+.idea-result__build li {
+  display: grid;
+  grid-template-columns: 1rem minmax(0, 1fr);
+  align-items: start;
+  gap: 0.625rem;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+}
+
+.idea-result__build .brand-logo,
+.idea-result__build .arrow-icon {
+  width: 1rem;
+  height: 1rem;
+  margin-block-start: 0.0625rem;
+}
+
+.idea-result__build .arrow-icon {
+  width: 0.75rem;
+  height: 0.75rem;
+  margin: 0.25rem 0.125rem 0;
 }
 
 /* ---- 5. Talk to Ben ---- */
@@ -1704,7 +1798,7 @@ a {
 }
 
 .ideas-close__title {
-  font-size: min(7.4vw, 2.25rem);
+  font-size: min(8.4vw, 2.5rem);
   font-weight: 450;
   line-height: 1.08;
   letter-spacing: -0.025em;
@@ -1719,26 +1813,110 @@ a {
 
 .ideas-close__cta.button {
   width: 100%;
-  min-height: 3.5rem;
+  min-height: 4rem;
   margin-block-start: 1.5rem;
+  border-radius: 12px;
 }
 
 .ideas-close__cta > span {
   display: inline-flex;
   align-items: center;
-  gap: 0.875rem;
+  gap: 1rem;
 }
 
-.ideas-close__cta .idea-icon {
-  width: 1.375rem;
-  height: 1.375rem;
+.ideas-close__cta .brand-logo {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.ideas-close__points {
+  display: grid;
+  gap: 0.75rem;
+  margin-block-start: 1.5rem;
+}
+
+.ideas-close__points li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9375rem;
+}
+
+.ideas-close__check {
+  display: grid;
+  width: 1.25rem;
+  height: 1.25rem;
+  flex: none;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--white);
+}
+
+.ideas-close__check .idea-icon {
+  width: 0.75rem;
+  height: 0.75rem;
+  stroke-width: 2;
 }
 
 .ideas-close__note {
-  margin-block-start: 1rem;
-  font-size: 0.875rem;
+  margin-block-start: 1.25rem;
+  font-size: 0.8125rem;
   line-height: 1.45;
+  color: var(--faint);
+}
+
+.ideas-close__alt {
+  margin-block-start: 2.5rem;
+  font-size: 0.9375rem;
   color: var(--soft);
+}
+
+.ideas-again {
+  display: grid;
+  width: 100%;
+  min-height: 3.75rem;
+  grid-template-columns: 1.25rem minmax(0, 1fr) 1rem;
+  align-items: center;
+  gap: 0.875rem;
+  margin-block-start: 0.75rem;
+  padding: 0.875rem 1.25rem;
+  border-radius: 12px;
+  color: var(--ink);
+  font-size: 1rem;
+  text-align: start;
+  cursor: pointer;
+  transition:
+    box-shadow var(--hover-duration) var(--ease-editorial),
+    transform var(--hover-duration) var(--ease-editorial);
+}
+
+.ideas-again .idea-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  transition: transform 420ms var(--ease-editorial);
+}
+
+.ideas-again .arrow-icon {
+  width: 1rem;
+  height: 1rem;
+  justify-self: end;
+  transition: transform var(--hover-duration) var(--ease-editorial);
+}
+
+@media (hover: hover) {
+  .ideas-again:hover {
+    box-shadow: 0 1px 2px rgb(10 10 10 / 0.04), 0 18px 40px rgb(10 10 10 / 0.08);
+    transform: translateY(-2px);
+  }
+
+  .ideas-again:hover .idea-icon {
+    transform: rotate(-180deg);
+  }
+
+  .ideas-again:hover .arrow-icon {
+    transform: translateX(3px);
+  }
 }
 
 .ideas-restart {
@@ -1753,11 +1931,6 @@ a {
   font-size: 0.875rem;
   cursor: pointer;
   transition: color var(--t-press) ease;
-}
-
-.ideas-restart .idea-icon {
-  width: 1rem;
-  height: 1rem;
 }
 
 @media (hover: hover) {
@@ -2593,21 +2766,15 @@ a {
   }
 
   .ideas-step__title {
+    font-size: min(3.2vw, 3rem);
+  }
+
+  .ideas-close__title {
     font-size: min(2.8vw, 2.75rem);
   }
 
-  .ideas-form__submit.button,
-  .ideas-close__cta.button {
-    width: auto;
-    min-width: 20rem;
-  }
-
-  .ideas-loading__visual {
-    margin-block-start: 3rem;
-  }
-
-  .ideas-loading .glass-stack {
-    width: 14rem;
+  .ideas-loading {
+    padding-block: 3.5rem 1rem;
   }
 
   /* ---------- 03 Selected work ---------- */
