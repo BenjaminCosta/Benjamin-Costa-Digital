@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { brandIn, buildSteps } from "../src/components/business-ideas/presentation";
+import { areaTools, brandIn, buildSteps, ideaBrand } from "../src/components/business-ideas/presentation";
 
 test("brandIn names the first platform a text mentions", () => {
   assert.equal(brandIn("Turn Google visitors into bookings"), "google");
@@ -32,4 +32,12 @@ test("buildSteps splits deliverables without cutting sentences", () => {
     buildSteps("A simple dashboard, connected to your booking system so the team sees every job in one place"),
     ["A simple dashboard, connected to your booking system so the team sees every job in one place"],
   );
+});
+
+test("every idea gets an official mark: the platform it names, else its area's tool", () => {
+  assert.equal(ideaBrand("Turn Google visitors into bookings", "conversion"), "google");
+  assert.equal(ideaBrand("Bring customers back automatically", "retention"), "whatsapp");
+  assert.equal(ideaBrand("Track where bookings come from with Google Analytics", "conversion"), "google-analytics");
+  // One distinct tool per area, so three ideas never share a mark.
+  assert.equal(new Set(Object.values(areaTools)).size, Object.keys(areaTools).length);
 });

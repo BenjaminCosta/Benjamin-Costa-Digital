@@ -59,7 +59,14 @@ export type Brand =
   | "shopify"
   | "stripe"
   | "xero"
-  | "calendly";
+  | "calendly"
+  | "google-analytics"
+  | "zapier"
+  | "airtable"
+  | "supabase"
+  | "firebase"
+  | "figma"
+  | "claude";
 
 export type IdeaAnswer = Readonly<{
   icon: GlassIconName;

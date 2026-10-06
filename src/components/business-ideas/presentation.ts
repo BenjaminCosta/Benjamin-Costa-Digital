@@ -1,8 +1,10 @@
+import type { BusinessAreaId } from "@/types/business-ideas";
 import type { Brand } from "@/types/content";
 
 // Most specific first: "Google Calendar" must not read as plain "Google".
 const brandPatterns: ReadonlyArray<readonly [Brand, RegExp]> = [
   ["google-calendar", /\bgoogle calendar\b/i],
+  ["google-analytics", /\bgoogle analytics\b/i],
   ["gmail", /\bgmail\b/i],
   ["google", /\bgoogle\b/i],
   ["whatsapp", /\bwhats\s?app\b/i],
@@ -15,6 +17,12 @@ const brandPatterns: ReadonlyArray<readonly [Brand, RegExp]> = [
   ["stripe", /\bstripe\b/i],
   ["xero", /\bxero\b/i],
   ["calendly", /\bcalendly\b/i],
+  ["zapier", /\bzapier\b/i],
+  ["airtable", /\bairtable\b/i],
+  ["supabase", /\bsupabase\b/i],
+  ["firebase", /\bfirebase\b/i],
+  ["figma", /\bfigma\b/i],
+  ["claude", /\bclaude\b/i],
 ];
 
 /** The platform a piece of text mentions first, if it mentions one. */
@@ -30,6 +38,26 @@ export function brandIn(text: string): Brand | null {
   }
   return found;
 }
+
+/**
+ * A tool each kind of solution is typically built with, so every idea can
+ * carry an official mark even when it names no platform.
+ */
+export const areaTools: Readonly<Record<BusinessAreaId, Brand>> = {
+  "local-presence": "google",
+  conversion: "google-analytics",
+  retention: "whatsapp",
+  automation: "zapier",
+  "internal-tools": "airtable",
+  ai: "claude",
+  website: "figma",
+  "custom-tools": "supabase",
+  apps: "firebase",
+  "e-commerce": "shopify",
+};
+
+/** The platform an idea names in its title, else its area's usual tool. */
+export const ideaBrand = (title: string, area: BusinessAreaId): Brand => brandIn(title) ?? areaTools[area];
 
 const capitalise = (value: string) => value.charAt(0).toUpperCase() + value.slice(1);
 const wordCount = (value: string) => value.split(/\s+/).length;

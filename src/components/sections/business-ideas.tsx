@@ -16,8 +16,8 @@ import { BrandLogo } from "@/components/ui/brand-logo";
 import { GlassIcon, prefetchGlassIcons } from "@/components/ui/glass-icon";
 import { IdeaIcon } from "@/components/ui/idea-icon";
 import { SectionHead } from "@/components/ui/section-head";
-import { areaIcons, ideaOptions, ideasCopy } from "@/data/site-content";
-import { brandIn, buildSteps } from "@/components/business-ideas/presentation";
+import { ideaOptions, ideasCopy } from "@/data/site-content";
+import { brandIn, buildSteps, ideaBrand } from "@/components/business-ideas/presentation";
 import { useBusinessIdeas, type BusinessIdeasProps } from "@/components/business-ideas/use-business-ideas";
 import type { IdeaOption } from "@/types/content";
 import type { Opportunity } from "@/types/business-ideas";
@@ -72,16 +72,11 @@ const basisLabel: Record<Opportunity["basis"], string> = {
   possibility: "Worth exploring — not a confirmed finding",
 };
 
-/** The idea's own mark: the platform it names, else its area's 3D icon. */
+/** The idea's mark: the official logo of the platform or tool behind it. */
 function IdeaMark({ idea }: Readonly<{ idea: Opportunity }>) {
-  const brand = brandIn(idea.title);
-  return brand ? (
-    <span className="idea-result__mark idea-result__mark--brand" aria-hidden="true">
-      <BrandLogo brand={brand} />
-    </span>
-  ) : (
+  return (
     <span className="idea-result__mark" aria-hidden="true">
-      <GlassIcon name={areaIcons[idea.area]} size={84} />
+      <BrandLogo brand={ideaBrand(idea.title, idea.area)} />
     </span>
   );
 }
@@ -404,7 +399,7 @@ export function BusinessIdeas(props: BusinessIdeasProps) {
                           style={vars({ "--i": index })}
                         >
                           <span className="idea-opp__num">{pad(index + 1)}</span>
-                          <GlassIcon name={answer.icon} size={112} />
+                          <GlassIcon name={answer.icon} size={64} />
                           <div>
                             <h4>{answer.title}</h4>
                             <p>{answer.text}</p>

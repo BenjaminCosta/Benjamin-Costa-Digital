@@ -111,7 +111,7 @@ const goalIcons: Record<BusinessGoalId, GlassIconName> = {
   "build-an-idea": "lightbulb", "not-sure": "compass",
 };
 // One icon per area, so no two cards in a view share one.
-export const areaIcons: Record<BusinessAreaId, GlassIconName> = {
+const areaIcons: Record<BusinessAreaId, GlassIconName> = {
   "local-presence": "search", conversion: "funnel", retention: "sync",
   automation: "flow", "internal-tools": "window-clock", ai: "sparkle", website: "monitor",
   "custom-tools": "cubes", apps: "gear", "e-commerce": "bag",
