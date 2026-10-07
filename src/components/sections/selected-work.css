@@ -1,6 +1,6 @@
 /* Approved daylight / glass direction. Only the active project is painted. */
 .selected-work {
-  --bg: #fbf6ed;
+  --bg: var(--paper);
   --fg: #171b1c;
   --section-estimate: calc(96vw + 483px);
   position: relative;
@@ -11,7 +11,7 @@
 }
 
 .sw-background {
-  z-index: -1;
+  z-index: -2;
   object-fit: cover;
   object-position: 38% center;
   opacity: .75;

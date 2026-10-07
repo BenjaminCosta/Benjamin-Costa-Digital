@@ -54,8 +54,10 @@
   --tracking-label: 0.1em;
   --leading-display: 1.02;
 
-  /* Vertical rhythm between sections */
+  /* Vertical rhythm between sections, and how far a section's imagery fades
+     into the paper at its edges */
   --section-space: 3.5rem;
+  --feather: 6rem;
 
   /* Layout */
   --gutter: 1.375rem;
@@ -560,7 +562,7 @@ a {
 
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: -2;
   overflow: hidden;
   pointer-events: none;
   opacity: var(--backdrop-opacity);
@@ -581,6 +583,33 @@ a {
 .hero,
 .section {
   isolation: isolate;
+}
+
+/*
+ * Every light section shares the same paper. Whatever is drawn behind one
+ * (photo, glass light, shadows) fades into that paper at its top and bottom
+ * edges, so moving between sections never shows a seam. Only the dark CTA
+ * changes colour. Fixed-height bands: they don't repaint when a section
+ * changes height.
+ */
+:is(.ideas, .selected-work, .feedback, .about)::before,
+:is(.ideas, .selected-work, .feedback, .about)::after {
+  position: absolute;
+  inset-inline: 0;
+  z-index: -1;
+  height: var(--feather);
+  pointer-events: none;
+  content: "";
+}
+
+:is(.ideas, .selected-work, .feedback, .about)::before {
+  inset-block-start: 0;
+  background: linear-gradient(var(--paper), rgb(242 240 234 / 0));
+}
+
+:is(.ideas, .selected-work, .feedback, .about)::after {
+  inset-block-end: 0;
+  background: linear-gradient(rgb(242 240 234 / 0), var(--paper));
 }
 
 /* Reviews: near-white prism light, so only the colour streaks remain */
@@ -856,6 +885,8 @@ a {
   margin-block-start: 2.25rem;
   overflow: hidden;
   background: var(--line);
+  -webkit-mask-image: linear-gradient(180deg, #000 calc(100% - var(--feather)), transparent);
+  mask-image: linear-gradient(180deg, #000 calc(100% - var(--feather)), transparent);
 }
 
 .hero__media img {
@@ -887,12 +918,6 @@ a {
   --t-results: 450ms;
 
   overflow: clip;
-  /* Fixed-size glow anchored top-right: it doesn't depend on the section's
-     height, so the tool can resize without repainting the whole section. */
-  background:
-    radial-gradient(40rem 26rem at 100% 0%, rgb(255 255 255 / 0.7), transparent 70%)
-      no-repeat,
-    var(--paper);
   padding-block: var(--section-space);
 }
 
@@ -2510,6 +2535,7 @@ a {
     --fs-label: 0.75rem;
     --fs-button: 0.8125rem;
     --section-space: 6rem;
+    --feather: 9rem;
   }
 
   .button {
