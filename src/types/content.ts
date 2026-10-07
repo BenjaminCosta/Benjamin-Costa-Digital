@@ -26,7 +26,7 @@ export type Project = Readonly<{
     height: number;
     viewBox: string;
   }>;
-  /** Original capture, used when the live deployment has not been confirmed. */
+  /** User-approved preview destination, with priority over the main website. */
   previewHref?: string;
 }>;
 

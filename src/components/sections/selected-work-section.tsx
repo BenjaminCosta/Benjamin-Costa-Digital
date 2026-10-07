@@ -16,7 +16,7 @@ export function SelectedWorkSection() {
         quality={50} className="sw-background" aria-hidden="true" />
       <WorkShowcase
         projectNames={selectedWorkProjects.map(({ name }) => name)}
-        heading={<h2 id="work-title" className="sw-title">A few things<br /><em>I’ve built.</em></h2>}
+        heading={<h2 id="work-title" className="sw-title">A few things<br />I’ve built.</h2>}
         slides={selectedWorkProjects.map((project) => <WorkProject key={project.id} project={project} />)}
         selectors={selectedWorkProjects.map((project) => (
           <span key={project.id} className="sw-selector__content">

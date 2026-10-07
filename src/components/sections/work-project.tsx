@@ -24,10 +24,7 @@ export function WorkProject({ project }: Readonly<{ project: Project }>) {
               </svg>
             </>
           ) : (
-            <>
-              {project.isotipo ? <Image src={project.isotipo} width={40} height={40} alt="" /> : null}
-              <span>{project.name}</span>
-            </>
+            <span>{project.name}</span>
           )}
         </h3>
         <p className="sw-project__location">{[project.category, project.location].filter(Boolean).join(" — ")}</p>
@@ -36,9 +33,9 @@ export function WorkProject({ project }: Readonly<{ project: Project }>) {
         </ul>
         <p className="sw-project__summary">{project.summary}</p>
         {project.href || project.previewHref ? (
-          <a className="button button--dark sw-project__cta" href={project.href ?? project.previewHref}
+          <a className="button button--dark sw-project__cta" href={project.previewHref ?? project.href}
             target="_blank" rel="noopener noreferrer">
-            <span>{project.href ? "Visit website" : "View preview"}</span>
+            <span>{project.previewHref ? "View preview" : "Visit website"}</span>
             <ArrowIcon direction="up-right" />
             <span className="visually-hidden"> — {project.name} (opens in a new tab)</span>
           </a>

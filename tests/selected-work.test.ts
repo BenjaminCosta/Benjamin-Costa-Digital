@@ -9,10 +9,10 @@ test("seven supplied projects have real assets and no fabricated case-study URLs
   assert.equal(selectedWorkProjects.length, 7);
   assert.equal(new Set(selectedWorkProjects.map(({ id }) => id)).size, 7);
   for (const project of selectedWorkProjects) {
-    for (const src of [project.image?.src, project.isotipo, project.previewHref, project.wordmark?.src]) {
+    for (const src of [project.image?.src, project.isotipo, project.wordmark?.src]) {
       if (src) assert.ok(existsSync(path.join(process.cwd(), "public", src)), src);
     }
-    assert.ok(project.image?.src.endsWith("-glass.webp"));
+    assert.ok(project.image?.src.endsWith("-devices-v3.webp"));
     assert.ok(project.services.length);
     assert.ok(project.summary);
     assert.ok(statSync(path.join(process.cwd(), "public", project.image!.src)).size < 200_000);
@@ -21,6 +21,43 @@ test("seven supplied projects have real assets and no fabricated case-study URLs
     assert.ok(readFileSync(originalIcon).equals(readFileSync(path.join(process.cwd(), "public", project.isotipo!))));
   }
   assert.ok(existsSync("public/images/work/daylight-background.webp"));
+});
+
+test("project previews use the exact destinations supplied by Benjamin", () => {
+  assert.deepEqual(selectedWorkProjects.map(({ id, previewHref }) => [id, previewHref]), [
+    ["mr-moustache", "https://mr-moustache.vercel.app"],
+    ["kirra-dive", "https://kirra-dive.vercel.app"],
+    ["santos-becker", "https://santos-becker-actualsite.vercel.app"],
+    ["agendify", "https://agendify.pro/"],
+    ["stockia", "https://stockia-online.vercel.app/comercio"],
+    ["decoratre", "https://decoratre-2.myshopify.com/"],
+    ["a1-estudio", "https://a1-estudio.vercel.app/"],
+  ]);
+});
+
+test("project media retain transparency so the shared background never changes", () => {
+  for (const project of selectedWorkProjects) {
+    const media = readFileSync(path.join(process.cwd(), "public", project.image!.src));
+    assert.equal(media.toString("ascii", 0, 4), "RIFF");
+    assert.equal(media.toString("ascii", 8, 12), "WEBP");
+    assert.equal(media.toString("ascii", 12, 16), "VP8X");
+    // The alpha flag must survive WebP export; no flattening onto an ivory plate.
+    assert.ok(media[20] & 0x10, project.id + " must preserve its transparent background");
+  }
+});
+
+test("supplied HQ wordmarks are used without adding icons to A1 or StockIA headings", () => {
+  for (const project of selectedWorkProjects) {
+    if (project.id === "a1-estudio" || project.id === "stockia") {
+      assert.equal(project.wordmark, undefined);
+      continue;
+    }
+    assert.equal(project.wordmark?.src, `/images/work/wordmarks/hq/${project.id}.webp`);
+    const original = `assets/selected-work/brand-assets/logos-hq/${project.id}.png`;
+    assert.ok(existsSync(original));
+    assert.ok(statSync(path.join("public", project.wordmark!.src)).size < 200_000);
+  }
+  assert.ok(existsSync("assets/selected-work/brand-assets/logos-hq/a1-estudio.png"));
 });
 
 test("the operations platform is preserved, not confused with StockIA", () => {

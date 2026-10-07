@@ -96,7 +96,7 @@ export function WorkShowcase({ projectNames, heading, slides, selectors }: WorkS
       const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       if (!reduce) {
         setPhase("exit");
-        await pause(170, signal);
+        await pause(160, signal);
       }
 
       // Never overlap two projects: hide the old slide before entering the new one.
@@ -114,7 +114,7 @@ export function WorkShowcase({ projectNames, heading, slides, selectors }: WorkS
           rail.scrollTo({ left: left - (rail.clientWidth - selector.offsetWidth) / 2, behavior: reduce ? "auto" : "smooth" });
         }
       }
-      if (!reduce) await pause(380, signal);
+      if (!reduce) await pause(340, signal);
       setPhase("idle");
     } catch {
       if (!signal.aborted) {
