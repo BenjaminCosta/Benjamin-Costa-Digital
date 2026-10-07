@@ -8,10 +8,7 @@ export const site = Object.freeze({
 });
 
 /** Hero photo: beside the copy on desktop, under it on smaller screens. */
-export const heroImage = Object.freeze({
-  portrait: "/images/bg/hero.png",
-  landscape: "/images/bg/hero-dp.png",
-});
+export const heroImage = "/images/bg/hero.png";
 
 /** Subtle glass/acrylic backgrounds, one per section that carries one. */
 export const backdrops = Object.freeze({

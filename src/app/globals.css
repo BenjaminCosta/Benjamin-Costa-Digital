@@ -54,10 +54,8 @@
   --tracking-label: 0.1em;
   --leading-display: 1.02;
 
-  /* Vertical rhythm between sections, and how far a section's imagery fades
-     into the paper at its edges */
-  --section-space: 3.5rem;
-  --feather: 6rem;
+  /* Vertical rhythm between sections */
+  --section-space: 3rem;
 
   /* Layout */
   --gutter: 1.375rem;
@@ -586,36 +584,17 @@ a {
 }
 
 /*
- * Every light section shares the same paper. Whatever is drawn behind one
- * (photo, glass light, shadows) fades into that paper at its top and bottom
- * edges, so moving between sections never shows a seam. Only the dark CTA
- * changes colour. Fixed-height bands: they don't repaint when a section
- * changes height.
+ * Light sections share one flat paper and meet edge to edge, with no fade
+ * bands. Each section's imagery is ambient light kept inside the section
+ * (an ellipse that dissolves well before the edges), so neighbouring
+ * sections always touch on plain paper. The only fade is under the hero
+ * photo.
  */
-:is(.ideas, .selected-work, .feedback, .about)::before,
-:is(.ideas, .selected-work, .feedback, .about)::after {
-  position: absolute;
-  inset-inline: 0;
-  z-index: -1;
-  height: var(--feather);
-  pointer-events: none;
-  content: "";
-}
-
-:is(.ideas, .selected-work, .feedback, .about)::before {
-  inset-block-start: 0;
-  background: linear-gradient(var(--paper), rgb(242 240 234 / 0));
-}
-
-:is(.ideas, .selected-work, .feedback, .about)::after {
-  inset-block-end: 0;
-  background: linear-gradient(rgb(242 240 234 / 0), var(--paper));
-}
 
 /* Reviews: near-white prism light, so only the colour streaks remain */
 .feedback__backdrop {
-  --backdrop-opacity: 0.75;
-  --backdrop-mask: linear-gradient(180deg, #000 70%, transparent 100%);
+  --backdrop-opacity: 0.7;
+  --backdrop-mask: radial-gradient(70% 55% at 50% 58%, #000 30%, transparent 100%);
 }
 
 .feedback__backdrop img {
@@ -634,6 +613,7 @@ a {
 
   inset-block-start: auto;
   height: 24rem;
+  display: none;
 }
 
 .about__backdrop img {
@@ -771,7 +751,7 @@ a {
 
 /* Selected Work keeps its own estimate in selected-work.css. */
 .feedback {
-  --section-estimate: 1038px;
+  --section-estimate: 560px;
 }
 
 .about {
@@ -784,7 +764,7 @@ a {
 
 @media (min-width: 48rem) {
   .feedback {
-    --section-estimate: 932px;
+    --section-estimate: 532px;
   }
 
   .about {
@@ -881,17 +861,20 @@ a {
    tablets, beside it on desktop. */
 .hero__media {
   position: relative;
-  aspect-ratio: 4 / 5;
-  margin-block-start: 2.25rem;
+  aspect-ratio: 6 / 5;
+  margin-block-start: 1.75rem;
   overflow: hidden;
   background: var(--line);
-  -webkit-mask-image: linear-gradient(180deg, #000 calc(100% - var(--feather)), transparent);
-  mask-image: linear-gradient(180deg, #000 calc(100% - var(--feather)), transparent);
+}
+
+.hero__caption {
+  padding: 0.875rem var(--gutter) 0;
+  color: var(--muted);
 }
 
 .hero__media img {
   object-fit: cover;
-  object-position: 50% 64%;
+  object-position: 40% 50%;
 }
 
 /* ---------- 02 Business ideas ---------- */
@@ -924,8 +907,8 @@ a {
 /* Soft, warm light for the glass to sit in. Fixed height, so the tool can
    change size without the image being rescaled on every frame. */
 .ideas__backdrop {
-  --backdrop-opacity: 1;
-  --backdrop-mask: linear-gradient(180deg, transparent 0, #000 8rem, #000 70%, transparent 100%);
+  --backdrop-opacity: 0.85;
+  --backdrop-mask: radial-gradient(26rem 30rem at 50% 30rem, #000 30%, transparent 100%);
 
   inset-block-end: auto;
   height: 120rem;
@@ -1123,7 +1106,7 @@ a {
 
 .idea-options {
   display: grid;
-  gap: 0.75rem;
+  gap: 0.625rem;
 }
 
 .idea-options li {
@@ -1141,11 +1124,11 @@ a {
 .idea-option {
   display: grid;
   width: 100%;
-  min-height: 5.25rem;
+  min-height: 4.5rem;
   grid-template-columns: 3.5rem minmax(0, 1fr) 1rem;
   align-items: center;
   gap: 1rem;
-  padding: 0.75rem 1.25rem 0.75rem 0.875rem;
+  padding: 0.5rem 1.25rem 0.5rem 0.875rem;
   border-radius: var(--radius-card);
   color: var(--ink);
   font-size: var(--fs-body);
@@ -2291,10 +2274,35 @@ a {
   fill: currentColor;
 }
 
+/* Below desktop the three reviews sit in one swipeable row (the next card
+   peeks in), instead of stacking into a long column */
 .reviews {
   display: grid;
-  gap: 0.875rem;
-  margin-block-start: 1.75rem;
+  grid-auto-columns: min(84%, 22rem);
+  grid-auto-flow: column;
+  gap: 0.75rem;
+  margin-block-start: 1.5rem;
+  margin-inline: calc(var(--gutter) * -1);
+  padding-inline: var(--gutter);
+  padding-block-end: 0.5rem;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scroll-padding-inline: var(--gutter);
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.reviews::-webkit-scrollbar {
+  display: none;
+}
+
+.reviews > li {
+  display: flex;
+  scroll-snap-align: start;
+}
+
+.reviews > li > .review {
+  flex: 1;
 }
 
 /* Frosted card, set in Workana's type */
@@ -2389,7 +2397,7 @@ a {
 
 .about {
   overflow: clip;
-  padding-block: var(--section-space) 13rem;
+  padding-block: var(--section-space);
 }
 
 .about__body {
@@ -2484,16 +2492,12 @@ a {
   }
 
   .hero__media {
-    aspect-ratio: 16 / 10;
-    margin-block-start: 3rem;
+    aspect-ratio: 2 / 1;
+    margin-block-start: 2.5rem;
   }
 
   .hero__media img {
-    object-position: 100% 60%;
-  }
-
-  .reviews {
-    max-width: 36rem;
+    object-position: 40% 55%;
   }
 
 }
@@ -2519,7 +2523,6 @@ a {
     --fs-label: 0.75rem;
     --fs-button: 0.8125rem;
     --section-space: 6rem;
-    --feather: 9rem;
   }
 
   .button {
@@ -2757,12 +2760,12 @@ a {
   }
 
   .hero__media img {
-    object-position: 40% 62%;
+    object-position: 45% 50%;
   }
 
   .feedback__backdrop {
-    --backdrop-opacity: 0.8;
-    --backdrop-mask: none;
+    --backdrop-opacity: 0.75;
+    --backdrop-mask: radial-gradient(60% 62% at 50% 58%, #000 30%, transparent 100%);
   }
 
   .feedback__backdrop img {
@@ -2770,6 +2773,11 @@ a {
   }
 
   /* ---------- 02 Business ideas ---------- */
+
+  /* Warm light behind the tool column */
+  .ideas__backdrop {
+    --backdrop-mask: radial-gradient(42rem 28rem at 70% 24rem, #000 25%, transparent 100%);
+  }
 
   /* The question stays put on the left; the tool block changes on the right */
   .ideas__tool {
@@ -2841,6 +2849,12 @@ a {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1rem;
     margin-block-start: 2.75rem;
+    grid-auto-columns: auto;
+    grid-auto-flow: row;
+    margin-inline: 0;
+    padding: 0;
+    overflow: visible;
+    scroll-snap-type: none;
   }
 
   .review {
@@ -2870,11 +2884,12 @@ a {
 
   .about__backdrop {
     --backdrop-opacity: 0.55;
-    --backdrop-mask: radial-gradient(60% 100% at 94% 60%, #000 12%, transparent 70%);
+    --backdrop-mask: radial-gradient(44% 62% at 88% 50%, #000 12%, transparent 100%);
 
     inset-block-start: 0;
     inset-inline-start: 52%;
     height: auto;
+    display: block;
   }
 
   .about__backdrop img {
