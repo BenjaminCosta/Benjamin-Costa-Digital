@@ -24,7 +24,11 @@ export type Project = Readonly<{
     src: string;
     width: number;
     height: number;
-    viewBox: string;
+    /**
+     * Desktop width in px. Set per logo from its proportions and ink weight
+     * so every wordmark reads at the same visual size.
+     */
+    display: number;
   }>;
   /** User-approved preview destination, with priority over the main website. */
   previewHref?: string;
