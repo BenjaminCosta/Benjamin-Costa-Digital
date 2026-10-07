@@ -36,6 +36,27 @@
   --duration-sweep: 380ms;
   --reveal-duration: 520ms;
 
+  /* Type scale: one size and weight per role, used across every section */
+  --fs-hero: min(14vw, 4.75rem);
+  --fs-title: min(10vw, 3rem);
+  --fs-subtitle: min(7.4vw, 2.25rem);
+  --fs-heading: 1.25rem;
+  --fs-card: 1.0625rem;
+  --fs-lead: 1.125rem;
+  --fs-body: 1rem;
+  --fs-small: 0.875rem;
+  --fs-micro: 0.75rem;
+  --fs-label: 0.6875rem;
+  --fs-button: 0.6875rem;
+  --weight-display: 450;
+  --weight-strong: 500;
+  --tracking-display: -0.025em;
+  --tracking-label: 0.1em;
+  --leading-display: 1.02;
+
+  /* Vertical rhythm between sections */
+  --section-space: 3.5rem;
+
   /* Layout */
   --gutter: 1.375rem;
   --container-max: 120rem;
@@ -89,7 +110,7 @@ body {
   margin: 0;
   overflow-x: clip;
   background: var(--paper);
-  font-size: 1rem;
+  font-size: var(--fs-body);
   line-height: 1.4;
 }
 
@@ -188,10 +209,10 @@ a {
 
 .mono-label {
   font-family: var(--font-mono);
-  font-size: 0.6875rem;
+  font-size: var(--fs-label);
   font-weight: 400;
   line-height: 1rem;
-  letter-spacing: 0.04em;
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
 }
 
@@ -201,9 +222,9 @@ a {
 
 .display {
   font-family: var(--font-display);
-  font-weight: 500;
-  letter-spacing: -0.05em;
-  line-height: 0.9;
+  font-weight: var(--weight-display);
+  letter-spacing: var(--tracking-display);
+  line-height: var(--leading-display);
 }
 
 .display span,
@@ -245,7 +266,7 @@ a {
   background: var(--button-bg);
   color: var(--button-fg);
   font-family: var(--font-mono);
-  font-size: 0.6875rem;
+  font-size: var(--fs-button);
   font-weight: 400;
   letter-spacing: 0.15em;
   line-height: 1;
@@ -330,7 +351,7 @@ a {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.875rem;
+  font-size: var(--fs-small);
   line-height: 1.2;
   letter-spacing: -0.01em;
 }
@@ -590,24 +611,6 @@ a {
   object-position: 90% 100%;
 }
 
-/* CTA: the photo is already shot on near-#141414, so it sits in the section
-   at full strength. Phones and tablets get it under the copy (the section's
-   bottom padding is its room); its top and bottom edges fade out so it meets
-   the copy and the footer without a seam. */
-.contact__backdrop {
-  --backdrop-opacity: 1;
-  --backdrop-mask: linear-gradient(180deg, transparent 0%, #000 22%, #000 84%, transparent 100%);
-
-  inset-block-start: auto;
-  height: 26rem;
-  mix-blend-mode: normal;
-}
-
-.contact__backdrop img {
-  object-position: 50% 58%;
-  filter: none;
-}
-
 .contact__body {
   position: relative;
   z-index: 1;
@@ -661,8 +664,8 @@ a {
   overflow: hidden;
   padding-block-end: 0.0625rem;
   font-family: var(--font-mono);
-  font-size: 0.65625rem;
-  letter-spacing: 0.02em;
+  font-size: var(--fs-label);
+  letter-spacing: var(--tracking-label);
   line-height: 1;
   text-overflow: ellipsis;
   text-transform: uppercase;
@@ -715,7 +718,7 @@ a {
   align-items: baseline;
   justify-content: space-between;
   gap: 1rem;
-  padding-block: 1.5rem 0;
+  padding-block: 0;
 }
 
 .section-head__label,
@@ -737,65 +740,54 @@ a {
   contain-intrinsic-block-size: auto var(--section-estimate);
 }
 
-.work {
-  --section-estimate: calc(95vw + 354px);
-}
-
+/* Selected Work keeps its own estimate in selected-work.css. */
 .feedback {
-  --section-estimate: 1045px;
+  --section-estimate: 1038px;
 }
 
 .about {
-  --section-estimate: 620px;
+  --section-estimate: 575px;
 }
 
 .contact {
-  --section-estimate: calc(50vw + 232px);
+  --section-estimate: calc(41.4vw + 197px);
 }
 
 @media (min-width: 48rem) {
-  .work {
-    --section-estimate: 940px;
-  }
-
   .feedback {
-    --section-estimate: 1000px;
+    --section-estimate: 932px;
   }
 
   .about {
-    --section-estimate: 640px;
+    --section-estimate: 538px;
   }
 
   .contact {
-    --section-estimate: 517px;
+    --section-estimate: 395px;
   }
 }
 
 @media (min-width: 64rem) {
-  .work {
-    --section-estimate: max(654px, calc(46vw + 105px));
-  }
-
   .feedback {
-    --section-estimate: calc(625px - 4.8vw);
+    --section-estimate: calc(614px - 5.4vw);
   }
 
   .about {
-    --section-estimate: 548px;
+    --section-estimate: 564px;
   }
 
   .contact {
-    --section-estimate: max(535px, calc(22vw + 235px));
+    --section-estimate: 470px;
   }
 }
 
 @media (min-width: 64rem) and (max-width: 79.999rem) {
   .feedback {
-    --section-estimate: calc(997px - 33.2vw);
+    --section-estimate: calc(1106px - 42.6vw);
   }
 
   .about {
-    --section-estimate: 710px;
+    --section-estimate: 706px;
   }
 }
 
@@ -807,16 +799,13 @@ a {
 
 .display--hero {
   margin-inline-start: -0.0625rem;
-  font-size: min(16.6vw, 6rem);
-  letter-spacing: -0.055em;
-  line-height: 0.935;
+  font-size: var(--fs-hero);
 }
 
 .hero__lede {
   margin-block-start: 1.25rem;
-  font-size: 1.0625rem;
+  font-size: var(--fs-lead);
   line-height: 1.25;
-  letter-spacing: 0.04em;
 }
 
 .hero__actions {
@@ -846,7 +835,6 @@ a {
 
 .hero__secondary .text-link {
   gap: 0.6875rem;
-  font-size: 0.90625rem;
   white-space: nowrap;
 }
 
@@ -899,13 +887,13 @@ a {
   --t-results: 450ms;
 
   overflow: clip;
-  padding-block-end: 3.5rem;
   /* Fixed-size glow anchored top-right: it doesn't depend on the section's
      height, so the tool can resize without repainting the whole section. */
   background:
     radial-gradient(40rem 26rem at 100% 0%, rgb(255 255 255 / 0.7), transparent 70%)
       no-repeat,
     var(--paper);
+  padding-block: var(--section-space);
 }
 
 /* Soft, warm light for the glass to sit in. Fixed height, so the tool can
@@ -966,16 +954,14 @@ a {
 }
 
 .display--ideas {
-  font-size: min(9.4vw, 4.5rem);
-  font-weight: 450;
-  line-height: 1.05;
-  letter-spacing: -0.025em;
+  font-size: var(--fs-title);
+  text-wrap: balance;
 }
 
 .ideas__lede {
   max-width: 20rem;
   margin-block-start: 1rem;
-  font-size: 1rem;
+  font-size: var(--fs-body);
   line-height: 1.45;
   color: var(--soft);
 }
@@ -1137,7 +1123,7 @@ a {
   padding: 0.75rem 1.25rem 0.75rem 0.875rem;
   border-radius: var(--radius-card);
   color: var(--ink);
-  font-size: 1rem;
+  font-size: var(--fs-body);
   line-height: 1.3;
   text-align: start;
   cursor: pointer;
@@ -1265,10 +1251,10 @@ a {
 }
 
 .ideas-step__title {
-  font-size: min(10vw, 3rem);
-  font-weight: 450;
+  font-size: var(--fs-subtitle);
+  font-weight: var(--weight-display);
   line-height: 1.06;
-  letter-spacing: -0.025em;
+  letter-spacing: var(--tracking-display);
 }
 
 .ideas-answers__mark + .ideas-step__title {
@@ -1282,7 +1268,7 @@ a {
 
 .ideas-step__intro {
   margin-block-start: 0.75rem;
-  font-size: 1rem;
+  font-size: var(--fs-body);
   line-height: 1.5;
   color: var(--soft);
 }
@@ -1305,8 +1291,9 @@ a {
 .idea-opp__num {
   padding-block-start: 0.25rem;
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: var(--fs-label);
   color: var(--faint);
+  letter-spacing: var(--tracking-label);
 }
 
 .idea-opp .glass-icon {
@@ -1315,14 +1302,14 @@ a {
 
 .idea-opp h4 {
   padding-block-start: 0.125rem;
-  font-size: 1.0625rem;
-  font-weight: 500;
+  font-size: var(--fs-card);
+  font-weight: var(--weight-strong);
   line-height: 1.3;
 }
 
 .idea-opp p {
   margin-block-start: 0.375rem;
-  font-size: 0.875rem;
+  font-size: var(--fs-small);
   line-height: 1.5;
   color: var(--soft);
 }
@@ -1335,8 +1322,8 @@ a {
 
 .ideas-form__title {
   margin-block-end: 1.125rem;
-  font-size: min(6vw, 1.5rem);
-  font-weight: 450;
+  font-size: var(--fs-heading);
+  font-weight: var(--weight-display);
   line-height: 1.2;
   letter-spacing: -0.015em;
 }
@@ -1374,7 +1361,7 @@ a {
   height: 2.75rem;
   border: 0;
   background: transparent;
-  font-size: 1rem;
+  font-size: var(--fs-body);
   outline: none;
 }
 
@@ -1445,14 +1432,14 @@ a {
 
 .ideas-form__note {
   margin-block-start: 0.625rem;
-  font-size: 0.75rem;
+  font-size: var(--fs-micro);
   line-height: 1.45;
   color: var(--faint);
 }
 
 .ideas-form__error {
   margin-block-start: 0.75rem;
-  font-size: 0.9375rem;
+  font-size: var(--fs-small);
   line-height: 1.45;
   color: var(--ink);
 }
@@ -1499,7 +1486,7 @@ a {
   border: 0;
   border-radius: inherit;
   background: none;
-  font-size: 0.875rem;
+  font-size: var(--fs-small);
   font-weight: 500;
   text-align: start;
   cursor: pointer;
@@ -1521,7 +1508,7 @@ a {
 
 .ideas-context label {
   display: block;
-  font-size: 0.8125rem;
+  font-size: var(--fs-small);
   color: var(--soft);
 }
 
@@ -1533,7 +1520,7 @@ a {
   border: 1px solid rgb(10 10 10 / 0.14);
   border-radius: var(--radius-field);
   background: rgb(255 255 255 / 0.82);
-  font-size: 0.9375rem;
+  font-size: var(--fs-body);
   line-height: 1.45;
   resize: vertical;
 }
@@ -1548,11 +1535,11 @@ a {
   justify-items: start;
   gap: 0.75rem;
   margin-block-start: 1.5rem;
-  font-size: 0.9375rem;
+  font-size: var(--fs-small);
 }
 
 .ideas-form__micro {
-  font-size: 0.875rem;
+  font-size: var(--fs-small);
   color: var(--soft);
 }
 
@@ -1660,17 +1647,17 @@ a {
 
 .ideas-loading__eyebrow {
   font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.12em;
+  font-size: var(--fs-label);
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
   color: var(--soft);
 }
 
 .ideas-loading__title {
-  font-size: min(6.6vw, 1.75rem);
-  font-weight: 450;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
+  font-size: var(--fs-heading);
+  font-weight: var(--weight-display);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
 }
 
 .ideas-loading__steps {
@@ -1693,7 +1680,7 @@ a {
 
 .ideas-loading__step {
   display: block;
-  font-size: 0.9375rem;
+  font-size: var(--fs-body);
   font-weight: 500;
   line-height: 1.3;
 }
@@ -1701,7 +1688,7 @@ a {
 .ideas-loading__detail {
   display: block;
   margin-block-start: 0.25rem;
-  font-size: 0.8125rem;
+  font-size: var(--fs-micro);
   line-height: 1.4;
   color: var(--soft);
 }
@@ -1808,7 +1795,7 @@ a {
 .ideas-loading__slow {
   min-height: 1.25rem;
   margin-block-start: 1.5rem;
-  font-size: 0.8125rem;
+  font-size: var(--fs-micro);
   color: var(--soft);
   text-align: center;
   opacity: 0;
@@ -1871,7 +1858,7 @@ a {
 
 .ideas-results__lede {
   margin-block-start: 0.75rem;
-  font-size: 1.0625rem;
+  font-size: var(--fs-body);
   color: var(--soft);
 }
 
@@ -1887,7 +1874,7 @@ a {
   gap: 0.5rem;
   padding: 0.5rem 0.75rem;
   border-radius: var(--radius-control);
-  font-size: 0.75rem;
+  font-size: var(--fs-micro);
   line-height: 1.4;
   color: var(--soft);
 }
@@ -1899,7 +1886,7 @@ a {
 
 .ideas-results__pages {
   margin-block-start: 0.75rem;
-  font-size: 0.75rem;
+  font-size: var(--fs-micro);
   line-height: 1.5;
   color: var(--faint);
 }
@@ -1933,7 +1920,7 @@ a {
 .idea-result__num {
   align-self: start;
   padding-block-start: 0.5rem;
-  font-size: 1.25rem;
+  font-size: var(--fs-card);
   line-height: 1;
   color: var(--ink);
 }
@@ -1956,8 +1943,8 @@ a {
 }
 
 .idea-result__title {
-  font-size: 1.0625rem;
-  font-weight: 500;
+  font-size: var(--fs-card);
+  font-weight: var(--weight-strong);
   line-height: 1.3;
 }
 
@@ -1967,7 +1954,7 @@ a {
 }
 
 .idea-result__summary {
-  font-size: 0.875rem;
+  font-size: var(--fs-small);
   line-height: 1.55;
   color: var(--soft);
 }
@@ -1975,15 +1962,15 @@ a {
 .idea-result__basis {
   margin-block-start: 0.625rem;
   font-family: var(--font-mono);
-  font-size: 0.625rem;
-  letter-spacing: 0.08em;
+  font-size: var(--fs-label);
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
   color: var(--faint);
 }
 
 .idea-result__evidence {
   margin-block-start: 0.375rem;
-  font-size: 0.8125rem;
+  font-size: var(--fs-small);
   line-height: 1.45;
   color: var(--soft);
 }
@@ -1997,7 +1984,7 @@ a {
 }
 
 .idea-result__build-label {
-  font-size: 0.875rem;
+  font-size: var(--fs-small);
   font-weight: 500;
 }
 
@@ -2012,7 +1999,7 @@ a {
   grid-template-columns: 1rem minmax(0, 1fr);
   align-items: start;
   gap: 0.625rem;
-  font-size: 0.8125rem;
+  font-size: var(--fs-small);
   line-height: 1.4;
 }
 
@@ -2036,15 +2023,15 @@ a {
 }
 
 .ideas-close__title {
-  font-size: min(8.4vw, 2.5rem);
-  font-weight: 450;
-  line-height: 1.08;
-  letter-spacing: -0.025em;
+  font-size: var(--fs-subtitle);
+  font-weight: var(--weight-display);
+  line-height: 1.06;
+  letter-spacing: var(--tracking-display);
 }
 
 .ideas-close__text {
   margin-block-start: 0.875rem;
-  font-size: 1rem;
+  font-size: var(--fs-body);
   line-height: 1.5;
   color: var(--soft);
 }
@@ -2077,7 +2064,7 @@ a {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  font-size: 0.9375rem;
+  font-size: var(--fs-body);
 }
 
 .ideas-close__check {
@@ -2099,14 +2086,14 @@ a {
 
 .ideas-close__note {
   margin-block-start: 1.25rem;
-  font-size: 0.8125rem;
+  font-size: var(--fs-micro);
   line-height: 1.45;
   color: var(--faint);
 }
 
 .ideas-close__alt {
   margin-block-start: 2.5rem;
-  font-size: 0.9375rem;
+  font-size: var(--fs-small);
   color: var(--soft);
 }
 
@@ -2121,7 +2108,7 @@ a {
   padding: 0.875rem 1.25rem;
   border-radius: 12px;
   color: var(--ink);
-  font-size: 1rem;
+  font-size: var(--fs-body);
   text-align: start;
   cursor: pointer;
   transition:
@@ -2166,7 +2153,7 @@ a {
   border: 0;
   background: none;
   color: var(--soft);
-  font-size: 0.875rem;
+  font-size: var(--fs-small);
   cursor: pointer;
   transition: color var(--t-press) ease;
 }
@@ -2191,7 +2178,7 @@ a {
   --soft: color-mix(in srgb, var(--ink) 62%, var(--paper));
 
   overflow: clip;
-  padding-block-end: 3.5rem;
+  padding-block: var(--section-space);
 }
 
 .feedback__head {
@@ -2207,8 +2194,8 @@ a {
   align-items: center;
   gap: 0.5rem;
   font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.16em;
+  font-size: var(--fs-label);
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
   color: var(--soft);
 }
@@ -2222,10 +2209,7 @@ a {
 
 .display--feedback {
   margin-block-start: 0.625rem;
-  font-size: min(9.8vw, 4.5rem);
-  font-weight: 500;
-  line-height: 0.98;
-  letter-spacing: -0.035em;
+  font-size: var(--fs-title);
 }
 
 .workana-rating {
@@ -2282,7 +2266,7 @@ a {
 
 .workana-rating__count {
   color: var(--wk-muted);
-  font-size: 0.8125rem;
+  font-size: var(--fs-small);
   white-space: nowrap;
 }
 
@@ -2333,7 +2317,7 @@ a {
 .review__quote {
   margin-block-start: 0.875rem;
   color: var(--wk-text);
-  font-size: 0.9375rem;
+  font-size: var(--fs-body);
   line-height: 1.5;
   text-wrap: pretty;
 }
@@ -2362,7 +2346,7 @@ a {
 .review__name {
   display: block;
   color: var(--wk-text);
-  font-size: 0.9375rem;
+  font-size: var(--fs-small);
   font-weight: 500;
   line-height: 1.35;
 }
@@ -2370,7 +2354,7 @@ a {
 .review__project {
   display: block;
   color: var(--wk-muted);
-  font-size: 0.8125rem;
+  font-size: var(--fs-micro);
   line-height: 1.4;
 }
 
@@ -2384,23 +2368,19 @@ a {
 
 .feedback__note {
   order: 2;
-  font-size: 0.75rem;
+  font-size: var(--fs-micro);
   color: var(--soft);
 }
 
 .feedback__profile {
   order: 1;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
 }
 
 /* ---------- 05 About ---------- */
 
 .about {
   overflow: clip;
-  padding-block-end: 13rem;
+  padding-block: var(--section-space) 13rem;
 }
 
 .about__body {
@@ -2410,9 +2390,7 @@ a {
 
 .display--about {
   margin-block-start: 1.25rem;
-  font-size: min(11.8vw, 4.5rem);
-  line-height: 0.95;
-  letter-spacing: -0.045em;
+  font-size: var(--fs-title);
 }
 
 .about__bio {
@@ -2420,9 +2398,8 @@ a {
   gap: 1.125rem;
   max-width: 34rem;
   margin-block-start: 1.75rem;
-  font-size: 1rem;
+  font-size: var(--fs-body);
   line-height: 1.5;
-  letter-spacing: 0.01em;
   color: color-mix(in srgb, var(--ink) 80%, var(--paper));
 }
 
@@ -2433,8 +2410,8 @@ a {
 /* ---------- 06 Final CTA ---------- */
 
 .contact {
-  padding-block-end: 23rem;
   overflow: clip;
+  padding-block: var(--section-space) calc(var(--section-space) + 1rem);
 }
 
 .contact__body {
@@ -2444,9 +2421,7 @@ a {
 
 .display--contact {
   margin-block-start: 1.0625rem;
-  font-size: min(15vw, 5.25rem);
-  line-height: 0.88;
-  letter-spacing: -0.05em;
+  font-size: var(--fs-title);
 }
 
 .display--contact strong {
@@ -2462,9 +2437,8 @@ a {
 .contact__note {
   max-width: 16rem;
   margin-block-start: 1.25rem;
-  font-size: 0.96875rem;
+  font-size: var(--fs-body);
   line-height: 1.32;
-  letter-spacing: 0.02em;
 }
 
 /* ---------- Footer ---------- */
@@ -2491,11 +2465,6 @@ a {
   color: var(--ink);
 }
 
-.site-footer .mono-label {
-  font-size: 0.6125rem;
-  letter-spacing: 0;
-}
-
 /* ==========================================================================
    Tablet (≥ 48rem): mobile composition with roomier margins
    ========================================================================== */
@@ -2518,18 +2487,6 @@ a {
     max-width: 36rem;
   }
 
-  /* Landscape crop, full width under the copy */
-  .contact {
-    padding-block-end: calc(56vw - 1rem);
-  }
-
-  .contact__backdrop {
-    height: 56vw;
-  }
-
-  .contact__backdrop img {
-    object-position: 50% 50%;
-  }
 }
 
 /* ==========================================================================
@@ -2541,32 +2498,29 @@ a {
   :root {
     --gutter: 4.25rem;
     --header-height: 5.375rem;
-  }
-
-  body {
-    font-size: 1.0625rem;
-  }
-
-  .mono-label {
-    font-size: 0.75rem;
-    letter-spacing: 0.1em;
+    --fs-hero: min(6.4vw, 7.5rem);
+    --fs-title: clamp(3rem, 4.6vw, 4.5rem);
+    --fs-subtitle: clamp(2rem, 2.9vw, 2.75rem);
+    --fs-heading: 1.5rem;
+    --fs-card: 1.125rem;
+    --fs-lead: 1.1875rem;
+    --fs-body: 1.0625rem;
+    --fs-small: 0.9375rem;
+    --fs-micro: 0.8125rem;
+    --fs-label: 0.75rem;
+    --fs-button: 0.8125rem;
+    --section-space: 6rem;
   }
 
   .button {
     min-height: 3.75rem;
     gap: 2.5rem;
     padding-inline: 1.625rem;
-    font-size: 0.8125rem;
-    letter-spacing: 0.14em;
   }
 
   .button .arrow-icon {
     width: 1.125rem;
     height: 1.125rem;
-  }
-
-  .text-link {
-    font-size: 1rem;
   }
 
   .text-link .arrow-icon {
@@ -2586,8 +2540,8 @@ a {
     position: absolute;
     inset-inline-start: 0;
     font-family: var(--font-mono);
-    font-size: 0.8125rem;
-    letter-spacing: 0.04em;
+    font-size: var(--fs-label);
+    letter-spacing: var(--tracking-label);
     color: color-mix(in srgb, var(--fg) 62%, var(--bg));
   }
 
@@ -2648,11 +2602,6 @@ a {
     border: 0;
   }
 
-  .site-header__brand {
-    font-size: 0.75rem;
-    letter-spacing: 0.06em;
-  }
-
   .site-header__place {
     color: color-mix(in srgb, var(--header-fg) 62%, transparent);
     transition: color var(--hover-duration) var(--ease-editorial);
@@ -2665,7 +2614,7 @@ a {
     inset-inline-end: calc(100% - var(--hero-split) + 2.75rem);
     padding-block-end: 0.25rem;
     background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
-    font-size: 0.9375rem;
+    font-size: var(--fs-small);
     translate: 0 -50%;
     transition: background-size var(--hover-duration) var(--ease-editorial);
   }
@@ -2681,7 +2630,7 @@ a {
     border-radius: var(--radius-control);
     background: var(--header-cta-bg);
     color: var(--header-cta-fg);
-    font-size: 0.9375rem;
+    font-size: var(--fs-small);
     font-weight: 500;
     transition:
       color 180ms ease 110ms,
@@ -2758,18 +2707,12 @@ a {
 
   .display--hero {
     margin: 0;
-    font-size: min(6.4vw, 7.5rem);
-    font-weight: 450;
-    letter-spacing: -0.012em;
-    line-height: 1;
   }
 
   .hero__lede {
     max-width: 30rem;
     margin-block-start: 2.125rem;
-    font-size: 1.1875rem;
     line-height: 1.45;
-    letter-spacing: 0.015em;
     text-wrap: balance;
   }
 
@@ -2796,7 +2739,6 @@ a {
 
   .hero__secondary .text-link {
     gap: 0.875rem;
-    font-size: 1rem;
   }
 
   .hero__media {
@@ -2819,14 +2761,10 @@ a {
 
   /* ---------- 02 Business ideas ---------- */
 
-  .ideas {
-    padding-block: 4.5rem 5.5rem;
-  }
-
   /* The question stays put on the left; the tool block changes on the right */
   .ideas__tool {
     display: grid;
-    grid-template-columns: minmax(0, 24rem) minmax(0, 40rem);
+    grid-template-columns: minmax(0, 28rem) minmax(0, 40rem);
     align-items: start;
     column-gap: clamp(3rem, 8vw, 9rem);
   }
@@ -2837,17 +2775,9 @@ a {
     padding-block-start: 1.75rem;
   }
 
-  .display--ideas {
-    font-size: min(3.4vw, 3.5rem);
-  }
-
   .ideas-stage,
   .ideas__tool:not([data-view="select"]) .ideas-stage {
     margin-block-start: 1.75rem;
-  }
-
-  .ideas-step__title {
-    font-size: min(3.2vw, 3rem);
   }
 
   /* The intro holds the left column, so the way back lives in the tool */
@@ -2860,20 +2790,12 @@ a {
     align-items: center;
   }
 
-  .ideas-close__title {
-    font-size: min(2.8vw, 2.75rem);
-  }
-
   .ideas-loading {
     padding-block: 3.5rem 1rem;
   }
 
 
   /* ---------- 04 Client feedback (Workana) ---------- */
-
-  .feedback {
-    padding-block: 4.5rem 5rem;
-  }
 
   .feedback__head {
     gap: 3rem;
@@ -2882,10 +2804,6 @@ a {
 
   .display--feedback {
     margin-block-start: 1rem;
-    font-size: min(5.6vw, 6.5rem);
-    font-weight: 450;
-    letter-spacing: -0.02em;
-    line-height: 1.04;
   }
 
   .display--feedback span {
@@ -2909,10 +2827,6 @@ a {
     height: 1.25rem;
   }
 
-  .workana-rating__count {
-    font-size: 0.9375rem;
-  }
-
   .reviews {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1rem;
@@ -2921,10 +2835,6 @@ a {
 
   .review {
     padding: 1.875rem 1.75rem 1.75rem;
-  }
-
-  .review__quote {
-    font-size: 1rem;
   }
 
   .feedback__foot {
@@ -2945,7 +2855,7 @@ a {
   /* ---------- 05 About ---------- */
 
   .about {
-    padding-block: 5rem 0;
+    padding-block: var(--section-space) 0;
   }
 
   .about__backdrop {
@@ -2967,15 +2877,11 @@ a {
     grid-template-columns: minmax(0, 1fr) minmax(0, 24rem);
     column-gap: 4rem;
     margin-inline: var(--gutter) 14%;
-    padding-block-end: 5.5rem;
+    padding-block-end: var(--section-space);
   }
 
   .display--about {
     margin-block-start: 2.25rem;
-    font-size: min(5vw, 6.25rem);
-    font-weight: 450;
-    letter-spacing: -0.025em;
-    line-height: 1.04;
   }
 
   .about__aside {
@@ -2987,9 +2893,7 @@ a {
 
   .about__bio {
     margin: 0;
-    font-size: 1.03125rem;
     line-height: 1.6;
-    letter-spacing: 0;
   }
 
   .about .button {
@@ -2998,28 +2902,6 @@ a {
 
   /* ---------- 06 Final CTA ---------- */
 
-  .contact {
-    padding-block: 4.5rem 6rem;
-  }
-
-  /* Beside the copy: anchored bottom-right and capped in size so the device
-     clears the headline on narrower desktops. */
-  .contact__backdrop {
-    --backdrop-mask:
-      linear-gradient(90deg, transparent, #000 30%),
-      linear-gradient(180deg, transparent, #000 25%, #000 86%, transparent);
-
-    inset: auto 0 0 auto;
-    height: min(100%, 40vw);
-    aspect-ratio: 1672 / 941;
-    -webkit-mask-composite: source-in;
-    mask-composite: intersect;
-  }
-
-  .contact__backdrop img {
-    object-position: 100% 50%;
-  }
-
   .contact__body {
     width: auto;
     margin-inline: var(--gutter) calc(38.2% + 2rem);
@@ -3027,10 +2909,6 @@ a {
 
   .display--contact {
     margin-block-start: 1.75rem;
-    font-size: min(6.2vw, 7.25rem);
-    font-weight: 450;
-    letter-spacing: -0.02em;
-    line-height: 1;
   }
 
   .display--contact strong {
@@ -3054,9 +2932,7 @@ a {
     max-width: none;
     margin: 0;
     padding: 0;
-    font-size: 1.0625rem;
     line-height: 1.5;
-    letter-spacing: 0.01em;
   }
 
   /* ---------- Footer ---------- */
@@ -3068,17 +2944,12 @@ a {
   .site-footer__inner {
     padding-block-start: 1.5rem;
   }
-
-  .site-footer .mono-label {
-    font-size: 0.6875rem;
-    letter-spacing: 0.08em;
-  }
 }
 
 /* Small desktop (64–80rem): stack the denser rows */
 @media (min-width: 64rem) and (max-width: 79.999rem) {
   .ideas__tool {
-    grid-template-columns: minmax(0, 20rem) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 24rem) minmax(0, 1fr);
     column-gap: 3.5rem;
   }
 
@@ -3106,19 +2977,6 @@ a {
 
   .contact__note {
     max-width: 18rem;
-  }
-}
-
-/* Wide desktop: room for the CTA photo at the section's full height */
-@media (min-width: 90rem) {
-  .contact__backdrop {
-    --backdrop-mask:
-      linear-gradient(90deg, transparent, #000 34%),
-      linear-gradient(180deg, #000 86%, transparent);
-
-    inset: 0 0 0 22%;
-    height: auto;
-    aspect-ratio: auto;
   }
 }
 

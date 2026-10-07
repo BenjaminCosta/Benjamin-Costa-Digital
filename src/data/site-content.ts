@@ -24,8 +24,6 @@ export const backdrops = Object.freeze({
   reviewsDesktop: "/images/bg/reviews-dp-soft.jpg",
   work: "/images/bg/glass-devices-sunlight.png",
   about: "/images/bg/glass-laptop-soft.png",
-  contact: "/images/bg/cta.png",
-  contactDesktop: "/images/bg/cta-dp.png",
 });
 
 export const plannedProjectCount = 8;

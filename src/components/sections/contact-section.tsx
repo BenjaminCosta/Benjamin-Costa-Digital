@@ -1,7 +1,6 @@
 import { ButtonLink } from "@/components/ui/button-link";
-import { Backdrop } from "@/components/ui/backdrop";
 import { SectionHead } from "@/components/ui/section-head";
-import { backdrops, pricing } from "@/data/site-content";
+import { pricing } from "@/data/site-content";
 
 export function ContactSection() {
   return (
@@ -11,15 +10,6 @@ export function ContactSection() {
       aria-labelledby="contact-title"
       data-header-theme="dark"
     >
-      <Backdrop
-        src={backdrops.contact}
-        sizes="100vw"
-        desktopSrc={backdrops.contactDesktop}
-        desktopSizes="(min-width: 64rem) 78vw, 100vw"
-        desktopMedia="(min-width: 48rem)"
-        className="contact__backdrop"
-      />
-
       <div className="page-container indexed contact__body" data-reveal>
         <SectionHead index="06" title="Final CTA" desktopTitle="Contact" />
 
