@@ -25,7 +25,8 @@
 .sw-navigation { display: flex; align-items: center; gap: 2.5rem; }
 .sw-desktop-arrows { display: none; }
 .sw-body { position: relative; margin-block-start: 1.75rem; }
-.sw-title { font-size: clamp(2.5rem, 10.3vw, 4rem); font-weight: 450; line-height: 1.03; letter-spacing: -.045em; }
+/* Same title metrics as the other sections' headings (see .display--feedback). */
+.sw-title { font-size: min(9.8vw, 4.5rem); font-weight: 500; line-height: .98; letter-spacing: -.035em; }
 .sw-viewport { list-style: none; margin: 0; padding: 0; touch-action: pan-y pinch-zoom; outline-offset: 8px; }
 .sw-slide { list-style: none; }
 .sw-slide[hidden] { display: none; }
@@ -99,7 +100,7 @@
   .sw-desktop-arrows { display: flex; gap: .75rem; }
   .selected-work .sw-arrow { width: 3.5rem; height: 3.5rem; }
   .sw-body { margin-block-start: 1.875rem; }
-  .sw-title { position: absolute; z-index: 2; inset: 0 auto auto 0; width: 38%; font-size: clamp(3rem, 4.6vw, 4.75rem); pointer-events: none; }
+  .sw-title { position: absolute; z-index: 2; inset: 0 auto auto 0; width: 38%; font-size: clamp(3rem, 4.6vw, 4.75rem); font-weight: 450; line-height: 1.04; letter-spacing: -.02em; pointer-events: none; }
   .sw-project { grid-template-columns: minmax(0, .34fr) minmax(0, .66fr); min-height: clamp(30rem, 37vw, 37rem); align-items: end; }
   .sw-project__visual { grid-column: 2; grid-row: 1; align-self: center; aspect-ratio: 3 / 2; width: calc(100% + 3.5rem); margin: 0 0 0 -2rem; }
   .sw-project__copy { grid-column: 1; grid-row: 1; align-self: start; min-height: 0; padding: 12rem 0 2.25rem; }
