@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="color-scheme" content="light">
+  <title>Selected work — art direction study</title>
+  <style>
+    :root { color-scheme: light; --paper:#f7f5f0; --ink:#181c1d; --muted:#626863; --line:#deded5; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:auto; }
+    body { margin:0; background:var(--paper); color:var(--ink); font-family:Arial, Helvetica, sans-serif; -webkit-font-smoothing:antialiased; }
+    a { color:inherit; text-underline-offset:5px; }
+    a:focus-visible { outline:2px solid var(--ink); outline-offset:6px; border-radius:3px; }
+    .skip { position:absolute; top:-80px; left:24px; padding:12px; background:white; }
+    .skip:focus { top:12px; z-index:4; }
+    .wrap { width:min(1240px, calc(100% - 96px)); margin-inline:auto; }
+    header { padding:44px 0 64px; border-bottom:1px solid var(--line); }
+    .eyebrow { margin:0; font:11px/1.6 ui-monospace, monospace; text-transform:uppercase; letter-spacing:.13em; }
+    .sr-only { position:absolute; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip-path:inset(50%); white-space:nowrap; border:0; }
+    .topline { display:flex; justify-content:space-between; gap:20px; color:var(--muted); }
+    h1 { font-size:clamp(48px,6.6vw,88px); line-height:1.05; font-weight:400; letter-spacing:-.055em; margin:50px 0 24px; }
+    h1 em { font-family:Georgia, "Times New Roman", serif; font-weight:400; }
+    .intro { max-width:600px; font-size:16px; line-height:1.65; color:var(--muted); }
+    .brand-label { margin-top:38px; color:var(--muted); }
+    .brand-rail { display:flex; gap:16px; margin-top:14px; padding:8px 8px 16px; overflow-x:auto; overscroll-behavior-x:contain; scroll-snap-type:x proximity; scrollbar-width:thin; scrollbar-color:#b6b9ae transparent; }
+    .brand-selector { display:grid; gap:12px; justify-items:center; flex:0 0 108px; min-height:120px; padding:12px 6px; text-decoration:none; scroll-snap-align:start; border-radius:16px; transition:transform .18s ease; }
+    .brand-selector:hover { transform:translateY(-2px); }
+    .brand-selector:active { transform:translateY(1px); }
+    .isotipo-frame { width:64px; height:64px; display:grid; place-items:center; border-radius:16px; border:1px solid #ffffff; background:#ffffff75; box-shadow:inset 0 1px 0 #fff,0 8px 16px #333e3b0b; overflow:hidden; }
+    .isotipo-frame img { width:44px; height:44px; object-fit:contain; }
+    .isotipo-frame--mr-moustache { background:#242828; border-color:#4d5551; box-shadow:inset 0 1px 0 #ffffff33,0 8px 16px #333e3b12; }
+    .isotipo-frame--santos-becker { background:#fff; }
+    .isotipo-frame--decoratre img { width:54px; }
+    .isotipo-frame--a1-estudio img { width:100%; height:100%; object-fit:contain; }
+    .brand-selector__label { color:var(--muted); font-size:11px; line-height:1.5; text-align:center; }
+    .project { display:grid; grid-template-columns: .85fr 1.6fr; gap:30px; align-items:center; padding:64px 0; border-bottom:1px solid var(--line); }
+    .copy { padding:0 8px 0 0; }
+    .number { color:var(--muted); margin-bottom:24px; }
+    h2 { font-size:29px; line-height:1.12; letter-spacing:-.035em; font-weight:500; margin:0 0 10px; }
+    .brand-heading { height:56px; display:flex; align-items:center; margin-bottom:14px; }
+    .brand-wordmark { display:block; width:min(270px,100%); height:42px; filter:brightness(0); }
+    .brand-wordmark--agendify { width:210px; }
+    .brand-wordmark--decoratre { width:240px; }
+    .brand-heading--fallback { gap:12px; font-weight:600; }
+    .title-isotipo { width:34px; height:34px; object-fit:contain; }
+    .title-isotipo--a1-estudio { width:44px; height:44px; border-radius:8px; }
+    .category { font-size:13px; line-height:1.6; color:var(--muted); margin:0; }
+    .services { font:10px/1.8 ui-monospace,monospace; letter-spacing:.04em; color:var(--muted); margin:22px 0; }
+    h3 { font-size:23px; font-weight:400; line-height:1.3; letter-spacing:-.025em; margin:24px 0 16px; }
+    .description { font-size:14px; line-height:1.7; color:var(--muted); max-width:34ch; }
+    .visit { display:inline-flex; align-items:center; min-height:44px; margin-top:12px; font-size:13px; font-weight:500; }
+    .pending { color:var(--muted); font-size:12px; line-height:1.6; margin-top:24px; }
+    figure { margin:0; min-width:0; }
+    .mockup-concept { width:100%; height:auto; display:block; aspect-ratio:3/2; border-radius:4px; }
+    .scene { position:relative; aspect-ratio:1.35; isolation:isolate; overflow:hidden; background:linear-gradient(130deg,#eeeae1,#fbfaf7 55%,#e9e6df); border-radius:4px; }
+    .scene::before { content:""; position:absolute; inset:12% 2% 12% 30%; border:1px solid #fff; border-radius:18px; transform:rotate(-7deg); background:linear-gradient(125deg,#ffffff7a,#ffffff0a); box-shadow:inset 0 0 0 1px #ffffff90, 0 12px 22px #3941400d; z-index:-1; }
+    .scene::after { content:""; position:absolute; width:100%; height:12%; bottom:3%; background:radial-gradient(ellipse,#272f301c,transparent 70%); z-index:-1; }
+    .laptop { position:absolute; top:18%; left:7%; width:78%; padding:1.4%; background:linear-gradient(140deg,#61635f,#121412 16%,#161816 85%,#747973); border-radius:clamp(8px,1.4vw,18px); transform:rotate(-4deg); box-shadow:0 20px 30px #333c3922,0 0 0 1px #999d95; }
+    .screen { display:block; width:100%; height:auto; aspect-ratio:1.37; object-fit:cover; object-position:top; border-radius:3px; }
+    .laptop::after { content:""; position:absolute; width:110%; height:4%; left:-5%; bottom:-3.5%; border-radius:2px 2px 45% 45%; background:linear-gradient(#eff0e8,#a3a7a2 30%,#d8dbd4 65%,#797e76); box-shadow:0 7px 8px #2c333b16; }
+    .phone { position:absolute; width:25%; bottom:6%; right:6%; padding:1.1%; background:linear-gradient(140deg,#8b8e87,#151716 12%,#171918 88%,#9b9e94); border-radius:clamp(16px,2.7vw,32px); transform:rotate(3deg); box-shadow:0 15px 22px #30363333,0 0 0 1px #acb1a7; }
+    .phone img { display:block; width:100%; height:auto; aspect-ratio:724/1567; object-fit:cover; object-position:top; border-radius:clamp(12px,2.3vw,26px); }
+    figcaption { display:flex; flex-wrap:wrap; justify-content:space-between; gap:6px 20px; margin:16px 0 0; font:10px/1.6 ui-monospace,monospace; color:var(--muted); }
+    .sources { display:flex; gap:14px; }
+    .sources a { display:inline-flex; min-height:44px; align-items:center; }
+    .concept { padding:72px 0; }
+    .concept h2 { font-weight:400; font-size:clamp(28px,4vw,46px); }
+    .concept p { max-width:720px; font-size:14px; line-height:1.7; color:var(--muted); }
+    .concept img { width:100%; height:auto; display:block; margin-top:32px; border-radius:4px; }
+    footer { padding:30px 0 50px; font-size:12px; color:var(--muted); line-height:1.7; }
+    @media (max-width:800px) {
+      .wrap { width:calc(100% - 40px); }
+      header { padding:28px 0 40px; }
+      .topline { flex-direction:column; gap:6px; }
+      h1 { margin-top:34px; }
+      .brand-rail { gap:10px; margin-inline:-8px; }
+      .brand-selector { flex-basis:100px; }
+      .project { grid-template-columns:1fr; gap:28px; padding:44px 0; }
+      .copy { padding:0; }
+      .project figure { order:-1; }
+      .number { margin-bottom:16px; }
+      .description { max-width:50ch; }
+      .scene { aspect-ratio:1.15; }
+      .laptop { top:20%; left:4%; width:80%; }
+      .phone { width:28%; bottom:8%; right:4%; }
+      .concept { padding:48px 0; }
+    }
+    @media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } .brand-selector { transition:none; } }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#projects">Skip to projects</a>
+  <header>
+    <div class="wrap">
+      <div class="topline"><p class="eyebrow">Benjamin Costa / Selected work study</p><p class="eyebrow">7 projects · Draft, not live</p></div>
+      <h1>A few things<br><em>I’ve built.</em></h1>
+      <p class="intro">Real brands, real work. Original wordmarks for the project titles and isotipos for the horizontal selector. Screen captures stay unchanged; glass, sunlight and perspective are explored separately. Copy and unconfirmed services are drafts.</p>
+      <p class="eyebrow brand-label">Explore the projects</p>
+      <nav class="brand-rail" aria-label="Projects — scroll horizontally to explore">
+        <a href="#01-mr-moustache" class="brand-selector" aria-label="View Mr Moustache project"><span class="isotipo-frame isotipo-frame--mr-moustache"><img src="brand-assets/isotipos/mr-moustache.png" width="48" height="48" alt="" decoding="async"></span><span class="brand-selector__label">Mr Moustache</span></a>
+        <a href="#02-kirra-dive" class="brand-selector" aria-label="View Kirra Dive project"><span class="isotipo-frame isotipo-frame--kirra-dive"><img src="brand-assets/isotipos/kirra-dive.png" width="48" height="48" alt="" decoding="async"></span><span class="brand-selector__label">Kirra Dive</span></a>
+        <a href="#03-santos-becker" class="brand-selector" aria-label="View Santos &amp; Becker project"><span class="isotipo-frame isotipo-frame--santos-becker"><img src="brand-assets/isotipos/santos-becker.png" width="48" height="48" alt="" decoding="async"></span><span class="brand-selector__label">Santos &amp; Becker</span></a>
+        <a href="#04-agendify" class="brand-selector" aria-label="View Agendify project"><span class="isotipo-frame isotipo-frame--agendify"><img src="brand-assets/isotipos/agendify.png" width="48" height="48" alt="" decoding="async"></span><span class="brand-selector__label">Agendify</span></a>
+        <a href="#05-stockia" class="brand-selector" aria-label="View StockIA project"><span class="isotipo-frame isotipo-frame--stockia"><img src="brand-assets/isotipos/stockia.png" width="48" height="48" alt="" decoding="async"></span><span class="brand-selector__label">StockIA</span></a>
+        <a href="#06-decoratre" class="brand-selector" aria-label="View Decoratre project"><span class="isotipo-frame isotipo-frame--decoratre"><img src="brand-assets/isotipos/decoratre.png" width="48" height="48" alt="" decoding="async"></span><span class="brand-selector__label">Decoratre</span></a>
+        <a href="#07-a1-estudio" class="brand-selector" aria-label="View A1 Estudio project"><span class="isotipo-frame isotipo-frame--a1-estudio"><img src="brand-assets/isotipos/a1-estudio.png" width="48" height="48" alt="" decoding="async"></span><span class="brand-selector__label">A1 Estudio</span></a>
+      </nav>
+    </div>
+  </header>
+  <main class="wrap" id="projects">
+    <article class="project" id="01-mr-moustache" aria-labelledby="01-mr-moustache-title">
+      <div class="copy">
+        <p class="eyebrow number">01 / 07</p>
+        <h2 id="01-mr-moustache-title" class="brand-heading"><span class="sr-only">Mr Moustache</span><svg class="brand-wordmark brand-wordmark--mr-moustache" viewBox="250 250 1570 250" aria-hidden="true" focusable="false"><image href="brand-assets/logos/mr_moustache_logo_transparente_hq.png" width="2048" height="715"/></svg></h2>
+        <p class="category">Barbershop · Gold Coast, AU</p>
+        <p class="services">Website / Bookings / Automations</p>
+        <h3>Two shops, one digital experience.</h3>
+        <p class="description">A website connecting both locations with a clearer path to booking.</p>
+        <a class="visit" href="https://moustachebarbersgc.com/" target="_blank" rel="noopener noreferrer">Visit website ↗<span style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)"> (opens in a new tab)</span></a>
+      </div>
+      <figure>
+        <img class="mockup-concept" src="concepts/mr-moustache-glass-v2.png" width="1536" height="1024" decoding="async" alt="Mr Moustache glass v2 concept: angled silver laptop and upright phone, warm palm shadows and beveled clear glass">
+        <figcaption><span>Glass v2 / AI scene study — verify screen details</span><span class="sources"><a href="source-captures/desktop/01-mr-moustache-home.png">Original desktop</a><a href="source-captures/mobile/01-mr-moustache-home.png">Original mobile</a></span></figcaption>
+      </figure>
+    </article>
+    <article class="project" id="02-kirra-dive" aria-labelledby="02-kirra-dive-title">
+      <div class="copy">
+        <p class="eyebrow number">02 / 07</p>
+        <h2 id="02-kirra-dive-title" class="brand-heading"><span class="sr-only">Kirra Dive</span><svg class="brand-wordmark brand-wordmark--kirra-dive" viewBox="150 170 1770 245" aria-hidden="true" focusable="false"><image href="brand-assets/logos/kirra_dive_logo_transparente_real.png" width="2048" height="473"/></svg></h2>
+        <p class="category">Dive centre · Tweed Heads, AU</p>
+        <p class="services">Website / Booking platform</p>
+        <h3>From the first question to the first dive.</h3>
+        <p class="description">A focused course experience with a clearer path to booking.</p>
+        <p class="pending">Landing link to confirm — no placeholder link.</p>
+      </div>
+      <figure>
+        <img class="mockup-concept" src="concepts/kirra-dive-glass-v2.png" width="1536" height="1024" loading="lazy" decoding="async" alt="Kirra Dive glass v2 concept: teal diving website on an angled silver laptop and black phone, warm palm shadows and beveled glass">
+        <figcaption><span>Glass v2 / AI scene study — verify screen details</span><span class="sources"><a href="source-captures/desktop/02-kirra-dive-home.png">Original desktop</a><a href="source-captures/mobile/02-kirra-dive-home.png">Original mobile</a></span></figcaption>
+      </figure>
+    </article>
+    <article class="project" id="03-santos-becker" aria-labelledby="03-santos-becker-title">
+      <div class="copy">
+        <p class="eyebrow number">03 / 07</p>
+        <h2 id="03-santos-becker-title" class="brand-heading"><span class="sr-only">Santos &amp; Becker</span><svg class="brand-wordmark brand-wordmark--santos-becker" viewBox="120 80 1800 215" aria-hidden="true" focusable="false"><image href="brand-assets/logos/santos_becker_logo_transparente_real_v2.png" width="2048" height="376"/></svg></h2>
+        <p class="category">Immigration consulting · Mexico</p>
+        <p class="services">Website / Multilingual UX · proposed scope</p>
+        <h3>A clearer digital presence for a global practice.</h3>
+        <p class="description">An editorial website bringing services, expertise and enquiries together.</p>
+        <p class="pending">New version link to confirm — no placeholder link.</p>
+      </div>
+      <figure>
+        <div class="scene">
+          <div class="laptop"><img class="screen" src="source-captures/desktop/03-santos-becker-home.png" width="1288" height="940" alt="Santos &amp; Becker desktop homepage, original capture" loading="lazy" decoding="async"></div>
+          <div class="phone"><img src="source-captures/mobile/03-santos-becker-home.png" width="724" height="1567" alt="Santos &amp; Becker mobile homepage, original capture" loading="lazy" decoding="async"></div>
+        </div>
+        <figcaption><span>Original captures / CSS device study</span><span class="sources"><a href="source-captures/desktop/03-santos-becker-home.png">Desktop capture</a><a href="source-captures/mobile/03-santos-becker-home.png">Mobile capture</a></span></figcaption>
+      </figure>
+    </article>
+    <article class="project" id="04-agendify" aria-labelledby="04-agendify-title">
+      <div class="copy">
+        <p class="eyebrow number">04 / 07</p>
+        <h2 id="04-agendify-title" class="brand-heading"><span class="sr-only">Agendify</span><svg class="brand-wordmark brand-wordmark--agendify" viewBox="420 440 1210 300" aria-hidden="true" focusable="false"><image href="brand-assets/logos/agendify_logo_transparente_hq.png" width="2048" height="1153"/></svg></h2>
+        <p class="category">Scheduling product · location to confirm</p>
+        <p class="services">Website / Booking product / Automation · proposed scope</p>
+        <h3>Bookings, without the back-and-forth.</h3>
+        <p class="description">A product experience for scheduling and customer communication.</p>
+        <p class="pending">Current version link to confirm — no placeholder link.</p>
+      </div>
+      <figure>
+        <div class="scene">
+          <div class="laptop"><img class="screen" src="source-captures/desktop/04-agendify-home.png" width="1316" height="906" alt="Agendify desktop homepage, original capture" loading="lazy" decoding="async"></div>
+          <div class="phone"><img src="source-captures/mobile/04-agendify-home.png" width="724" height="1567" alt="Agendify mobile homepage, original capture" loading="lazy" decoding="async"></div>
+        </div>
+        <figcaption><span>Original captures / CSS device study</span><span class="sources"><a href="source-captures/desktop/04-agendify-home.png">Desktop capture</a><a href="source-captures/mobile/04-agendify-home.png">Mobile capture</a></span></figcaption>
+      </figure>
+    </article>
+    <article class="project" id="05-stockia" aria-labelledby="05-stockia-title">
+      <div class="copy">
+        <p class="eyebrow number">05 / 07</p>
+        <h2 id="05-stockia-title" class="brand-heading brand-heading--fallback"><img class="title-isotipo title-isotipo--stockia" src="brand-assets/isotipos/stockia.png" width="44" height="44" alt="" aria-hidden="true"><span>StockIA</span></h2>
+        <p class="category">Wholesale commerce · Argentina, per capture</p>
+        <p class="services">E-commerce / Custom platform · proposed scope</p>
+        <h3>Wholesale ordering, in one place.</h3>
+        <p class="description">A commerce experience connecting product discovery, repeat orders and suppliers.</p>
+        <p class="pending">Project link to confirm — no placeholder link.</p>
+      </div>
+      <figure>
+        <div class="scene">
+          <div class="laptop"><img class="screen" src="source-captures/desktop/05-stockia-home.png" width="1316" height="906" alt="StockIA desktop homepage, original capture" loading="lazy" decoding="async"></div>
+          <div class="phone"><img src="source-captures/mobile/05-stockia-home.png" width="724" height="1567" alt="StockIA mobile homepage, original capture" loading="lazy" decoding="async"></div>
+        </div>
+        <figcaption><span>Original captures / CSS device study</span><span class="sources"><a href="source-captures/desktop/05-stockia-home.png">Desktop capture</a><a href="source-captures/mobile/05-stockia-home.png">Mobile capture</a></span></figcaption>
+      </figure>
+    </article>
+    <article class="project" id="06-decoratre" aria-labelledby="06-decoratre-title">
+      <div class="copy">
+        <p class="eyebrow number">06 / 07</p>
+        <h2 id="06-decoratre-title" class="brand-heading"><span class="sr-only">Decoratre</span><svg class="brand-wordmark brand-wordmark--decoratre" viewBox="90 20 1900 270" aria-hidden="true" focusable="false"><image href="brand-assets/logos/decoratre_logo_transparente_real.png" width="2048" height="324"/></svg></h2>
+        <p class="category">Handcrafted furniture · location to confirm</p>
+        <p class="services">Website / E-commerce · proposed scope</p>
+        <h3>Craftsmanship, translated into a digital storefront.</h3>
+        <p class="description">An editorial shopping experience built around the products and their story.</p>
+        <p class="pending">Store link to confirm — no placeholder link.</p>
+      </div>
+      <figure>
+        <div class="scene">
+          <div class="laptop"><img class="screen" src="source-captures/desktop/06-decoratre-home.png" width="1316" height="906" alt="Decoratre desktop homepage, original capture" loading="lazy" decoding="async"></div>
+          <div class="phone"><img src="source-captures/mobile/06-decoratre-home.png" width="724" height="1445" alt="Decoratre mobile homepage, original capture" loading="lazy" decoding="async"></div>
+        </div>
+        <figcaption><span>Original captures / CSS device study</span><span class="sources"><a href="source-captures/desktop/06-decoratre-home.png">Desktop capture</a><a href="source-captures/mobile/06-decoratre-home.png">Mobile capture</a></span></figcaption>
+      </figure>
+    </article>
+    <article class="project" id="07-a1-estudio" aria-labelledby="07-a1-estudio-title">
+      <div class="copy">
+        <p class="eyebrow number">07 / 07</p>
+        <h2 id="07-a1-estudio-title" class="brand-heading brand-heading--fallback"><img class="title-isotipo title-isotipo--a1-estudio" src="brand-assets/isotipos/a1-estudio.png" width="44" height="44" alt="" aria-hidden="true"><span>A1 Estudio</span></h2>
+        <p class="category">Food direction · Buenos Aires, per capture</p>
+        <p class="services">Website / Editorial design · proposed scope</p>
+        <h3>A bold digital presence for food direction.</h3>
+        <p class="description">An editorial website for a studio working across concept, kitchens and operations.</p>
+        <p class="pending">Project link to confirm — no placeholder link.</p>
+      </div>
+      <figure>
+        <div class="scene">
+          <div class="laptop"><img class="screen" src="source-captures/desktop/07-a1-estudio-home.png" width="1316" height="906" alt="A1 Estudio desktop homepage, original capture" loading="lazy" decoding="async"></div>
+          <div class="phone"><img src="source-captures/mobile/07-a1-estudio-home.png" width="724" height="1567" alt="A1 Estudio mobile homepage, original capture" loading="lazy" decoding="async"></div>
+        </div>
+        <figcaption><span>Original captures / CSS device study</span><span class="sources"><a href="source-captures/desktop/07-a1-estudio-home.png">Desktop capture</a><a href="source-captures/mobile/07-a1-estudio-home.png">Mobile capture</a></span></figcaption>
+      </figure>
+    </article>
+    <section class="concept" aria-labelledby="concept-title">
+      <p class="eyebrow">Materials / lighting</p>
+      <h2 id="concept-title">The earlier direction, for comparison.</h2>
+      <p>These v1 concepts are kept to compare against the more dimensional v2 direction in the project cards. Generated scenes can alter small screen details and are not approved production media. Original captures remain available beside each project. The CSS device studies keep those files unchanged. Final captions and links remain HTML.</p>
+      <img src="concepts/mr-moustache-glass-v1.png" width="1536" height="1024" loading="lazy" decoding="async" alt="Generated concept of Mr Moustache on a silver laptop and black phone, with soft sunlight and clear glass behind them">
+      <p>Kirra Dive uses the same material and lighting direction, keeping its ocean imagery inside the website. Both generated concepts are review drafts, not exact screenshot composites.</p>
+      <img src="concepts/kirra-dive-glass-v1.png" width="1536" height="1024" loading="lazy" decoding="async" alt="Generated matching Kirra Dive concept on a silver laptop and black phone with underwater website imagery and clear glass behind the devices">
+    </section>
+  </main>
+  <footer class="wrap">Art direction only. No changes to the published landing page or business ideas tool. Brand files are original supplied assets; clean exports and unconfirmed project URLs are still needed. StockIA has no supplied wordmark, and A1’s wordmark export is damaged, so those titles use the isotipo plus text.</footer>
+</body>
+</html>

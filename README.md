@@ -7,7 +7,7 @@ Benjamin Costa's personal and business website. The design from main is integrat
 - Next.js App Router
 - TypeScript
 - Tailwind CSS
-- React Server Components by default, with one interactive island for the business ideas tool
+- React Server Components by default, with isolated interactive controllers for business ideas and selected-work navigation
 - AI SDK + direct OpenAI Responses API for server-only structured generation
 - Vercel deployment target
 
@@ -57,6 +57,10 @@ The economical default is `gpt-6-luna`, with reasoning disabled, standard servic
 No database, authentication, CMS, analytics or new animation library was added. The original plan is in [business ideas plan](docs/business-ideas-plan.md).
 ## Design system
 
-Tokens live at the top of `src/app/globals.css`: Inter Tight for display and body copy, IBM Plex Mono for labels, a paper/ink palette with no accent colour, and editorial motion timings. Layouts follow the approved mobile and desktop mockups (desktop from 64rem, with a numbered index column); section backgrounds use the glass/acrylic photography in `public/images/bg` through the decorative `Backdrop` component, and project image areas render neutral placeholders (`MediaSlot`) until final photography is added.
+Tokens live at the top of `src/app/globals.css`: Inter Tight for display and body copy, IBM Plex Mono for labels, a paper/ink palette, and editorial motion timings. Section backgrounds use decorative glass/acrylic photography. Selected work has its own scoped styles in `src/components/sections/selected-work.css` and typed content in `src/data/selected-work.ts`.
+
+Selected work shows one of seven projects at a time on desktop and mobile, with arrows, swipe, keyboard navigation and original client isotipos. Static project markup is server-rendered. Only the small controller runs on the client; there is no autoplay or animation dependency. Mockups use lazy `next/image`, with the next image loaded on navigation intent before swapping slides. Reduced-motion preferences are respected. Optimized WebP exports live in `public/images/work/`; original captures and generation prompts are preserved under `assets/selected-work/`.
+
+Mr Moustache links to its confirmed website. The other six links open authentic screenshot previews until exact live project URLs are confirmed. Generated mockup screens are illustrative, not pixel-exact evidence of the delivered interfaces. The existing Custom Operations Platform record is preserved as pending, not misidentified as StockIA. See [selected work notes](docs/selected-work-direction.md).
 
 The section 02 design now uses the real OpenAI endpoint, source/evidence validation and contextual WhatsApp links, not preview results. Broader production evaluation and Vercel protections remain required before launch.

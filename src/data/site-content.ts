@@ -1,4 +1,4 @@
-import type { IdeaIconName, IdeaOption, Project, Testimonial } from "@/types/content";
+import type { IdeaIconName, IdeaOption, Testimonial } from "@/types/content";
 import type { BusinessAreaId, BusinessGoalId } from "@/types/business-ideas";
 import { businessGoals } from "@/data/business-goals";
 
@@ -22,33 +22,7 @@ export const backdrops = Object.freeze({
 
 export const plannedProjectCount = 8;
 
-export const projects: readonly Project[] = [
-  {
-    id: "mr-moustache",
-    name: "Mr Moustache",
-    category: "Barbershop",
-    location: "Gold Coast, AU",
-    services: ["Website", "Bookings", "Automations"],
-    summary: "Two shops, one digital experience.",
-    description:
-      "Two shops, bookings spread across platforms and no site that sold the place. Now one site, Square bookings connected, and the follow-ups go out on their own.",
-  },
-  {
-    id: "kirra-dive",
-    name: "Kirra Dive",
-    location: "Tweed Heads, AU",
-    services: ["Website", "Booking platform"],
-    summary:
-      "A simpler, clearer way for customers to find the right dive and book it.",
-  },
-  {
-    id: "custom-operations-platform",
-    name: "Custom Operations Platform",
-    location: "USA",
-    services: ["Internal software", "Dashboards", "Automation"],
-    summary: "Software built to keep people, jobs and operations in one place.",
-  },
-];
+export { selectedWorkProjects as projects } from "./selected-work";
 
 /**
  * Public Workana profile. Figures and reviews were transcribed from the

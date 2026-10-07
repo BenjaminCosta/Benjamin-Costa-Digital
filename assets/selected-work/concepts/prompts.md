@@ -1,0 +1,23 @@
+# Mockup concepts
+
+Mode: built-in image generation with local references. Review concepts only; not production media. Original UI and logos must be checked against source captures before export/integration.
+
+## Kirra Dive — v1
+
+References: desktop/02-kirra-dive-home.png, mobile/02-kirra-dive-home.png and Mr Moustache v1 (style/composition only).
+
++Use case: product-mockup. Asset type: standalone portfolio project media, landscape 3:2.
+Input roles: Image 1: authentic Kirra Dive DESKTOP homepage screenshot. Image 2: authentic Kirra Dive MOBILE homepage screenshot. Image 3: STYLE/composition anchor, previously generated Mr Moustache mockup. Do not reuse any barber website content from Image 3.
+Create the matching Kirra Dive image for the same editorial portfolio series: premium photorealistic slim silver laptop centre-left and upright black phone overlapping the lower right bezel, devices fully visible with generous safe margins, nearly frontal restrained camera angle, large crisp screens. Warm off-white architectural surface and quiet daylight with faint palm shadows only on the backdrop; clear glass/acrylic support with thin beveled edges behind devices, subtle refraction, realistic contact shadows. Match the restrained device size, ivory warmth and lighting of Image 3; remove all Mr Moustache identity.
+Place Image 1's actual desktop website inside laptop, Image 2's actual mobile website inside phone, preserving real logo including circular dive emblem, underwater turtle photograph, teal ocean scene, blue booking buttons and typography. Desktop headline verbatim "LEARN TO DIVE. START LOCAL." Mobile headline verbatim "LEARN TO DIVE. START LOCAL." Preserve screenshot structure and actual PADI course content; no redesign, no added dashboard or invented booking flow. The glass should not cover any important screen content. Tiny source text may be naturally small, do not fabricate claims or pricing. Use supplied real screenshots, not an invented website.
+No outer phone containing the whole scene; no portfolio title, caption, carousel controls, extra project, logo floating outside screens, watermark, sea creatures or additional props outside screens. The ocean belongs inside the authentic website only. Output a polished reviewing concept, not an entire section design.
+
+## Mr Moustache — v1
+
+References: desktop/01-mr-moustache-home.png, mobile/01-mr-moustache-home.png and the user's tall Selected Work visual reference (style only).
+
++Use case: product-mockup. Asset type: standalone portfolio project media, landscape 3:2, not an entire webpage.
+Input roles: Image 1 is the real Mr Moustache DESKTOP homepage screenshot; Image 2 is the real MOBILE homepage screenshot; Image 3 is a STYLE/lighting reference only (the user's tall phone-section reference).
+Create a premium photorealistic laptop and phone mockup on a warm off-white architectural studio surface. Slim silver laptop on the left/centre in a restrained almost frontal three-quarter view, upright black phone overlapping only its lower right bezel, both devices fully visible, substantial screen area, modest elegant perspective, not dramatic tilting. Place the authentic desktop capture from Image 1 inside the laptop screen; place the authentic mobile capture from Image 2 inside the phone screen. Preserve the real circular Mr Moustache logo, real barbershop photography, black website background, turquoise booking button, and exact main headline: "Good cuts. Good people. Proper barbering." Do NOT substitute the different fake headline shown in the style reference. Screen screenshots must look like the supplied website, not a new web design. Tiny original text may become naturally small at scale; do not invent additional claims, ratings, slogans, menus, interface features or results.
+Style: extremely clean modern editorial presentation; one subtle clear beveled acrylic/glass slab partly behind the devices, thin bright edges, soft realistic refraction and contact shadows. Warm natural daylight from upper left, faint soft palm shadows on the background only, calm generous breathing room. Glass is a quiet supporting detail, never obscures screen content; no exaggerated rainbow colors or glow, no scene props.
+Layout: device grouping centered within this standalone visual with safe margins, a very pale warm ivory background. NO surrounding outer iPhone enclosing the scene. NO portfolio heading, counter, captions, project name outside screens, CTA buttons, carousel UI or fake adjacent project. Those will be real HTML later. NO watermark. Reference 3 only guides the glass material and sunny warmth. Output a polished concept for reviewing art direction, with clear readable large website headline and logo.

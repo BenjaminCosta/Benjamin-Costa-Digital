@@ -18,6 +18,16 @@ export type Project = Readonly<{
   description?: string;
   href?: string;
   image?: ImageAsset;
+  /** Supplied brand assets; never recreate client lettering with a font. */
+  isotipo?: string;
+  wordmark?: Readonly<{
+    src: string;
+    width: number;
+    height: number;
+    viewBox: string;
+  }>;
+  /** Original capture, used when the live deployment has not been confirmed. */
+  previewHref?: string;
 }>;
 
 export type Testimonial = Readonly<{
