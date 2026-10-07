@@ -38,25 +38,48 @@ export type Testimonial = Readonly<{
   source: "Workana";
 }>;
 
-export type IdeaIconName =
+/** 3D glass icons in /public/images/icons (file name without extension). */
+export type GlassIconName =
+  | "bag"
   | "calendar"
-  | "gear"
-  | "monitor"
-  | "bulb"
+  | "calendar-2"
   | "compass"
-  | "search"
-  | "chart"
-  | "users"
+  | "cubes"
   | "flow"
-  | "grid"
+  | "funnel"
+  | "gear"
+  | "lightbulb"
+  | "location-pin"
+  | "monitor"
+  | "search"
   | "sparkle"
-  | "pin"
-  | "cube"
-  | "phone"
-  | "bag";
+  | "sync"
+  | "window-clock";
+
+/** Platforms with an official mark we can show next to an idea. */
+export type Brand =
+  | "google"
+  | "google-calendar"
+  | "gmail"
+  | "whatsapp"
+  | "instagram"
+  | "facebook"
+  | "tiktok"
+  | "square"
+  | "shopify"
+  | "stripe"
+  | "xero"
+  | "calendly"
+  | "google-analytics"
+  | "zapier"
+  | "airtable"
+  | "supabase"
+  | "firebase"
+  | "figma"
+  | "claude";
 
 export type IdeaAnswer = Readonly<{
-  icon: IdeaIconName;
+  icon: GlassIconName;
   title: string;
   text: string;
 }>;
@@ -65,7 +88,7 @@ export type IdeaAnswer = Readonly<{
 export type IdeaOption = Readonly<{
   id: BusinessGoalId;
   label: string;
-  icon: IdeaIconName;
+  icon: GlassIconName;
   /** Line shown above the instant answers (or on its own when there are none). */
   intro: string;
   answers: readonly IdeaAnswer[];

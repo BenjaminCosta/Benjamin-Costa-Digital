@@ -1,19 +1,11 @@
 import { ArrowIcon } from "@/components/ui/arrow-icon";
+import { ArtDirectedPicture } from "@/components/ui/art-directed-picture";
 import { ButtonLink } from "@/components/ui/button-link";
-import { Backdrop } from "@/components/ui/backdrop";
-import { backdrops } from "@/data/site-content";
+import { heroImage } from "@/data/site-content";
 
 export function HeroSection() {
   return (
     <section className="hero" aria-labelledby="hero-title">
-      <Backdrop
-        src={backdrops.hero}
-        sizes="100vw"
-        desktopSrc={backdrops.heroDesktop}
-        className="hero__backdrop"
-        eager
-      />
-
       <div className="hero__panel">
         <div className="page-container indexed hero__body">
           <span className="indexed__index only-desktop" aria-hidden="true">
@@ -41,6 +33,20 @@ export function HeroSection() {
           </div>
         </div>
       </div>
+
+      {/* Portrait crop beside the copy on desktop, landscape under it on
+          tablets, portrait under it on phones. */}
+      <ArtDirectedPicture
+        src={heroImage.portrait}
+        sizes="100vw"
+        sources={[
+          { media: "(min-width: 64rem)", src: heroImage.portrait, sizes: "39vw" },
+          { media: "(min-width: 48rem)", src: heroImage.landscape, sizes: "100vw" },
+        ]}
+        className="hero__media"
+        quality={75}
+        eager
+      />
     </section>
   );
 }
