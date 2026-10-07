@@ -119,7 +119,6 @@ export const ideasCopy = Object.freeze({
   submitting: "Finding ideas…",
   changeOption: "Change option",
   talkInstead: "Talk to Ben instead",
-  microcopy: "Three starting points, followed by a personal conversation.",
   loadingTitle: "Finding ideas for your business…",
   // One request does all three; the steps pace what it is doing.
   loadingSteps: {
@@ -140,9 +139,4 @@ export const ideasCopy = Object.freeze({
   closeNote: "WhatsApp opens with your business context, goal and ideas. You decide whether to send the message.",
   tryAnother: "Or try another option",
   restart: "Start again",
-  basis: {
-    public: "From public info",
-    owner: "From your description",
-    explore: "Worth exploring",
-  },
 });
