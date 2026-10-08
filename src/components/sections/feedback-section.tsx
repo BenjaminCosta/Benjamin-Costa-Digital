@@ -1,22 +1,17 @@
+import Image from "next/image";
 import { ArrowIcon } from "@/components/ui/arrow-icon";
-import { Backdrop } from "@/components/ui/backdrop";
-import { SectionHead } from "@/components/ui/section-head";
-import { VerifiedBadge } from "@/components/ui/verified-badge";
 import { WorkanaLogo } from "@/components/ui/workana-logo";
-import { backdrops, testimonials, workana } from "@/data/site-content";
+import { VerifiedBadge } from "@/components/ui/verified-badge";
+import { LinkedInProfileLink } from "@/components/ui/linkedin-profile-link";
+import { socialProfiles } from "@/data/social-profiles";
+import { ReviewCarousel } from "./review-carousel";
+import { carouselTestimonials, workana } from "@/data/workana";
+import type { Testimonial } from "@/types/content";
+import "./feedback-section.css";
 
-const initials = (name: string) =>
-  name
-    .split(" ")
-    .filter((part) => /^\p{L}/u.test(part))
-    .map((part) => part[0])
-    .slice(0, 2)
-    .join("")
-    .toUpperCase();
-
-function Stars({ className }: Readonly<{ className?: string }>) {
+function Stars() {
   return (
-    <span className={className ? `stars ${className}` : "stars"} aria-hidden="true">
+    <span className="wk-stars" aria-hidden="true">
       {Array.from({ length: 5 }, (_, index) => (
         <svg key={index} viewBox="0 0 20 20" focusable="false">
           <path d="M10 1.2l2.6 5.6 6.1.7-4.5 4.2 1.2 6.1L10 14.8l-5.4 3 1.2-6.1L1.3 7.5l6.1-.7z" />
@@ -26,87 +21,86 @@ function Stars({ className }: Readonly<{ className?: string }>) {
   );
 }
 
+function BriefcaseIcon() {
+  return (
+    <svg className="wk-briefcase" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true" focusable="false">
+      <rect x="2.5" y="7" width="19" height="14" rx="2" />
+      <path d="M8 7V4.5A1.5 1.5 0 0 1 9.5 3h5A1.5 1.5 0 0 1 16 4.5V7M3 12h18" />
+    </svg>
+  );
+}
+
+function ProfileLink({ className }: Readonly<{ className: string }>) {
+  return (
+    <a className={className} href={workana.profileUrl} target="_blank" rel="noopener noreferrer">
+      <span className="wk-profile-link__label">Open Workana profile</span><ArrowIcon direction="up-right" />
+      <span className="visually-hidden"> (opens in a new tab)</span>
+    </a>
+  );
+}
+
+function ProfileLinks({ className }: Readonly<{ className: string }>) {
+  return (
+    <nav className={className} aria-label="Professional profiles">
+      <ProfileLink className="wk-profile-link" />
+      <LinkedInProfileLink href={socialProfiles.linkedin} />
+    </nav>
+  );
+}
+
+function ReviewCard({ review }: Readonly<{ review: Testimonial }>) {
+  const initials = review.author.split(" ").map((part) => part[0]).slice(0, 2).join("").toUpperCase();
+  return (
+    <li className="wk-review">
+      <figure>
+        <div className="wk-review__top">
+          <Stars />
+          <span className="visually-hidden">Rated {review.rating} out of 5.</span>
+          <span className="wk-source"><span>From</span><WorkanaLogo /></span>
+        </div>
+        <blockquote className="wk-review__quote"><p>“{review.quote}”</p></blockquote>
+        <figcaption className="wk-review__author">
+          <span className="wk-review__avatar" aria-hidden="true">{initials}</span>
+          <span><span className="wk-review__name">{review.author}</span><span className="wk-review__project">{review.project}</span></span>
+        </figcaption>
+        <ul className="wk-review__tags" role="list" aria-label="Project focus">
+          {review.tags.map((tag, index) => <li key={tag}>{index === 0 ? <BriefcaseIcon /> : null}{tag}</li>)}
+        </ul>
+      </figure>
+    </li>
+  );
+}
+
 export function FeedbackSection() {
   return (
-    <section
-      id="feedback"
-      className="section feedback"
-      aria-labelledby="feedback-title"
-      data-brand="workana"
-    >
-      <Backdrop
-        src={backdrops.reviews}
-        sizes="160vw"
-        desktopSrc={backdrops.reviewsDesktop}
-        className="feedback__backdrop"
-      />
-
-      <div className="page-container indexed feedback__body" data-reveal>
-        <SectionHead index="04" title="Client feedback" />
-
-        <div className="feedback__head">
-          <div className="feedback__heading">
-            <p className="feedback__verified">
-              <VerifiedBadge />
-              Workana verified
-            </p>
-            <h2 id="feedback-title" className="display display--feedback">
-              <span>What</span> <span>clients say.</span>
-            </h2>
+    <section id="feedback" className="section feedback workana-feedback" aria-labelledby="feedback-title" data-brand="workana">
+      <div className="page-container wk-feedback__body">
+        <p className="mono-label wk-feedback__index">04 <span aria-hidden="true"> / </span> Client feedback</p>
+        <div className="wk-feedback__head">
+          <h2 id="feedback-title" className="wk-feedback__title">What clients say.</h2>
+          <p className="wk-feedback__lede">Real feedback from businesses I’ve worked with on Workana. These reviews reflect the quality, commitment, and results I bring to every project.</p>
+          <ProfileLinks className="wk-profile-actions wk-profile-actions--desktop" />
+        </div>
+        <div className="wk-profile">
+          <div className="wk-profile__brand"><WorkanaLogo className="wk-profile__logo" /><p className="mono-label">Public client feedback</p></div>
+          <div className="wk-profile__portrait-wrap">
+            <Image className="wk-profile__portrait" src={workana.portrait} alt="Benjamin Costa Mihanovich" width={192} height={192} sizes="(min-width: 1024px) 112px, 88px" />
+            <span className="wk-profile__badge" aria-hidden="true"><VerifiedBadge /></span>
           </div>
-
-          <a
-            className="workana-rating"
-            href={workana.profileUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`Rated ${workana.score} out of 5 from ${workana.reviewCount} verified reviews on Workana (opens in a new tab)`}
-          >
-            <WorkanaLogo />
-            <span className="workana-rating__score">
-              <strong>{workana.score}</strong>
-              <Stars />
-            </span>
-            <span className="workana-rating__count">{workana.reviewCount} verified reviews</span>
-          </a>
+          <div className="wk-profile__identity">
+            <h3>{workana.name}</h3><p className="wk-profile__role">{workana.role}</p>
+            <p className="wk-profile__meta"><BriefcaseIcon />Freelancer on Workana</p>
+          </div>
+          <div className="wk-profile__rating" aria-label={`${workana.score} out of 5, based on ${workana.ratingCount} client ratings on Workana`}>
+            <p className="wk-profile__score"><strong>{workana.score}</strong><span>/ 5</span></p>
+            <Stars /><p className="wk-profile__count">Based on {workana.ratingCount} client ratings on Workana</p>
+          </div>
+          <ProfileLinks className="wk-profile-actions wk-profile-actions--mobile" />
         </div>
-
-        <ol className="reviews">
-          {testimonials.map((testimonial) => (
-            <li key={testimonial.id} className="review">
-              <figure>
-                <Stars className="review__stars" />
-                <span className="visually-hidden">Rated 5 out of 5.</span>
-                <blockquote className="review__quote">
-                  <p>“{testimonial.quote}”</p>
-                </blockquote>
-                <figcaption className="review__author">
-                  <span className="review__avatar" aria-hidden="true">
-                    {initials(testimonial.author)}
-                  </span>
-                  <span>
-                    <span className="review__name">{testimonial.author}</span>
-                    <span className="review__project">{testimonial.project}</span>
-                  </span>
-                </figcaption>
-              </figure>
-            </li>
-          ))}
-        </ol>
-
-        <div className="feedback__foot">
-          <p className="feedback__note">Reviews translated from Spanish.</p>
-          <a
-            className="text-link text-link--underlined feedback__profile"
-            href={workana.profileUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <span className="text-link__label">View profile on Workana</span>
-            <ArrowIcon direction="up-right" />
-            <span className="visually-hidden"> (opens in a new tab)</span>
-          </a>
-        </div>
+        <ReviewCarousel count={carouselTestimonials.length}>
+          {carouselTestimonials.map((review) => <ReviewCard key={review.id} review={review} />)}
+        </ReviewCarousel>
+        <p className="wk-feedback__note">Translated from Spanish. Original reviews available on <a href={workana.profileUrl} target="_blank" rel="noopener noreferrer">Workana<span className="visually-hidden"> (opens in a new tab)</span></a>.</p>
       </div>
     </section>
   );

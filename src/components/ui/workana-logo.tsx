@@ -1,21 +1,6 @@
-type WorkanaLogoProps = Readonly<{
-  className?: string;
-}>;
+import Image from "next/image";
 
-/**
- * Workana wordmark: lowercase set in Poppins with the multicolour "o".
- * Swap for the official SVG from Workana's brand assets when available.
- */
-export function WorkanaLogo({ className }: WorkanaLogoProps) {
-  return (
-    <span
-      className={className ? `workana-logo ${className}` : "workana-logo"}
-      role="img"
-      aria-label="Workana"
-    >
-      <span aria-hidden="true">w</span>
-      <span className="workana-logo__o" aria-hidden="true" />
-      <span aria-hidden="true">rkana</span>
-    </span>
-  );
+/** Official unmodified light-background asset from brand.workana.com. */
+export function WorkanaLogo({ className }: Readonly<{ className?: string }>) {
+  return <Image src="/images/workana/logo.svg" alt="Workana" width={147} height={24} className={className} />;
 }

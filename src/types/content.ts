@@ -33,8 +33,12 @@ export type Project = Readonly<{
 export type Testimonial = Readonly<{
   id: string;
   quote: string;
+  originalQuote: string;
   author: string;
   project: string;
+  tags: readonly string[];
+  rating: 5;
+  featured: boolean;
   source: "Workana";
 }>;
 
