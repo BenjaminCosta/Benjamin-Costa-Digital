@@ -1,4 +1,5 @@
 import Image from "next/image";
+import type { CSSProperties } from "react";
 import { ArrowIcon } from "@/components/ui/arrow-icon";
 import type { Project } from "@/types/content";
 
@@ -19,9 +20,9 @@ export function WorkProject({ project }: Readonly<{ project: Project }>) {
           {wordmark ? (
             <>
               <span className="visually-hidden">{project.name}</span>
-              <svg viewBox={wordmark.viewBox} aria-hidden="true" focusable="false">
-                <image href={wordmark.src} width={wordmark.width} height={wordmark.height} />
-              </svg>
+              <Image src={wordmark.src} alt="" width={wordmark.width} height={wordmark.height}
+                sizes={`${wordmark.display}px`} draggable={false} aria-hidden="true"
+                style={{ "--wm-w": `${wordmark.display}px` } as CSSProperties} />
             </>
           ) : (
             <span>{project.name}</span>

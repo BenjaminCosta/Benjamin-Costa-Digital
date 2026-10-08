@@ -68,12 +68,6 @@ function pauseScrollAnchoring(ms = 900) {
 
 const vars = (values: Record<string, number>) => values as CSSProperties;
 
-const basisLabel: Record<Opportunity["basis"], string> = {
-  "public-content": "From your public pages",
-  "your-description": "From your description",
-  possibility: "Worth exploring — not a confirmed finding",
-};
-
 /** The idea's mark: the official logo of the platform or tool behind it. */
 function IdeaMark({ idea }: Readonly<{ idea: Opportunity }>) {
   return (
@@ -449,7 +443,7 @@ export function BusinessIdeas(props: BusinessIdeasProps) {
                         className="ideas-form__go"
                         disabled={submitting || !props.available}
                         aria-label={submitLabel}
-                        aria-describedby="ideas-availability"
+                        aria-describedby={props.available ? undefined : "ideas-availability"}
                       >
                         {submitting ? <span className="ideas-form__spinner" aria-hidden="true" /> : <ArrowIcon />}
                       </button>
@@ -503,7 +497,7 @@ export function BusinessIdeas(props: BusinessIdeasProps) {
                         <span className="text-link__label">{ideasCopy.talkInstead}</span>
                         <ArrowIcon direction="up-right" />
                       </a> : null}
-                      <p id="ideas-availability" className="ideas-form__micro">{props.available ? ideasCopy.microcopy : "Personalised ideas aren’t available right now. The instant starting points still work."}</p>
+                      {props.available ? null : <p id="ideas-availability" className="ideas-form__micro">Personalised ideas aren’t available right now. The instant starting points still work.</p>}
                     </div>
                   </form>
                 </>
@@ -579,8 +573,6 @@ export function BusinessIdeas(props: BusinessIdeasProps) {
                         </div>
                         <div className="idea-result__body">
                           <p className="idea-result__summary">{idea.explanation}</p>
-                          <p className="idea-result__basis">{basisLabel[idea.basis]}</p>
-                          {idea.evidence ? <blockquote className="idea-result__evidence">“{idea.evidence}”</blockquote> : null}
                           <div className="idea-result__build">
                             <p className="idea-result__build-label">{ideasCopy.buildLabel}</p>
                             <ul>

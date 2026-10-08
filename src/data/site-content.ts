@@ -8,10 +8,7 @@ export const site = Object.freeze({
 });
 
 /** Hero photo: beside the copy on desktop, under it on smaller screens. */
-export const heroImage = Object.freeze({
-  portrait: "/images/bg/hero.png",
-  landscape: "/images/bg/hero-dp.png",
-});
+export const heroImage = "/images/bg/hero.png";
 
 /** Subtle glass/acrylic backgrounds, one per section that carries one. */
 export const backdrops = Object.freeze({
@@ -24,8 +21,6 @@ export const backdrops = Object.freeze({
   reviewsDesktop: "/images/bg/reviews-dp-soft.jpg",
   work: "/images/bg/glass-devices-sunlight.png",
   about: "/images/bg/glass-laptop-soft.png",
-  contact: "/images/bg/cta.png",
-  contactDesktop: "/images/bg/cta-dp.png",
 });
 
 export const plannedProjectCount = 8;
@@ -85,7 +80,6 @@ export const ideasCopy = Object.freeze({
   submitting: "Finding ideas…",
   changeOption: "Change option",
   talkInstead: "Talk to Ben instead",
-  microcopy: "Three starting points, followed by a personal conversation.",
   loadingTitle: "Finding ideas for your business…",
   // One request does all three; the steps pace what it is doing.
   loadingSteps: {
@@ -106,9 +100,4 @@ export const ideasCopy = Object.freeze({
   closeNote: "WhatsApp opens with your business context, goal and ideas. You decide whether to send the message.",
   tryAnother: "Or try another option",
   restart: "Start again",
-  basis: {
-    public: "From public info",
-    owner: "From your description",
-    explore: "Worth exploring",
-  },
 });

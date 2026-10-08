@@ -36,6 +36,32 @@
   --duration-sweep: 380ms;
   --reveal-duration: 520ms;
 
+  /* Type scale: one size and weight per role, used across every section */
+  --fs-hero: min(14vw, 4.75rem);
+  --fs-title: min(10vw, 3rem);
+  --fs-subtitle: min(7.4vw, 2.25rem);
+  --fs-heading: 1.25rem;
+  --fs-card: 1.0625rem;
+  --fs-lead: 1.125rem;
+  --fs-body: 1rem;
+  --fs-small: 0.875rem;
+  --fs-micro: 0.75rem;
+  --fs-label: 0.6875rem;
+  --fs-button: 0.6875rem;
+  --weight-display: 450;
+  --weight-strong: 500;
+  --tracking-display: -0.025em;
+  --tracking-label: 0.1em;
+  --leading-display: 1.02;
+
+  /* Vertical rhythm between sections */
+  --section-space: 2.75rem;
+  /* The one wash over every light section's photo (see .backdrop) */
+  --veil: rgb(242 240 234 / 0.4);
+
+  /* Section label to its title, the same in every section */
+  --head-gap: 1.25rem;
+
   /* Layout */
   --gutter: 1.375rem;
   --container-max: 120rem;
@@ -89,7 +115,7 @@ body {
   margin: 0;
   overflow-x: clip;
   background: var(--paper);
-  font-size: 1rem;
+  font-size: var(--fs-body);
   line-height: 1.4;
 }
 
@@ -188,10 +214,10 @@ a {
 
 .mono-label {
   font-family: var(--font-mono);
-  font-size: 0.6875rem;
+  font-size: var(--fs-label);
   font-weight: 400;
   line-height: 1rem;
-  letter-spacing: 0.04em;
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
 }
 
@@ -201,9 +227,9 @@ a {
 
 .display {
   font-family: var(--font-display);
-  font-weight: 500;
-  letter-spacing: -0.05em;
-  line-height: 0.9;
+  font-weight: var(--weight-display);
+  letter-spacing: var(--tracking-display);
+  line-height: var(--leading-display);
 }
 
 .display span,
@@ -245,7 +271,7 @@ a {
   background: var(--button-bg);
   color: var(--button-fg);
   font-family: var(--font-mono);
-  font-size: 0.6875rem;
+  font-size: var(--fs-button);
   font-weight: 400;
   letter-spacing: 0.15em;
   line-height: 1;
@@ -330,7 +356,7 @@ a {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.875rem;
+  font-size: var(--fs-small);
   line-height: 1.2;
   letter-spacing: -0.01em;
 }
@@ -529,32 +555,36 @@ a {
   backdrop-filter: blur(18px);
 }
 
-/* Glass/acrylic photography behind a section: present, never loud.
-   The image is blended into the section colour (multiply on paper, screen
-   on dark) and feathered on every edge, so its own background disappears
-   and only the glass reads. */
+/* Section photography: the whole image, kept sharp, toned the same way in
+   every light section (half saturation, then one paper veil). Each photo
+   keeps its detail while all of them share the page's colour, so
+   neighbouring sections meet on near-identical tones, edge to edge, with no
+   fade bands. */
 .backdrop {
-  --backdrop-opacity: 0.55;
-  --backdrop-mask: radial-gradient(100% 80% at 70% 70%, #000 20%, transparent 70%);
-
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: -2;
   overflow: hidden;
   pointer-events: none;
-  opacity: var(--backdrop-opacity);
-  mix-blend-mode: multiply;
-  -webkit-mask-image: var(--backdrop-mask);
-  mask-image: var(--backdrop-mask);
 }
 
-.section--dark .backdrop {
-  mix-blend-mode: screen;
-}
-
-.backdrop img {
+.backdrop img,
+.sw-background {
   object-fit: cover;
-  filter: saturate(0.6);
+  filter: saturate(0.5);
+}
+
+.backdrop::after,
+.selected-work::before {
+  position: absolute;
+  inset: 0;
+  background: var(--veil);
+  content: "";
+  pointer-events: none;
+}
+
+.selected-work::before {
+  z-index: -1;
 }
 
 .hero,
@@ -562,15 +592,9 @@ a {
   isolation: isolate;
 }
 
-/* Reviews: near-white prism light, so only the colour streaks remain */
-.feedback__backdrop {
-  --backdrop-opacity: 0.75;
-  --backdrop-mask: linear-gradient(180deg, #000 70%, transparent 100%);
-}
-
+/* Reviews: near-white prism light */
 .feedback__backdrop img {
   object-position: 60% 30%;
-  filter: none;
 }
 
 .feedback__body {
@@ -578,34 +602,25 @@ a {
   z-index: 1;
 }
 
+/* About keeps its original treatment: the glass card and phone rise from
+   the lower right, multiplied into the paper and feathered on every side,
+   so its edges are plain paper like its neighbours'. */
 .about__backdrop {
-  --backdrop-opacity: 0.55;
-  --backdrop-mask: radial-gradient(110% 85% at 78% 88%, #000 18%, transparent 70%);
-
   inset-block-start: auto;
   height: 24rem;
+  opacity: 0.55;
+  mix-blend-mode: multiply;
+  -webkit-mask-image: radial-gradient(110% 85% at 78% 88%, #000 18%, transparent 70%);
+  mask-image: radial-gradient(110% 85% at 78% 88%, #000 18%, transparent 70%);
+}
+
+.about__backdrop::after {
+  content: none;
 }
 
 .about__backdrop img {
   object-position: 90% 100%;
-}
-
-/* CTA: the photo is already shot on near-#141414, so it sits in the section
-   at full strength. Phones and tablets get it under the copy (the section's
-   bottom padding is its room); its top and bottom edges fade out so it meets
-   the copy and the footer without a seam. */
-.contact__backdrop {
-  --backdrop-opacity: 1;
-  --backdrop-mask: linear-gradient(180deg, transparent 0%, #000 22%, #000 84%, transparent 100%);
-
-  inset-block-start: auto;
-  height: 26rem;
-  mix-blend-mode: normal;
-}
-
-.contact__backdrop img {
-  object-position: 50% 58%;
-  filter: none;
+  filter: saturate(0.6);
 }
 
 .contact__body {
@@ -661,8 +676,8 @@ a {
   overflow: hidden;
   padding-block-end: 0.0625rem;
   font-family: var(--font-mono);
-  font-size: 0.65625rem;
-  letter-spacing: 0.02em;
+  font-size: var(--fs-label);
+  letter-spacing: var(--tracking-label);
   line-height: 1;
   text-overflow: ellipsis;
   text-transform: uppercase;
@@ -715,7 +730,7 @@ a {
   align-items: baseline;
   justify-content: space-between;
   gap: 1rem;
-  padding-block: 1.5rem 0;
+  padding-block: 0;
 }
 
 .section-head__label,
@@ -737,65 +752,55 @@ a {
   contain-intrinsic-block-size: auto var(--section-estimate);
 }
 
-.work {
-  --section-estimate: calc(95vw + 354px);
-}
-
+/* Selected Work keeps its own estimate in selected-work.css. */
 .feedback {
-  --section-estimate: 1045px;
+  --section-estimate: 560px;
 }
 
 .about {
-  --section-estimate: 620px;
+  --section-estimate: 575px;
 }
 
 .contact {
-  --section-estimate: calc(50vw + 232px);
+  --section-estimate: calc(41.4vw + 197px);
 }
 
 @media (min-width: 48rem) {
-  .work {
-    --section-estimate: 940px;
-  }
-
   .feedback {
-    --section-estimate: 1000px;
+    --section-estimate: 532px;
   }
 
   .about {
-    --section-estimate: 640px;
+    --section-estimate: 538px;
   }
 
   .contact {
-    --section-estimate: 517px;
+    --section-estimate: 395px;
   }
 }
 
 @media (min-width: 64rem) {
-  .work {
-    --section-estimate: max(654px, calc(46vw + 105px));
-  }
-
   .feedback {
-    --section-estimate: calc(625px - 4.8vw);
+    --section-estimate: calc(614px - 5.4vw);
   }
 
+  /* About's body carries the bottom section space, which follows the screen height */
   .about {
-    --section-estimate: 548px;
+    --section-estimate: calc(468px + clamp(3.5rem, 8vh, 6rem));
   }
 
   .contact {
-    --section-estimate: max(535px, calc(22vw + 235px));
+    --section-estimate: 470px;
   }
 }
 
 @media (min-width: 64rem) and (max-width: 79.999rem) {
   .feedback {
-    --section-estimate: calc(997px - 33.2vw);
+    --section-estimate: calc(1106px - 42.6vw);
   }
 
   .about {
-    --section-estimate: 710px;
+    --section-estimate: calc(607px + clamp(3.5rem, 8vh, 6rem));
   }
 }
 
@@ -807,16 +812,13 @@ a {
 
 .display--hero {
   margin-inline-start: -0.0625rem;
-  font-size: min(16.6vw, 6rem);
-  letter-spacing: -0.055em;
-  line-height: 0.935;
+  font-size: var(--fs-hero);
 }
 
 .hero__lede {
   margin-block-start: 1.25rem;
-  font-size: 1.0625rem;
+  font-size: var(--fs-lead);
   line-height: 1.25;
-  letter-spacing: 0.04em;
 }
 
 .hero__actions {
@@ -846,7 +848,6 @@ a {
 
 .hero__secondary .text-link {
   gap: 0.6875rem;
-  font-size: 0.90625rem;
   white-space: nowrap;
 }
 
@@ -864,15 +865,35 @@ a {
    tablets, beside it on desktop. */
 .hero__media {
   position: relative;
-  aspect-ratio: 4 / 5;
-  margin-block-start: 2.25rem;
+  margin-block-start: 1.75rem;
   overflow: hidden;
   background: var(--line);
 }
 
+/* Phones: the hero fills the first screen exactly and the photo takes
+   whatever height the copy leaves (never under 11rem). */
+@media (max-width: 47.999rem) {
+  .hero {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - var(--header-height));
+    min-height: calc(100svh - var(--header-height));
+  }
+
+  .hero__media {
+    flex: 1 0 11rem;
+    max-height: 26rem;
+  }
+}
+
+.hero__caption {
+  padding: 0.875rem var(--gutter) 0;
+  color: var(--muted);
+}
+
 .hero__media img {
   object-fit: cover;
-  object-position: 50% 64%;
+  object-position: 40% 50%;
 }
 
 /* ---------- 02 Business ideas ---------- */
@@ -899,29 +920,24 @@ a {
   --t-results: 450ms;
 
   overflow: clip;
-  padding-block-end: 3.5rem;
-  /* Fixed-size glow anchored top-right: it doesn't depend on the section's
-     height, so the tool can resize without repainting the whole section. */
-  background:
-    radial-gradient(40rem 26rem at 100% 0%, rgb(255 255 255 / 0.7), transparent 70%)
-      no-repeat,
-    var(--paper);
+  padding-block: var(--section-space);
 }
 
-/* Soft, warm light for the glass to sit in. Fixed height, so the tool can
-   change size without the image being rescaled on every frame. */
+/* Soft, warm light for the glass to sit in. Fixed height (a little more
+   than the first view), so the tool can change size without the image being
+   rescaled on every frame; when results make the section taller, the light
+   gives way to the paper inside the section. */
 .ideas__backdrop {
-  --backdrop-opacity: 1;
-  --backdrop-mask: linear-gradient(180deg, transparent 0, #000 8rem, #000 70%, transparent 100%);
-
   inset-block-end: auto;
-  height: 120rem;
-  mix-blend-mode: normal;
+  height: 50rem;
+  -webkit-mask-image: linear-gradient(#000 80%, transparent);
+  mask-image: linear-gradient(#000 80%, transparent);
 }
 
+/* The darkest of the photos: lifted to the others' level */
 .ideas__backdrop img {
   object-position: 30% 30%;
-  filter: none;
+  filter: saturate(0.5) brightness(1.05);
 }
 
 .ideas__body {
@@ -935,7 +951,7 @@ a {
   display: flex;
   align-items: flex-end;
   gap: 0.25rem;
-  padding-block-end: 1rem;
+  padding-block-end: 0.75rem;
 }
 
 .ideas__head::after {
@@ -962,20 +978,18 @@ a {
 }
 
 .ideas__intro {
-  padding-block-start: 1.5rem;
+  padding-block-start: calc(var(--head-gap) - 0.75rem);
 }
 
 .display--ideas {
-  font-size: min(9.4vw, 4.5rem);
-  font-weight: 450;
-  line-height: 1.05;
-  letter-spacing: -0.025em;
+  font-size: var(--fs-title);
+  text-wrap: balance;
 }
 
 .ideas__lede {
   max-width: 20rem;
   margin-block-start: 1rem;
-  font-size: 1rem;
+  font-size: var(--fs-body);
   line-height: 1.45;
   color: var(--soft);
 }
@@ -995,7 +1009,7 @@ a {
 /* ---- Stage: eases to the height of its current content ---- */
 
 .ideas-stage {
-  margin-block-start: 1.75rem;
+  margin-block-start: 1.25rem;
   transition: height var(--t-swap) var(--ease-editorial);
 }
 
@@ -1103,6 +1117,8 @@ a {
 .glass-icon {
   display: block;
   flex: none;
+  width: var(--glass-fit, var(--glass-size));
+  height: var(--glass-fit, var(--glass-size));
   max-width: none;
   pointer-events: none;
   user-select: none;
@@ -1112,7 +1128,7 @@ a {
 
 .idea-options {
   display: grid;
-  gap: 0.75rem;
+  gap: 0.5rem;
 }
 
 .idea-options li {
@@ -1128,16 +1144,18 @@ a {
 }
 
 .idea-option {
+  --glass-fit: 4.5rem;
+
   display: grid;
   width: 100%;
-  min-height: 5.25rem;
-  grid-template-columns: 3.5rem minmax(0, 1fr) 1rem;
+  min-height: 3.875rem;
+  grid-template-columns: 3rem minmax(0, 1fr) 1rem;
   align-items: center;
-  gap: 1rem;
-  padding: 0.75rem 1.25rem 0.75rem 0.875rem;
+  gap: 0.875rem;
+  padding: 0.375rem 1.25rem 0.375rem 0.75rem;
   border-radius: var(--radius-card);
   color: var(--ink);
-  font-size: 1rem;
+  font-size: var(--fs-body);
   line-height: 1.3;
   text-align: start;
   cursor: pointer;
@@ -1149,9 +1167,9 @@ a {
     transform var(--t-press) var(--ease-editorial);
 }
 
-/* The PNG's own padding is trimmed so its tile fills the 3.5rem column */
+/* The PNG's own padding is trimmed so its tile fills the icon column */
 .idea-option .glass-icon {
-  margin: -0.875rem;
+  margin: -0.75rem;
   transition: transform var(--hover-duration) var(--ease-editorial);
 }
 
@@ -1265,10 +1283,10 @@ a {
 }
 
 .ideas-step__title {
-  font-size: min(10vw, 3rem);
-  font-weight: 450;
+  font-size: var(--fs-subtitle);
+  font-weight: var(--weight-display);
   line-height: 1.06;
-  letter-spacing: -0.025em;
+  letter-spacing: var(--tracking-display);
 }
 
 .ideas-answers__mark + .ideas-step__title {
@@ -1282,7 +1300,7 @@ a {
 
 .ideas-step__intro {
   margin-block-start: 0.75rem;
-  font-size: 1rem;
+  font-size: var(--fs-body);
   line-height: 1.5;
   color: var(--soft);
 }
@@ -1305,8 +1323,9 @@ a {
 .idea-opp__num {
   padding-block-start: 0.25rem;
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: var(--fs-label);
   color: var(--faint);
+  letter-spacing: var(--tracking-label);
 }
 
 .idea-opp .glass-icon {
@@ -1315,14 +1334,14 @@ a {
 
 .idea-opp h4 {
   padding-block-start: 0.125rem;
-  font-size: 1.0625rem;
-  font-weight: 500;
+  font-size: var(--fs-card);
+  font-weight: var(--weight-strong);
   line-height: 1.3;
 }
 
 .idea-opp p {
   margin-block-start: 0.375rem;
-  font-size: 0.875rem;
+  font-size: var(--fs-small);
   line-height: 1.5;
   color: var(--soft);
 }
@@ -1335,8 +1354,8 @@ a {
 
 .ideas-form__title {
   margin-block-end: 1.125rem;
-  font-size: min(6vw, 1.5rem);
-  font-weight: 450;
+  font-size: var(--fs-heading);
+  font-weight: var(--weight-display);
   line-height: 1.2;
   letter-spacing: -0.015em;
 }
@@ -1374,7 +1393,7 @@ a {
   height: 2.75rem;
   border: 0;
   background: transparent;
-  font-size: 1rem;
+  font-size: var(--fs-body);
   outline: none;
 }
 
@@ -1445,14 +1464,14 @@ a {
 
 .ideas-form__note {
   margin-block-start: 0.625rem;
-  font-size: 0.75rem;
+  font-size: var(--fs-micro);
   line-height: 1.45;
   color: var(--faint);
 }
 
 .ideas-form__error {
   margin-block-start: 0.75rem;
-  font-size: 0.9375rem;
+  font-size: var(--fs-small);
   line-height: 1.45;
   color: var(--ink);
 }
@@ -1499,7 +1518,7 @@ a {
   border: 0;
   border-radius: inherit;
   background: none;
-  font-size: 0.875rem;
+  font-size: var(--fs-small);
   font-weight: 500;
   text-align: start;
   cursor: pointer;
@@ -1521,7 +1540,7 @@ a {
 
 .ideas-context label {
   display: block;
-  font-size: 0.8125rem;
+  font-size: var(--fs-small);
   color: var(--soft);
 }
 
@@ -1533,7 +1552,7 @@ a {
   border: 1px solid rgb(10 10 10 / 0.14);
   border-radius: var(--radius-field);
   background: rgb(255 255 255 / 0.82);
-  font-size: 0.9375rem;
+  font-size: var(--fs-body);
   line-height: 1.45;
   resize: vertical;
 }
@@ -1548,11 +1567,11 @@ a {
   justify-items: start;
   gap: 0.75rem;
   margin-block-start: 1.5rem;
-  font-size: 0.9375rem;
+  font-size: var(--fs-small);
 }
 
 .ideas-form__micro {
-  font-size: 0.875rem;
+  font-size: var(--fs-small);
   color: var(--soft);
 }
 
@@ -1660,17 +1679,17 @@ a {
 
 .ideas-loading__eyebrow {
   font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.12em;
+  font-size: var(--fs-label);
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
   color: var(--soft);
 }
 
 .ideas-loading__title {
-  font-size: min(6.6vw, 1.75rem);
-  font-weight: 450;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
+  font-size: var(--fs-heading);
+  font-weight: var(--weight-display);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
 }
 
 .ideas-loading__steps {
@@ -1693,7 +1712,7 @@ a {
 
 .ideas-loading__step {
   display: block;
-  font-size: 0.9375rem;
+  font-size: var(--fs-body);
   font-weight: 500;
   line-height: 1.3;
 }
@@ -1701,7 +1720,7 @@ a {
 .ideas-loading__detail {
   display: block;
   margin-block-start: 0.25rem;
-  font-size: 0.8125rem;
+  font-size: var(--fs-micro);
   line-height: 1.4;
   color: var(--soft);
 }
@@ -1808,7 +1827,7 @@ a {
 .ideas-loading__slow {
   min-height: 1.25rem;
   margin-block-start: 1.5rem;
-  font-size: 0.8125rem;
+  font-size: var(--fs-micro);
   color: var(--soft);
   text-align: center;
   opacity: 0;
@@ -1871,7 +1890,7 @@ a {
 
 .ideas-results__lede {
   margin-block-start: 0.75rem;
-  font-size: 1.0625rem;
+  font-size: var(--fs-body);
   color: var(--soft);
 }
 
@@ -1887,7 +1906,7 @@ a {
   gap: 0.5rem;
   padding: 0.5rem 0.75rem;
   border-radius: var(--radius-control);
-  font-size: 0.75rem;
+  font-size: var(--fs-micro);
   line-height: 1.4;
   color: var(--soft);
 }
@@ -1899,7 +1918,7 @@ a {
 
 .ideas-results__pages {
   margin-block-start: 0.75rem;
-  font-size: 0.75rem;
+  font-size: var(--fs-micro);
   line-height: 1.5;
   color: var(--faint);
 }
@@ -1933,7 +1952,7 @@ a {
 .idea-result__num {
   align-self: start;
   padding-block-start: 0.5rem;
-  font-size: 1.25rem;
+  font-size: var(--fs-card);
   line-height: 1;
   color: var(--ink);
 }
@@ -1956,8 +1975,8 @@ a {
 }
 
 .idea-result__title {
-  font-size: 1.0625rem;
-  font-weight: 500;
+  font-size: var(--fs-card);
+  font-weight: var(--weight-strong);
   line-height: 1.3;
 }
 
@@ -1967,25 +1986,9 @@ a {
 }
 
 .idea-result__summary {
-  font-size: 0.875rem;
-  line-height: 1.55;
-  color: var(--soft);
-}
-
-.idea-result__basis {
-  margin-block-start: 0.625rem;
-  font-family: var(--font-mono);
-  font-size: 0.625rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--faint);
-}
-
-.idea-result__evidence {
-  margin-block-start: 0.375rem;
-  font-size: 0.8125rem;
+  font-size: var(--fs-body);
   line-height: 1.45;
-  color: var(--soft);
+  color: color-mix(in srgb, var(--ink) 72%, var(--paper));
 }
 
 .idea-result__build {
@@ -1997,36 +2000,36 @@ a {
 }
 
 .idea-result__build-label {
-  font-size: 0.875rem;
+  font-size: var(--fs-small);
   font-weight: 500;
+  color: var(--soft);
 }
 
 .idea-result__build ul {
   display: grid;
-  gap: 0.5rem;
-  margin-block-start: 0.625rem;
+  gap: 0.625rem;
+  margin-block-start: 0.75rem;
 }
 
 .idea-result__build li {
   display: grid;
   grid-template-columns: 1rem minmax(0, 1fr);
-  align-items: start;
+  align-items: center;
   gap: 0.625rem;
-  font-size: 0.8125rem;
-  line-height: 1.4;
+  font-size: var(--fs-body);
+  line-height: 1.35;
 }
 
 .idea-result__build .brand-logo,
 .idea-result__build .arrow-icon {
   width: 1rem;
   height: 1rem;
-  margin-block-start: 0.0625rem;
 }
 
 .idea-result__build .arrow-icon {
   width: 0.75rem;
   height: 0.75rem;
-  margin: 0.25rem 0.125rem 0;
+  margin-inline: 0.125rem;
 }
 
 /* ---- 5. Talk to Ben ---- */
@@ -2036,15 +2039,15 @@ a {
 }
 
 .ideas-close__title {
-  font-size: min(8.4vw, 2.5rem);
-  font-weight: 450;
-  line-height: 1.08;
-  letter-spacing: -0.025em;
+  font-size: var(--fs-subtitle);
+  font-weight: var(--weight-display);
+  line-height: 1.06;
+  letter-spacing: var(--tracking-display);
 }
 
 .ideas-close__text {
   margin-block-start: 0.875rem;
-  font-size: 1rem;
+  font-size: var(--fs-body);
   line-height: 1.5;
   color: var(--soft);
 }
@@ -2077,7 +2080,7 @@ a {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  font-size: 0.9375rem;
+  font-size: var(--fs-body);
 }
 
 .ideas-close__check {
@@ -2099,14 +2102,14 @@ a {
 
 .ideas-close__note {
   margin-block-start: 1.25rem;
-  font-size: 0.8125rem;
+  font-size: var(--fs-micro);
   line-height: 1.45;
   color: var(--faint);
 }
 
 .ideas-close__alt {
   margin-block-start: 2.5rem;
-  font-size: 0.9375rem;
+  font-size: var(--fs-small);
   color: var(--soft);
 }
 
@@ -2121,7 +2124,7 @@ a {
   padding: 0.875rem 1.25rem;
   border-radius: 12px;
   color: var(--ink);
-  font-size: 1rem;
+  font-size: var(--fs-body);
   text-align: start;
   cursor: pointer;
   transition:
@@ -2166,7 +2169,7 @@ a {
   border: 0;
   background: none;
   color: var(--soft);
-  font-size: 0.875rem;
+  font-size: var(--fs-small);
   cursor: pointer;
   transition: color var(--t-press) ease;
 }
@@ -2185,7 +2188,7 @@ a {
 
 .about {
   overflow: clip;
-  padding-block-end: 13rem;
+  padding-block: var(--section-space);
 }
 
 .about__body {
@@ -2194,10 +2197,8 @@ a {
 }
 
 .display--about {
-  margin-block-start: 1.25rem;
-  font-size: min(11.8vw, 4.5rem);
-  line-height: 0.95;
-  letter-spacing: -0.045em;
+  margin-block-start: var(--head-gap);
+  font-size: var(--fs-title);
 }
 
 .about__bio {
@@ -2205,9 +2206,8 @@ a {
   gap: 1.125rem;
   max-width: 34rem;
   margin-block-start: 1.75rem;
-  font-size: 1rem;
+  font-size: var(--fs-body);
   line-height: 1.5;
-  letter-spacing: 0.01em;
   color: color-mix(in srgb, var(--ink) 80%, var(--paper));
 }
 
@@ -2218,8 +2218,8 @@ a {
 /* ---------- 06 Final CTA ---------- */
 
 .contact {
-  padding-block-end: 23rem;
   overflow: clip;
+  padding-block: var(--section-space) calc(var(--section-space) + 1rem);
 }
 
 .contact__body {
@@ -2228,10 +2228,8 @@ a {
 }
 
 .display--contact {
-  margin-block-start: 1.0625rem;
-  font-size: min(15vw, 5.25rem);
-  line-height: 0.88;
-  letter-spacing: -0.05em;
+  margin-block-start: var(--head-gap);
+  font-size: var(--fs-title);
 }
 
 .display--contact strong {
@@ -2247,9 +2245,8 @@ a {
 .contact__note {
   max-width: 16rem;
   margin-block-start: 1.25rem;
-  font-size: 0.96875rem;
+  font-size: var(--fs-body);
   line-height: 1.32;
-  letter-spacing: 0.02em;
 }
 
 /* ---------- Footer ---------- */
@@ -2276,11 +2273,6 @@ a {
   color: var(--ink);
 }
 
-.site-footer .mono-label {
-  font-size: 0.6125rem;
-  letter-spacing: 0;
-}
-
 /* ==========================================================================
    Tablet (≥ 48rem): mobile composition with roomier margins
    ========================================================================== */
@@ -2291,30 +2283,15 @@ a {
   }
 
   .hero__media {
-    aspect-ratio: 16 / 10;
-    margin-block-start: 3rem;
+    aspect-ratio: 2 / 1;
+    margin-block-start: 2.5rem;
+    height: auto;
   }
 
   .hero__media img {
-    object-position: 100% 60%;
+    object-position: 40% 55%;
   }
 
-  .reviews {
-    max-width: 36rem;
-  }
-
-  /* Landscape crop, full width under the copy */
-  .contact {
-    padding-block-end: calc(56vw - 1rem);
-  }
-
-  .contact__backdrop {
-    height: 56vw;
-  }
-
-  .contact__backdrop img {
-    object-position: 50% 50%;
-  }
 }
 
 /* ==========================================================================
@@ -2326,32 +2303,30 @@ a {
   :root {
     --gutter: 4.25rem;
     --header-height: 5.375rem;
-  }
-
-  body {
-    font-size: 1.0625rem;
-  }
-
-  .mono-label {
-    font-size: 0.75rem;
-    letter-spacing: 0.1em;
+    --fs-hero: min(6.4vw, 7.5rem);
+    --fs-title: clamp(3rem, 4.6vw, 4.5rem);
+    --fs-subtitle: clamp(2rem, 2.9vw, 2.75rem);
+    --fs-heading: 1.5rem;
+    --fs-card: 1.125rem;
+    --fs-lead: 1.1875rem;
+    --fs-body: 1.0625rem;
+    --fs-small: 0.9375rem;
+    --fs-micro: 0.8125rem;
+    --fs-label: 0.75rem;
+    --fs-button: 0.8125rem;
+    --section-space: clamp(3.5rem, 8vh, 6rem);
+    --head-gap: 2rem;
   }
 
   .button {
     min-height: 3.75rem;
     gap: 2.5rem;
     padding-inline: 1.625rem;
-    font-size: 0.8125rem;
-    letter-spacing: 0.14em;
   }
 
   .button .arrow-icon {
     width: 1.125rem;
     height: 1.125rem;
-  }
-
-  .text-link {
-    font-size: 1rem;
   }
 
   .text-link .arrow-icon {
@@ -2371,8 +2346,8 @@ a {
     position: absolute;
     inset-inline-start: 0;
     font-family: var(--font-mono);
-    font-size: 0.8125rem;
-    letter-spacing: 0.04em;
+    font-size: var(--fs-label);
+    letter-spacing: var(--tracking-label);
     color: color-mix(in srgb, var(--fg) 62%, var(--bg));
   }
 
@@ -2433,11 +2408,6 @@ a {
     border: 0;
   }
 
-  .site-header__brand {
-    font-size: 0.75rem;
-    letter-spacing: 0.06em;
-  }
-
   .site-header__place {
     color: color-mix(in srgb, var(--header-fg) 62%, transparent);
     transition: color var(--hover-duration) var(--ease-editorial);
@@ -2450,7 +2420,7 @@ a {
     inset-inline-end: calc(100% - var(--hero-split) + 2.75rem);
     padding-block-end: 0.25rem;
     background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
-    font-size: 0.9375rem;
+    font-size: var(--fs-small);
     translate: 0 -50%;
     transition: background-size var(--hover-duration) var(--ease-editorial);
   }
@@ -2466,7 +2436,7 @@ a {
     border-radius: var(--radius-control);
     background: var(--header-cta-bg);
     color: var(--header-cta-fg);
-    font-size: 0.9375rem;
+    font-size: var(--fs-small);
     font-weight: 500;
     transition:
       color 180ms ease 110ms,
@@ -2534,27 +2504,22 @@ a {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding-block: calc(var(--header-height) + 5.75rem) 4.5rem;
+    /* Shorter screens (1366×768 laptops) trim the air, not the copy */
+    padding-block: calc(var(--header-height) + clamp(2.5rem, 12vh - 2rem, 5.75rem)) clamp(2.5rem, 8vh, 4.5rem);
   }
 
   .hero__body > .indexed__index {
-    inset-block-start: calc(var(--header-height) + 4.25rem);
+    inset-block-start: calc(var(--header-height) + clamp(1rem, 12vh - 3.5rem, 4.25rem));
   }
 
   .display--hero {
     margin: 0;
-    font-size: min(6.4vw, 7.5rem);
-    font-weight: 450;
-    letter-spacing: -0.012em;
-    line-height: 1;
   }
 
   .hero__lede {
     max-width: 30rem;
     margin-block-start: 2.125rem;
-    font-size: 1.1875rem;
     line-height: 1.45;
-    letter-spacing: 0.015em;
     text-wrap: balance;
   }
 
@@ -2581,21 +2546,16 @@ a {
 
   .hero__secondary .text-link {
     gap: 0.875rem;
-    font-size: 1rem;
   }
 
   .hero__media {
     aspect-ratio: auto;
     margin: 0;
+    height: auto;
   }
 
   .hero__media img {
-    object-position: 40% 62%;
-  }
-
-  .feedback__backdrop {
-    --backdrop-opacity: 0.8;
-    --backdrop-mask: none;
+    object-position: 45% 50%;
   }
 
   .feedback__backdrop img {
@@ -2604,14 +2564,10 @@ a {
 
   /* ---------- 02 Business ideas ---------- */
 
-  .ideas {
-    padding-block: 4.5rem 5.5rem;
-  }
-
   /* The question stays put on the left; the tool block changes on the right */
   .ideas__tool {
     display: grid;
-    grid-template-columns: minmax(0, 24rem) minmax(0, 40rem);
+    grid-template-columns: minmax(0, 28rem) minmax(0, 40rem);
     align-items: start;
     column-gap: clamp(3rem, 8vw, 9rem);
   }
@@ -2619,11 +2575,6 @@ a {
   .ideas__intro {
     position: sticky;
     inset-block-start: calc(var(--header-height) + 2rem);
-    padding-block-start: 1.75rem;
-  }
-
-  .display--ideas {
-    font-size: min(3.4vw, 3.5rem);
   }
 
   .ideas-stage,
@@ -2631,8 +2582,21 @@ a {
     margin-block-start: 1.75rem;
   }
 
-  .ideas-step__title {
-    font-size: min(3.2vw, 3rem);
+  .idea-options {
+    gap: 0.625rem;
+  }
+
+  .idea-option {
+    --glass-fit: 5.25rem;
+
+    min-height: 4.25rem;
+    grid-template-columns: 3.5rem minmax(0, 1fr) 1rem;
+    gap: 1rem;
+    padding: 0.5rem 1.25rem 0.5rem 0.875rem;
+  }
+
+  .idea-option .glass-icon {
+    margin: -0.875rem;
   }
 
   /* The intro holds the left column, so the way back lives in the tool */
@@ -2645,10 +2609,6 @@ a {
     align-items: center;
   }
 
-  .ideas-close__title {
-    font-size: min(2.8vw, 2.75rem);
-  }
-
   .ideas-loading {
     padding-block: 3.5rem 1rem;
   }
@@ -2659,16 +2619,15 @@ a {
   /* ---------- 05 About ---------- */
 
   .about {
-    padding-block: 5rem 0;
+    padding-block: var(--section-space) 0;
   }
 
   .about__backdrop {
-    --backdrop-opacity: 0.55;
-    --backdrop-mask: radial-gradient(60% 100% at 94% 60%, #000 12%, transparent 70%);
-
     inset-block-start: 0;
     inset-inline-start: 52%;
     height: auto;
+    -webkit-mask-image: radial-gradient(60% 100% at 94% 60%, #000 12%, transparent 70%);
+    mask-image: radial-gradient(60% 100% at 94% 60%, #000 12%, transparent 70%);
   }
 
   .about__backdrop img {
@@ -2681,16 +2640,9 @@ a {
     grid-template-columns: minmax(0, 1fr) minmax(0, 24rem);
     column-gap: 4rem;
     margin-inline: var(--gutter) 14%;
-    padding-block-end: 5.5rem;
+    padding-block-end: var(--section-space);
   }
 
-  .display--about {
-    margin-block-start: 2.25rem;
-    font-size: min(5vw, 6.25rem);
-    font-weight: 450;
-    letter-spacing: -0.025em;
-    line-height: 1.04;
-  }
 
   .about__aside {
     display: flex;
@@ -2701,9 +2653,7 @@ a {
 
   .about__bio {
     margin: 0;
-    font-size: 1.03125rem;
     line-height: 1.6;
-    letter-spacing: 0;
   }
 
   .about .button {
@@ -2712,40 +2662,11 @@ a {
 
   /* ---------- 06 Final CTA ---------- */
 
-  .contact {
-    padding-block: 4.5rem 6rem;
-  }
-
-  /* Beside the copy: anchored bottom-right and capped in size so the device
-     clears the headline on narrower desktops. */
-  .contact__backdrop {
-    --backdrop-mask:
-      linear-gradient(90deg, transparent, #000 30%),
-      linear-gradient(180deg, transparent, #000 25%, #000 86%, transparent);
-
-    inset: auto 0 0 auto;
-    height: min(100%, 40vw);
-    aspect-ratio: 1672 / 941;
-    -webkit-mask-composite: source-in;
-    mask-composite: intersect;
-  }
-
-  .contact__backdrop img {
-    object-position: 100% 50%;
-  }
-
   .contact__body {
     width: auto;
     margin-inline: var(--gutter) calc(38.2% + 2rem);
   }
 
-  .display--contact {
-    margin-block-start: 1.75rem;
-    font-size: min(6.2vw, 7.25rem);
-    font-weight: 450;
-    letter-spacing: -0.02em;
-    line-height: 1;
-  }
 
   .display--contact strong {
     margin-block-start: 1.5rem;
@@ -2768,9 +2689,7 @@ a {
     max-width: none;
     margin: 0;
     padding: 0;
-    font-size: 1.0625rem;
     line-height: 1.5;
-    letter-spacing: 0.01em;
   }
 
   /* ---------- Footer ---------- */
@@ -2782,23 +2701,17 @@ a {
   .site-footer__inner {
     padding-block-start: 1.5rem;
   }
-
-  .site-footer .mono-label {
-    font-size: 0.6875rem;
-    letter-spacing: 0.08em;
-  }
 }
 
 /* Small desktop (64–80rem): stack the denser rows */
 @media (min-width: 64rem) and (max-width: 79.999rem) {
   .ideas__tool {
-    grid-template-columns: minmax(0, 20rem) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 24rem) minmax(0, 1fr);
     column-gap: 3.5rem;
   }
 
   .about__backdrop {
-    --backdrop-opacity: 0.5;
-
+    opacity: 0.5;
     inset-inline-start: 60%;
   }
 
@@ -2820,19 +2733,6 @@ a {
 
   .contact__note {
     max-width: 18rem;
-  }
-}
-
-/* Wide desktop: room for the CTA photo at the section's full height */
-@media (min-width: 90rem) {
-  .contact__backdrop {
-    --backdrop-mask:
-      linear-gradient(90deg, transparent, #000 34%),
-      linear-gradient(180deg, #000 86%, transparent);
-
-    inset: 0 0 0 22%;
-    height: auto;
-    aspect-ratio: auto;
   }
 }
 

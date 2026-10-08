@@ -18,7 +18,7 @@ export const selectedWorkProjects: readonly Project[] = [
     href: "https://moustachebarbersgc.com/",
     ...media("mr-moustache", "Mr Moustache"),
     previewHref: "https://mr-moustache.vercel.app",
-    wordmark: { src: "/images/work/wordmarks/hq/mr-moustache.webp", width: 2777, height: 420, viewBox: "43 52 2692 316" },
+    wordmark: { src: "/images/work/wordmarks/hq/mr-moustache.webp", width: 1525, height: 176, display: 298 },
   },
   {
     id: "kirra-dive", name: "Kirra Dive", category: "Dive centre", location: "Tweed Heads",
@@ -26,7 +26,7 @@ export const selectedWorkProjects: readonly Project[] = [
     summary: "From the first question to the first dive.",
     ...media("kirra-dive", "Kirra Dive"),
     previewHref: "https://kirra-dive.vercel.app",
-    wordmark: { src: "/images/work/wordmarks/hq/kirra-dive.webp", width: 2631, height: 420, viewBox: "58 65 2517 290" },
+    wordmark: { src: "/images/work/wordmarks/hq/kirra-dive.webp", width: 1656, height: 176, display: 322 },
   },
   {
     id: "santos-becker", name: "Santos & Becker", category: "Immigration consulting", location: "Mexico",
@@ -34,7 +34,7 @@ export const selectedWorkProjects: readonly Project[] = [
     summary: "A clearer digital presence for a global practice.",
     ...media("santos-becker", "Santos & Becker"),
     previewHref: "https://santos-becker-actualsite.vercel.app",
-    wordmark: { src: "/images/work/wordmarks/hq/santos-becker.webp", width: 3318, height: 420, viewBox: "54 68 3204 288" },
+    wordmark: { src: "/images/work/wordmarks/hq/santos-becker.webp", width: 2092, height: 176, display: 360 },
   },
   {
     id: "agendify", name: "Agendify", category: "Scheduling product", location: "",
@@ -42,7 +42,7 @@ export const selectedWorkProjects: readonly Project[] = [
     summary: "Bookings, without the back-and-forth.",
     ...media("agendify", "Agendify"),
     previewHref: "https://agendify.pro/",
-    wordmark: { src: "/images/work/wordmarks/hq/agendify.webp", width: 1427, height: 420, viewBox: "44 52 1340 315" },
+    wordmark: { src: "/images/work/wordmarks/hq/agendify.webp", width: 719, height: 176, display: 165 },
   },
   {
     id: "stockia", name: "StockIA", category: "Wholesale commerce", location: "Argentina",
@@ -57,7 +57,7 @@ export const selectedWorkProjects: readonly Project[] = [
     summary: "Craftsmanship, translated into a digital storefront.",
     ...media("decoratre", "Decoratre"),
     previewHref: "https://decoratre-2.myshopify.com/",
-    wordmark: { src: "/images/work/wordmarks/hq/decoratre.webp", width: 2196, height: 420, viewBox: "149 67 1992 219" },
+    wordmark: { src: "/images/work/wordmarks/hq/decoratre.webp", width: 1795, height: 176, display: 333 },
   },
   {
     id: "a1-estudio", name: "A1 Estudio", category: "Food direction", location: "Buenos Aires",
@@ -65,6 +65,7 @@ export const selectedWorkProjects: readonly Project[] = [
     summary: "A bold digital presence for food direction.",
     ...media("a1-estudio", "A1 Estudio"),
     previewHref: "https://a1-estudio.vercel.app/",
+    wordmark: { src: "/images/work/wordmarks/hq/a1-estudio.webp", width: 980, height: 176, display: 205 },
   },
 ];
 

@@ -46,18 +46,29 @@ test("project media retain transparency so the shared background never changes",
   }
 });
 
-test("supplied HQ wordmarks are used without adding icons to A1 or StockIA headings", () => {
+test("final 4K wordmarks are used and balanced; StockIA keeps its name in type", () => {
+  const sources: Record<string, string> = {
+    "mr-moustache": "mr_moustache_logo_transparente_hq",
+    "kirra-dive": "kirra_dive_logo_transparente_hq",
+    "santos-becker": "santos_becker_logo_transparente_real_v2",
+    agendify: "agendify_logo_transparente_hq",
+    decoratre: "decoratre_logo_transparente_real",
+    "a1-estudio": "a1estudio_logo_transparente_real",
+  };
+  const heights: number[] = [];
   for (const project of selectedWorkProjects) {
-    if (project.id === "a1-estudio" || project.id === "stockia") {
+    if (project.id === "stockia") {
       assert.equal(project.wordmark, undefined);
       continue;
     }
-    assert.equal(project.wordmark?.src, `/images/work/wordmarks/hq/${project.id}.webp`);
-    const original = `assets/selected-work/brand-assets/logos-hq/${project.id}.png`;
-    assert.ok(existsSync(original));
-    assert.ok(statSync(path.join("public", project.wordmark!.src)).size < 200_000);
+    const { wordmark } = project;
+    assert.equal(wordmark?.src, `/images/work/wordmarks/hq/${project.id}.webp`);
+    assert.ok(existsSync(`public/images/logos/${sources[project.id]}.png`), project.id);
+    assert.ok(statSync(path.join("public", wordmark!.src)).size < 200_000);
+    heights.push((wordmark!.display * wordmark!.height) / wordmark!.width);
   }
-  assert.ok(existsSync("assets/selected-work/brand-assets/logos-hq/a1-estudio.png"));
+  // Wide, light logos sit lower; compact, heavy ones taller, within one band.
+  assert.ok(Math.min(...heights) >= 28 && Math.max(...heights) <= 48, heights.join(", "));
 });
 
 test("the operations platform is preserved, not confused with StockIA", () => {

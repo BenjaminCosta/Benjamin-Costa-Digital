@@ -63,7 +63,7 @@ Selected work shows one of seven projects at a time on desktop and mobile, with 
 
 The background stays stationary: transparent v3 device layers fade out in 160 ms and in over 340 ms, without translating the slide or its copy. A1 Estudio and StockIA use text-only project headings; their original isotipos remain in the selector. Device extraction prompts are preserved in `assets/selected-work/concepts/device-cutouts-prompts.md`.
 
-Supplied HQ wordmarks are copied unchanged under `assets/selected-work/brand-assets/logos-hq/` and exported losslessly under `public/images/work/wordmarks/hq/`. Every selector uses the same translucent glass surface; the active project has a dark background, not an underline. A1 remains text-only because its supplied wordmark is damaged, and StockIA has no supplied wordmark.
+Wordmarks come from the final 4K logos in `public/images/logos/`, exported trimmed and ink-coloured under `public/images/work/wordmarks/hq/`, each with a display width balanced for its proportions and weight. Every selector uses the same translucent glass surface; the active project has a dark background, not an underline. StockIA has no supplied wordmark, so its name stays in type.
 
 All seven project CTAs open Benjamin's supplied live preview links in a new tab, including StockIA's `/comercio` route. The section title uses one consistent, non-italic typeface. Original captures remain archived under `assets/selected-work/`; generated mockup screens are illustrative, not pixel-exact evidence of the delivered interfaces. The existing Custom Operations Platform record is preserved as pending, not misidentified as StockIA. See [selected work notes](docs/selected-work-direction.md).
 
