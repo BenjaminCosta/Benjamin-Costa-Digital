@@ -22,6 +22,7 @@ export function Backdrop({
       sizes={sizes}
       sources={desktopSrc ? [{ media: "(min-width: 64rem)", src: desktopSrc, sizes: desktopSizes }] : []}
       className={className ? `backdrop ${className}` : "backdrop"}
+      quality={75}
     />
   );
 }

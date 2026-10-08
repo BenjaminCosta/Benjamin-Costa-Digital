@@ -56,6 +56,9 @@
 
   /* Vertical rhythm between sections */
   --section-space: 2.75rem;
+  /* The one wash over every light section's photo (see .backdrop) */
+  --veil: rgb(242 240 234 / 0.4);
+
   /* Section label to its title, the same in every section */
   --head-gap: 1.25rem;
 
@@ -552,32 +555,36 @@ a {
   backdrop-filter: blur(18px);
 }
 
-/* Glass/acrylic photography behind a section: present, never loud.
-   The image is blended into the section colour (multiply on paper, screen
-   on dark) and feathered on every edge, so its own background disappears
-   and only the glass reads. */
+/* Section photography: the whole image, kept sharp, toned the same way in
+   every light section (half saturation, then one paper veil). Each photo
+   keeps its detail while all of them share the page's colour, so
+   neighbouring sections meet on near-identical tones, edge to edge, with no
+   fade bands. */
 .backdrop {
-  --backdrop-opacity: 0.55;
-  --backdrop-mask: radial-gradient(100% 80% at 70% 70%, #000 20%, transparent 70%);
-
   position: absolute;
   inset: 0;
   z-index: -2;
   overflow: hidden;
   pointer-events: none;
-  opacity: var(--backdrop-opacity);
-  mix-blend-mode: multiply;
-  -webkit-mask-image: var(--backdrop-mask);
-  mask-image: var(--backdrop-mask);
 }
 
-.section--dark .backdrop {
-  mix-blend-mode: screen;
-}
-
-.backdrop img {
+.backdrop img,
+.sw-background {
   object-fit: cover;
-  filter: saturate(0.6);
+  filter: saturate(0.5);
+}
+
+.backdrop::after,
+.selected-work::before {
+  position: absolute;
+  inset: 0;
+  background: var(--veil);
+  content: "";
+  pointer-events: none;
+}
+
+.selected-work::before {
+  z-index: -1;
 }
 
 .hero,
@@ -585,23 +592,9 @@ a {
   isolation: isolate;
 }
 
-/*
- * Light sections share one flat paper and meet edge to edge, with no fade
- * bands. Each section's imagery is ambient light kept inside the section
- * (an ellipse that dissolves well before the edges), so neighbouring
- * sections always touch on plain paper. The only fade is under the hero
- * photo.
- */
-
-/* Reviews: near-white prism light, so only the colour streaks remain */
-.feedback__backdrop {
-  --backdrop-opacity: 0.7;
-  --backdrop-mask: radial-gradient(70% 55% at 50% 58%, #000 30%, transparent 100%);
-}
-
+/* Reviews: near-white prism light */
 .feedback__backdrop img {
   object-position: 60% 30%;
-  filter: none;
 }
 
 .feedback__body {
@@ -609,17 +602,10 @@ a {
   z-index: 1;
 }
 
-.about__backdrop {
-  --backdrop-opacity: 0.55;
-  --backdrop-mask: radial-gradient(110% 85% at 78% 88%, #000 18%, transparent 70%);
-
-  inset-block-start: auto;
-  height: 24rem;
-  display: none;
-}
-
+/* Phones show the bright desk and the glass card; the laptop and phone
+   join in from the desktop layout, beside the copy */
 .about__backdrop img {
-  object-position: 90% 100%;
+  object-position: 72% 100%;
 }
 
 .contact__body {
@@ -922,20 +908,21 @@ a {
   padding-block: var(--section-space);
 }
 
-/* Soft, warm light for the glass to sit in. Fixed height, so the tool can
-   change size without the image being rescaled on every frame. */
+/* Soft, warm light for the glass to sit in. Fixed height (a little more
+   than the first view), so the tool can change size without the image being
+   rescaled on every frame; when results make the section taller, the light
+   gives way to the paper inside the section. */
 .ideas__backdrop {
-  --backdrop-opacity: 0.85;
-  --backdrop-mask: radial-gradient(26rem 30rem at 50% 30rem, #000 30%, transparent 100%);
-
   inset-block-end: auto;
-  height: 120rem;
-  mix-blend-mode: normal;
+  height: 50rem;
+  -webkit-mask-image: linear-gradient(#000 80%, transparent);
+  mask-image: linear-gradient(#000 80%, transparent);
 }
 
+/* The darkest of the photos: lifted to the others' level */
 .ideas__backdrop img {
   object-position: 30% 30%;
-  filter: none;
+  filter: saturate(0.5) brightness(1.05);
 }
 
 .ideas__body {
@@ -2789,21 +2776,11 @@ a {
     object-position: 45% 50%;
   }
 
-  .feedback__backdrop {
-    --backdrop-opacity: 0.75;
-    --backdrop-mask: radial-gradient(60% 62% at 50% 58%, #000 30%, transparent 100%);
-  }
-
   .feedback__backdrop img {
     object-position: 50% 50%;
   }
 
   /* ---------- 02 Business ideas ---------- */
-
-  /* Warm light behind the tool column */
-  .ideas__backdrop {
-    --backdrop-mask: radial-gradient(42rem 28rem at 70% 24rem, #000 25%, transparent 100%);
-  }
 
   /* The question stays put on the left; the tool block changes on the right */
   .ideas__tool {
@@ -2923,16 +2900,6 @@ a {
     padding-block: var(--section-space) 0;
   }
 
-  .about__backdrop {
-    --backdrop-opacity: 0.55;
-    --backdrop-mask: radial-gradient(44% 62% at 88% 50%, #000 12%, transparent 100%);
-
-    inset-block-start: 0;
-    inset-inline-start: 52%;
-    height: auto;
-    display: block;
-  }
-
   .about__backdrop img {
     object-position: 100% 50%;
   }
@@ -3011,12 +2978,6 @@ a {
   .ideas__tool {
     grid-template-columns: minmax(0, 24rem) minmax(0, 1fr);
     column-gap: 3.5rem;
-  }
-
-  .about__backdrop {
-    --backdrop-opacity: 0.5;
-
-    inset-inline-start: 60%;
   }
 
   .about__body {

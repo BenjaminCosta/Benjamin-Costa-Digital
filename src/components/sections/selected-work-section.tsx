@@ -13,7 +13,7 @@ export function SelectedWorkSection() {
       aria-labelledby="work-title"
     >
       <Image src="/images/work/daylight-background.webp" alt="" fill sizes="100vw"
-        quality={50} className="sw-background" aria-hidden="true" />
+        quality={75} className="sw-background" aria-hidden="true" />
       <WorkShowcase
         projectNames={selectedWorkProjects.map(({ name }) => name)}
         heading={<h2 id="work-title" className="display sw-title"><span>A few things</span> <span>I’ve built.</span></h2>}
