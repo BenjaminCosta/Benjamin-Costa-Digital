@@ -602,10 +602,25 @@ a {
   z-index: 1;
 }
 
-/* Phones show the bright desk and the glass card; the laptop and phone
-   join in from the desktop layout, beside the copy */
+/* About keeps its original treatment: the glass card and phone rise from
+   the lower right, multiplied into the paper and feathered on every side,
+   so its edges are plain paper like its neighbours'. */
+.about__backdrop {
+  inset-block-start: auto;
+  height: 24rem;
+  opacity: 0.55;
+  mix-blend-mode: multiply;
+  -webkit-mask-image: radial-gradient(110% 85% at 78% 88%, #000 18%, transparent 70%);
+  mask-image: radial-gradient(110% 85% at 78% 88%, #000 18%, transparent 70%);
+}
+
+.about__backdrop::after {
+  content: none;
+}
+
 .about__backdrop img {
-  object-position: 72% 100%;
+  object-position: 90% 100%;
+  filter: saturate(0.6);
 }
 
 .contact__body {
@@ -2900,6 +2915,14 @@ a {
     padding-block: var(--section-space) 0;
   }
 
+  .about__backdrop {
+    inset-block-start: 0;
+    inset-inline-start: 52%;
+    height: auto;
+    -webkit-mask-image: radial-gradient(60% 100% at 94% 60%, #000 12%, transparent 70%);
+    mask-image: radial-gradient(60% 100% at 94% 60%, #000 12%, transparent 70%);
+  }
+
   .about__backdrop img {
     object-position: 100% 50%;
   }
@@ -2978,6 +3001,11 @@ a {
   .ideas__tool {
     grid-template-columns: minmax(0, 24rem) minmax(0, 1fr);
     column-gap: 3.5rem;
+  }
+
+  .about__backdrop {
+    opacity: 0.5;
+    inset-inline-start: 60%;
   }
 
   .about__body {
