@@ -75,6 +75,25 @@ export function WorkShowcase({ projectNames, heading, slides, selectors }: WorkS
     });
   }, [total]);
 
+  // Once the carousel nears the screen, keep both neighbours of the current
+  // project loaded, so the arrows and swipes never wait on the network.
+  const [near, setNear] = useState(false);
+  useEffect(() => {
+    const viewport = viewportRef.current;
+    if (!viewport || near) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry?.isIntersecting) setNear(true);
+    }, { rootMargin: "50% 0px" });
+    observer.observe(viewport);
+    return () => observer.disconnect();
+  }, [near]);
+
+  useEffect(() => {
+    if (!near) return;
+    warm(active + 1);
+    warm(active - 1);
+  }, [near, active, warm]);
+
   const choose = useCallback(async (index: number) => {
     const next = getProjectIndex(index, total);
     if (!total || next === active || busyRef.current) return;
@@ -154,9 +173,6 @@ export function WorkShowcase({ projectNames, heading, slides, selectors }: WorkS
   function onTouchStart(event: TouchEvent<HTMLOListElement>) {
     const touch = event.touches[0];
     touchRef.current = event.touches.length === 1 && touch ? { x: touch.clientX, y: touch.clientY } : null;
-    // Start fetching both neighbours now, so the swipe never waits on the image
-    warm(active + 1);
-    warm(active - 1);
   }
 
   function onTouchEnd(event: TouchEvent<HTMLOListElement>) {

@@ -18,10 +18,15 @@ export function SiteHeader() {
       document.querySelectorAll<HTMLElement>("[data-header-theme='dark']"),
     );
     let frame = 0;
+    // Written only when it changes, so scrolling doesn't restyle the header
+    // on every frame.
+    const setTheme = (theme: string) => {
+      if (header.dataset.theme !== theme) header.dataset.theme = theme;
+    };
     const update = () => {
       frame = 0;
       if (window.scrollY < 8) {
-        header.dataset.theme = "top";
+        setTheme("top");
         return;
       }
       // Sample the content just below the header's bottom edge.
@@ -30,7 +35,7 @@ export function SiteHeader() {
         const { top, bottom } = section.getBoundingClientRect();
         return top <= probe && bottom > probe;
       });
-      header.dataset.theme = isDark ? "dark" : "light";
+      setTheme(isDark ? "dark" : "light");
     };
     const schedule = () => {
       if (!frame) frame = requestAnimationFrame(update);

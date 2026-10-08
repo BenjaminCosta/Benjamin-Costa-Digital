@@ -2,7 +2,6 @@
 .selected-work {
   --bg: var(--paper);
   --fg: #171b1c;
-  --section-estimate: calc(75.7vw + 326px);
   position: relative;
   isolation: isolate;
   overflow: clip;
@@ -100,15 +99,12 @@
 @keyframes sw-device-enter { from { opacity: 0; } to { opacity: 1; } }
 
 @media (min-width: 48rem) and (max-width: 63.999rem) {
-  .selected-work { --section-estimate: calc(55.8vw + 407px); }
   .sw-shell { width: calc(100% - 80px); }
   .sw-project__visual { aspect-ratio: 16 / 9; }
   .sw-project__copy { max-width: 36rem; }
 }
 
 @media (min-width: 64rem) {
-  /* The project row is sized by the screen height (see .sw-project) */
-  .selected-work { --section-estimate: calc(173px + clamp(23.5rem, 48vh, 30rem)); }
   .sw-shell { width: min(1400px, calc(100% - 112px)); }
   .sw-background { object-position: center; }
   /* Prev/next close the selector row, level with the marks */

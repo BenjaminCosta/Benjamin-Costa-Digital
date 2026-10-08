@@ -53,16 +53,19 @@ const headerBottom = () =>
   document.querySelector(".site-header")?.getBoundingClientRect().bottom ?? 0;
 
 /**
- * The browser's scroll anchoring would "correct" the page while the block
- * changes height, fighting our own scrolling. Pause it for the transition.
+ * While the block changes height (see globals.css, body[data-block-moving]):
+ * scroll anchoring is paused, so the browser doesn't "correct" the page
+ * against our own scrolling, and everything below the block rides on its own
+ * layers, so moving it each frame doesn't repaint it. Set on <body>: any
+ * style change on <html> would restyle the whole document.
  */
-let anchorTimer: number | undefined;
-function pauseScrollAnchoring(ms = 900) {
-  const root = document.documentElement;
-  root.style.overflowAnchor = "none";
-  window.clearTimeout(anchorTimer);
-  anchorTimer = window.setTimeout(() => {
-    root.style.overflowAnchor = "";
+let movingTimer: number | undefined;
+function holdWhileMoving(ms = 900) {
+  const { body } = document;
+  body.dataset.blockMoving = "";
+  window.clearTimeout(movingTimer);
+  movingTimer = window.setTimeout(() => {
+    delete body.dataset.blockMoving;
   }, ms);
 }
 
@@ -138,7 +141,11 @@ export function BusinessIdeas(props: BusinessIdeasProps) {
     const inner = innerRef.current;
     if (!stage || !inner) return;
     const observer = new ResizeObserver(() => {
-      stage.style.height = `${inner.offsetHeight}px`;
+      const height = `${inner.offsetHeight}px`;
+      if (stage.style.height === height) return;
+      // Not on the first measure: the page is still loading, nothing moves.
+      if (stage.style.height) holdWhileMoving();
+      stage.style.height = height;
     });
     observer.observe(inner);
     return () => observer.disconnect();
@@ -151,7 +158,7 @@ export function BusinessIdeas(props: BusinessIdeasProps) {
     if (shownView.current === view) return;
     shownView.current = view;
 
-    pauseScrollAnchoring();
+    holdWhileMoving();
     const from = flipFrom.current;
     flipFrom.current = null;
 
