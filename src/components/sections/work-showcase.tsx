@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { KeyboardEvent, PointerEvent, ReactNode } from "react";
+import type { KeyboardEvent, PointerEvent, ReactNode, TouchEvent } from "react";
 import { ArrowIcon } from "@/components/ui/arrow-icon";
 import { getProjectIndex, getSwipeStep } from "@/lib/work-navigation";
 
@@ -59,6 +59,7 @@ export function WorkShowcase({ projectNames, heading, slides, selectors }: WorkS
   const requestRef = useRef<AbortController | null>(null);
   const busyRef = useRef(false);
   const gestureRef = useRef<{ x: number; y: number; pointerId: number } | null>(null);
+  const touchRef = useRef<{ x: number; y: number } | null>(null);
   const [active, setActive] = useState(0);
   const [phase, setPhase] = useState<Phase>("idle");
   const [error, setError] = useState("");
@@ -134,8 +135,11 @@ export function WorkShowcase({ projectNames, heading, slides, selectors }: WorkS
     void choose(index);
   }
 
+  // Mouse and pen drags use pointer events. Fingers use touch events: on
+  // phones the browser can cancel the pointer stream mid-swipe (over the
+  // device image in particular), but touchend always arrives.
   function onPointerDown(event: PointerEvent<HTMLOListElement>) {
-    if (event.button !== 0) return;
+    if (event.pointerType === "touch" || event.button !== 0) return;
     gestureRef.current = { x: event.clientX, y: event.clientY, pointerId: event.pointerId };
   }
 
@@ -144,6 +148,23 @@ export function WorkShowcase({ projectNames, heading, slides, selectors }: WorkS
     gestureRef.current = null;
     if (!start || start.pointerId !== event.pointerId) return;
     const step = getSwipeStep(start, { x: event.clientX, y: event.clientY });
+    if (step) void choose(active + step);
+  }
+
+  function onTouchStart(event: TouchEvent<HTMLOListElement>) {
+    const touch = event.touches[0];
+    touchRef.current = event.touches.length === 1 && touch ? { x: touch.clientX, y: touch.clientY } : null;
+    // Start fetching both neighbours now, so the swipe never waits on the image
+    warm(active + 1);
+    warm(active - 1);
+  }
+
+  function onTouchEnd(event: TouchEvent<HTMLOListElement>) {
+    const start = touchRef.current;
+    const touch = event.changedTouches[0];
+    touchRef.current = null;
+    if (!start || !touch) return;
+    const step = getSwipeStep(start, { x: touch.clientX, y: touch.clientY });
     if (step) void choose(active + step);
   }
 
@@ -170,17 +191,16 @@ export function WorkShowcase({ projectNames, heading, slides, selectors }: WorkS
     <div className="sw-shell" role="group" aria-roledescription="carousel" aria-label="Selected projects">
       <div className="sw-topline">
         <p className="mono-label sw-label">03 <span aria-hidden="true"> / </span> Selected work</p>
-        <div className="sw-navigation">
-          <p className="mono-label sw-counter" aria-hidden="true">{pad(active + 1)} / {pad(total)}</p>
-          <div className="sw-desktop-arrows">{arrows}</div>
-        </div>
+        <p className="mono-label sw-counter" aria-hidden="true">{pad(active + 1)} / {pad(total)}</p>
       </div>
       <div className="sw-body">
         {heading}
         <ol ref={viewportRef} id="work-projects" className="sw-viewport" tabIndex={0}
           aria-label="Projects. Use arrow keys or swipe to change project." aria-busy={busy}
           data-phase={phase} onKeyDown={onKeyDown} onPointerDown={onPointerDown}
-          onPointerUp={onPointerUp} onPointerCancel={() => { gestureRef.current = null; }}>
+          onPointerUp={onPointerUp} onPointerCancel={() => { gestureRef.current = null; }}
+          onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}
+          onTouchCancel={() => { touchRef.current = null; }}>
           {slides.map((slide, index) => (
             <li key={projectNames[index]} className="sw-slide" hidden={index !== active}
               inert={index !== active} aria-hidden={index !== active}
@@ -195,15 +215,19 @@ export function WorkShowcase({ projectNames, heading, slides, selectors }: WorkS
       <p className="visually-hidden" aria-live="polite" aria-atomic="true">
         {projectNames[active] + ". Project " + (active + 1) + " of " + total + "."}
       </p>
-      <div ref={selectorsRef} className="sw-selectors" role="group" aria-label="Choose a project">
-        {selectors.map((selector, index) => (
-          <button key={projectNames[index]} type="button" className="sw-selector"
-            aria-label={"Show " + projectNames[index] + " project"} aria-pressed={index === active}
-            aria-controls="work-projects" disabled={busy}
-            onPointerEnter={() => warm(index)} onFocus={() => warm(index)} onClick={() => void choose(index)}>
-            {selector}
-          </button>
-        ))}
+      {/* Projects on the left, prev/next at the end of the same row (desktop) */}
+      <div className="sw-footer">
+        <div ref={selectorsRef} className="sw-selectors" role="group" aria-label="Choose a project">
+          {selectors.map((selector, index) => (
+            <button key={projectNames[index]} type="button" className="sw-selector"
+              aria-label={"Show " + projectNames[index] + " project"} aria-pressed={index === active}
+              aria-controls="work-projects" disabled={busy}
+              onPointerEnter={() => warm(index)} onFocus={() => warm(index)} onClick={() => void choose(index)}>
+              {selector}
+            </button>
+          ))}
+        </div>
+        <div className="sw-desktop-arrows">{arrows}</div>
       </div>
     </div>
   );

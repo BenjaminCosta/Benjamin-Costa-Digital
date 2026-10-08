@@ -1,4 +1,5 @@
 import Image, { getImageProps } from "next/image";
+import type { CSSProperties } from "react";
 import type { GlassIconName } from "@/types/content";
 
 // Every glass icon is requested at one size, so the same file serves the row,
@@ -9,7 +10,8 @@ const props = (name: GlassIconName) =>
 
 type GlassIconProps = Readonly<{
   name: GlassIconName;
-  /** Rendered size in CSS pixels; the PNG carries its own tile and shadow. */
+  /** Rendered size in CSS pixels (a parent can override it with --glass-fit);
+   *  the PNG carries its own tile and shadow. */
   size: number;
   className?: string;
 }>;
@@ -20,7 +22,7 @@ export function GlassIcon({ name, size, className }: GlassIconProps) {
       {...props(name)}
       alt=""
       className={className ? `glass-icon ${className}` : "glass-icon"}
-      style={{ width: size, height: size }}
+      style={{ "--glass-size": `${size}px` } as CSSProperties}
       draggable={false}
     />
   );
