@@ -1,13 +1,14 @@
 import { Backdrop } from "@/components/ui/backdrop";
 import { ButtonLink } from "@/components/ui/button-link";
 import { SectionHead } from "@/components/ui/section-head";
-import { backdrops, site } from "@/data/site-content";
+import { backdropAlt, backdrops, site } from "@/data/site-content";
 
 export function AboutSection() {
   return (
     <section id="about" className="section about" aria-labelledby="about-title">
       <Backdrop
         src={backdrops.about}
+        alt={backdropAlt.about}
         className="about__backdrop"
         sizes="(min-width: 64rem) 60vw, 180vw"
       />
@@ -33,8 +34,8 @@ export function AboutSection() {
               systems and automations that save time and bring in more customers.
             </p>
             <p>
-              I use modern tools and AI to move fast, keep things simple and focus
-              on what actually makes a difference for your business.
+              I use modern tools to build in weeks, for a fraction of what an
+              agency charges for the same thing.
             </p>
           </div>
 

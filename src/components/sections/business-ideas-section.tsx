@@ -1,6 +1,6 @@
 import { BusinessIdeas } from "@/components/sections/business-ideas";
 import { Backdrop } from "@/components/ui/backdrop";
-import { backdrops } from "@/data/site-content";
+import { backdropAlt, backdrops } from "@/data/site-content";
 import { getIdeasConfig } from "@/lib/business-ideas/config";
 
 export function BusinessIdeasSection() {
@@ -11,6 +11,7 @@ export function BusinessIdeasSection() {
       <div id="audit" aria-hidden="true" />
       <Backdrop
         src={backdrops.ideas}
+        alt={backdropAlt.ideas}
         sizes="100vw"
         desktopSrc={backdrops.ideasDesktop}
         className="ideas__backdrop"

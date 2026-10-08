@@ -1,6 +1,5 @@
 import { ButtonLink } from "@/components/ui/button-link";
 import { SectionHead } from "@/components/ui/section-head";
-import { pricing } from "@/data/site-content";
 
 export function ContactSection() {
   return (
@@ -24,8 +23,9 @@ export function ContactSection() {
           </ButtonLink>
 
           <p className="contact__note lines">
-            <span>Most projects start around {pricing.startingFrom}.</span>{" "}
-            <span>You get a fixed price before</span> <span>anything starts.</span>
+            <span>You get a fixed price before</span>{" "}
+            <span>anything starts — and a lot less</span>{" "}
+            <span>than an agency would charge.</span>
           </p>
         </div>
       </div>

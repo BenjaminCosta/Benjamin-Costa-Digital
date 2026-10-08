@@ -37,13 +37,16 @@ export function HeroSection() {
       {/* One photo: beside the copy on desktop (full height), under it on
           phones and tablets with a short caption. */}
       <ArtDirectedPicture
-        src={heroImage}
+        src={heroImage.src}
+        alt={heroImage.alt}
+        decorative={false}
         sizes="(min-width: 64rem) 39vw, 100vw"
         className="hero__media"
         quality={75}
         eager
       />
-      <p className="mono-label hero__caption only-mobile" aria-hidden="true">Local businesses. Real collaboration.</p>
+      {/* The alt text already names the place for screen readers */}
+      <p className="mono-label hero__caption only-mobile" aria-hidden="true">{heroImage.caption}</p>
     </section>
   );
 }

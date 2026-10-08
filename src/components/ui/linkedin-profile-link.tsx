@@ -4,8 +4,8 @@ import { ArrowIcon } from "./arrow-icon";
 export function LinkedInProfileLink({ href }: Readonly<{ href: string | null }>) {
   const content = (
     <>
-      <Image src="/images/brands/linkedin.png" alt="" width={635} height={540}
-        sizes="20px" className="linkedin-profile-link__logo" />
+      <Image src="/images/brands/linkedin.png" alt="LinkedIn logo" width={635} height={540}
+        sizes="20px" className="linkedin-profile-link__logo" aria-hidden="true" />
       <span className="linkedin-profile-link__label">LinkedIn</span>
       <ArrowIcon direction="up-right" />
     </>

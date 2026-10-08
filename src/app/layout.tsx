@@ -29,13 +29,14 @@ const poppins = Poppins({
 });
 
 const siteName = "Benjamin Costa";
+const siteTitle = "Benjamin Costa — Websites & automation, Gold Coast";
 const siteDescription =
-  "Websites, booking flows and automations for local businesses on the Gold Coast.";
+  "Websites, booking systems and automations for local businesses on the Gold Coast.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(env.siteUrl),
   title: {
-    default: siteName,
+    default: siteTitle,
     template: `%s | ${siteName}`,
   },
   description: siteDescription,
@@ -44,13 +45,13 @@ export const metadata: Metadata = {
   creator: siteName,
   openGraph: {
     type: "website",
-    title: siteName,
+    title: siteTitle,
     description: siteDescription,
     siteName,
   },
   twitter: {
     card: "summary_large_image",
-    title: siteName,
+    title: siteTitle,
     description: siteDescription,
   },
 };

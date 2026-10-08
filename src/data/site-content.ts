@@ -8,7 +8,11 @@ export const site = Object.freeze({
 });
 
 /** Hero photo: beside the copy on desktop, under it on smaller screens. */
-export const heroImage = "/images/bg/hero.png";
+export const heroImage = Object.freeze({
+  src: "/images/bg/hero.png",
+  alt: "Two people working together at a computer on the front counter of Kirra Dive, a dive shop in Tweed Heads, under its course and gear hire boards",
+  caption: "Kirra Dive — Tweed Heads",
+});
 
 /** Subtle glass/acrylic backgrounds, one per section that carries one. */
 export const backdrops = Object.freeze({
@@ -23,15 +27,19 @@ export const backdrops = Object.freeze({
   about: "/images/bg/glass-laptop-soft.png",
 });
 
+/** What each section's background photo shows. */
+export const backdropAlt = Object.freeze({
+  ideas: "Soft, warm daylight and blurred leaf shadows on a pale wall",
+  work: "Palm leaf shadows in morning sunlight across a cream wall and desk, with a glass block on the table",
+  reviews: "Prism light and rainbow refractions across a bright white surface",
+  about: "A laptop, a phone and a frosted glass card on a bright desk in soft daylight",
+});
+
 export const plannedProjectCount = 8;
 
 export { selectedWorkProjects as projects } from "./selected-work";
 
 export { testimonials, workana } from "./workana";
-
-export const pricing = Object.freeze({
-  startingFrom: "A$5,000",
-});
 
 /* --------------------------------------------------------------------------
    02 Business Ideas
@@ -68,7 +76,8 @@ export const ideasCopy = Object.freeze({
   formTitle: "Want to see what this could look like for your business?",
   linkLabel: "Your business website",
   linkPlaceholder: "yourbusiness.com.au",
-  linkNote: "Use your public website. No website? Leave this empty and describe your business below. No private links or personal information.",
+  linkNote: "Use your public website. No private links or personal information.",
+  noWebsite: "No website yet? Even better — tell me about the business instead",
   contextToggle: "Add a little context (optional)",
   contextLabel: "What does your business do, and what would you like to improve?",
   contextPlaceholder: "We’re a Gold Coast barbershop. We’d like more repeat bookings.",

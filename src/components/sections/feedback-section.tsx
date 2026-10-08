@@ -6,7 +6,7 @@ import { VerifiedBadge } from "@/components/ui/verified-badge";
 import { LinkedInProfileLink } from "@/components/ui/linkedin-profile-link";
 import { socialProfiles } from "@/data/social-profiles";
 import { ReviewCarousel } from "./review-carousel";
-import { backdrops } from "@/data/site-content";
+import { backdropAlt, backdrops } from "@/data/site-content";
 import { carouselTestimonials, workana } from "@/data/workana";
 import type { Testimonial } from "@/types/content";
 import "./feedback-section.css";
@@ -77,7 +77,7 @@ export function FeedbackSection() {
   return (
     <section id="feedback" className="section feedback workana-feedback" aria-labelledby="feedback-title" data-brand="workana">
       {/* Same prism-light photo and paper veil as before the redesign */}
-      <Backdrop src={backdrops.reviews} sizes="160vw" desktopSrc={backdrops.reviewsDesktop} className="feedback__backdrop" />
+      <Backdrop src={backdrops.reviews} alt={backdropAlt.reviews} sizes="160vw" desktopSrc={backdrops.reviewsDesktop} className="feedback__backdrop" />
       <div className="page-container wk-feedback__body">
         <p className="mono-label wk-feedback__index">04 <span aria-hidden="true"> / </span> Client feedback</p>
         <div className="wk-feedback__head">

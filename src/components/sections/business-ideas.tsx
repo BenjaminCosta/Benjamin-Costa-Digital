@@ -455,6 +455,20 @@ export function BusinessIdeas(props: BusinessIdeasProps) {
                         {submitting ? <span className="ideas-form__spinner" aria-hidden="true" /> : <ArrowIcon />}
                       </button>
                     </div>
+                    {/* Many of the best prospects have no site: straight to a conversation
+                        (or, without WhatsApp configured, to the description field). */}
+                    {tool.contactHref ? (
+                      <a className="text-link ideas-no-site" href={tool.contactHref} target="_blank" rel="noopener noreferrer">
+                        <span className="text-link__label">{ideasCopy.noWebsite}</span>
+                        <ArrowIcon />
+                        <span className="visually-hidden"> (opens WhatsApp in a new tab)</span>
+                      </a>
+                    ) : (
+                      <button type="button" className="text-link ideas-no-site" onClick={() => { if (!contextOpen) toggleContext(); }}>
+                        <span className="text-link__label">{ideasCopy.noWebsite}</span>
+                        <ArrowIcon />
+                      </button>
+                    )}
                     <p id="ideas-link-note" className="ideas-form__note">
                       {ideasCopy.linkNote}
                     </p>

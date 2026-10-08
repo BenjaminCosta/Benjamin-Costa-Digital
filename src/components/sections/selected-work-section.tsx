@@ -2,6 +2,7 @@ import Image from "next/image";
 import { WorkProject } from "@/components/sections/work-project";
 import { WorkShowcase } from "@/components/sections/work-showcase";
 import { selectedWorkProjects } from "@/data/selected-work";
+import { backdropAlt } from "@/data/site-content";
 import "./selected-work.css";
 
 export function SelectedWorkSection() {
@@ -12,7 +13,7 @@ export function SelectedWorkSection() {
       className="section work selected-work"
       aria-labelledby="work-title"
     >
-      <Image src="/images/work/daylight-background.webp" alt="" fill sizes="100vw"
+      <Image src="/images/work/daylight-background.webp" alt={backdropAlt.work} fill sizes="100vw"
         quality={75} className="sw-background" aria-hidden="true" />
       <WorkShowcase
         projectNames={selectedWorkProjects.map(({ name }) => name)}
@@ -21,7 +22,7 @@ export function SelectedWorkSection() {
         selectors={selectedWorkProjects.map((project) => (
           <span key={project.id} className="sw-selector__content">
             <span className={`sw-isotipo sw-isotipo--${project.id}`}>
-              {project.isotipo ? <Image src={project.isotipo} width={48} height={48} sizes="48px" alt="" /> : null}
+              {project.isotipo ? <Image src={project.isotipo} width={48} height={48} sizes="48px" alt={`${project.name} logo`} /> : null}
             </span>
             <span className="sw-selector__name">{project.name}</span>
           </span>
