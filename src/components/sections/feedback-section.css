@@ -3,7 +3,6 @@
   --wk-muted: #686875;
   --wk-purple: #7441ed;
   --wk-line: #dedbdc;
-  background: #f8f6f1;
   padding-block: clamp(3.5rem, 6vw, 6rem);
 }
 .wk-feedback__body { max-width: 100rem; }
@@ -65,9 +64,7 @@ a.linkedin-profile-link:hover .linkedin-profile-link__label { text-decoration-co
 .wk-review__tags { display: flex; align-items: center; flex-wrap: wrap; gap: .5rem; padding: 0; margin: 1rem 0 0; list-style: none; color: var(--wk-muted); font-size: .72rem; }
 .wk-review__tags li { display: inline-flex; align-items: center; gap: .65rem; }
 .wk-review__tags li + li::before { content: "·"; margin-right: .15rem; }
-.wk-carousel__controls { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 1.25rem; }
-.wk-carousel__position { color: var(--wk-muted); font-family: var(--font-mono); font-size: .75rem; }
-.wk-carousel__position > span { color: #74727c; }
+.wk-carousel__controls { display: flex; align-items: center; justify-content: flex-end; gap: 1rem; margin-top: 1.25rem; }
 .wk-carousel__arrows { display: flex; gap: .6rem; }
 .wk-carousel__arrows button { display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border: 1px solid var(--wk-line); border-radius: 50%; background: rgb(255 255 255 / 55%); color: var(--ink); cursor: pointer; transition: background 180ms ease, color 180ms ease, transform 180ms ease; }
 .wk-carousel__arrows button:enabled:hover { background: #1d1b22; color: white; }

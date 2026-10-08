@@ -63,8 +63,9 @@ export function ReviewCarousel({ children, count }: Readonly<{ children: ReactNo
         {children}
       </ol>
       <div className="wk-carousel__controls">
-        <p className="wk-carousel__position" aria-live="polite" aria-atomic="true">
-          {position.index + 1}{position.visible > 1 ? `–${Math.min(count, position.index + position.visible)}` : ""} <span>/ {count} reviews</span>
+        {/* Announced to screen readers only: the arrows carry it on screen */}
+        <p className="visually-hidden" aria-live="polite" aria-atomic="true">
+          Reviews {position.index + 1}{position.visible > 1 ? ` to ${Math.min(count, position.index + position.visible)}` : ""} of {count}
         </p>
         <div className="wk-carousel__arrows">
           <button type="button" aria-label="Previous reviews" aria-controls="workana-reviews"
