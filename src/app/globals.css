@@ -20,6 +20,11 @@
 
   --muted-soft: color-mix(in srgb, var(--muted) 62%, var(--paper));
 
+  /* Text on paper: only two greys, both well above the AA minimum, so copy
+     stays legible over the section photos too. Titles stay pure ink. */
+  --text: color-mix(in srgb, var(--ink) 90%, var(--paper)); /* paragraphs, ~13:1 */
+  --text-2: color-mix(in srgb, var(--ink) 78%, var(--paper)); /* labels, meta, notes, ~9.5:1 */
+
   /* Content-owned colour (Workana brand), never used as a site accent */
   --workana: #5342e3;
 
@@ -735,7 +740,7 @@ a {
 
 .section-head__label,
 .section-head__aside {
-  color: color-mix(in srgb, var(--fg) 62%, var(--bg));
+  color: color-mix(in srgb, var(--fg) 78%, var(--bg));
 }
 
 /* ---------- 01 Hero ---------- */
@@ -868,8 +873,8 @@ a {
     inset 0 1px 0 rgb(255 255 255 / 0.7),
     0 1px 2px rgb(70 50 30 / 0.04),
     0 16px 40px rgb(70 50 30 / 0.07);
-  --soft: color-mix(in srgb, var(--ink) 64%, var(--paper));
-  --faint: color-mix(in srgb, var(--ink) 50%, var(--paper));
+  --soft: var(--text);
+  --faint: var(--text-2);
   --t-press: 180ms;
   --t-swap: 360ms;
   --t-expand: 300ms;
@@ -1365,7 +1370,7 @@ body[data-block-moving] :is(.ideas ~ section, .site-footer) {
 
 .ideas-form__field input::placeholder,
 .ideas-context textarea::placeholder {
-  color: color-mix(in srgb, var(--ink) 42%, var(--paper));
+  color: color-mix(in srgb, var(--ink) 58%, var(--paper));
 }
 
 .ideas-form__go {
@@ -1987,7 +1992,7 @@ body[data-block-moving] :is(.ideas ~ section, .site-footer) {
 .idea-result__summary {
   font-size: var(--fs-body);
   line-height: 1.45;
-  color: color-mix(in srgb, var(--ink) 72%, var(--paper));
+  color: var(--text);
 }
 
 .idea-result__build {
@@ -2207,7 +2212,7 @@ body[data-block-moving] :is(.ideas ~ section, .site-footer) {
   margin-block-start: 1.75rem;
   font-size: var(--fs-body);
   line-height: 1.5;
-  color: color-mix(in srgb, var(--ink) 80%, var(--paper));
+  color: var(--text);
 }
 
 .about .button {
@@ -2347,7 +2352,7 @@ body[data-block-moving] :is(.ideas ~ section, .site-footer) {
     font-family: var(--font-mono);
     font-size: var(--fs-label);
     letter-spacing: var(--tracking-label);
-    color: color-mix(in srgb, var(--fg) 62%, var(--bg));
+    color: color-mix(in srgb, var(--fg) 78%, var(--bg));
   }
 
   .section-head {
@@ -2367,7 +2372,7 @@ body[data-block-moving] :is(.ideas ~ section, .site-footer) {
   }
 
   .section-head__label {
-    color: color-mix(in srgb, var(--fg) 66%, var(--bg));
+    color: color-mix(in srgb, var(--fg) 78%, var(--bg));
   }
 
   .display span,
@@ -2408,7 +2413,7 @@ body[data-block-moving] :is(.ideas ~ section, .site-footer) {
   }
 
   .site-header__place {
-    color: color-mix(in srgb, var(--header-fg) 62%, transparent);
+    color: color-mix(in srgb, var(--header-fg) 78%, transparent);
     transition: color var(--hover-duration) var(--ease-editorial);
   }
 

@@ -20,7 +20,7 @@
 
 .sw-shell { position: relative; width: min(1400px, calc(100% - 48px)); margin-inline: auto; }
 .sw-topline { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
-.sw-label { color: #5b5f5c; font-size: var(--fs-label); letter-spacing: var(--tracking-label); }
+.sw-label { color: var(--text-2); font-size: var(--fs-label); letter-spacing: var(--tracking-label); }
 .sw-label span { padding-inline: .5rem; }
 .sw-desktop-arrows { display: none; }
 .sw-body { position: relative; margin-block-start: var(--head-gap); }
@@ -46,10 +46,10 @@
    never moves between projects. */
 .sw-wordmark { --wm-scale: .82; display: flex; align-items: center; height: calc(2.875rem * var(--wm-scale)); font-size: calc(2.25rem * var(--wm-scale)); font-weight: var(--weight-display); line-height: 1; letter-spacing: var(--tracking-display); }
 .sw-wordmark img { display: block; width: calc(var(--wm-w) * var(--wm-scale)); max-width: 100%; height: auto; }
-.sw-project__location { margin-block-start: .25rem; font-size: var(--fs-body); line-height: 1.4; color: #646965; }
+.sw-project__location { margin-block-start: .25rem; font-size: var(--fs-body); line-height: 1.4; color: var(--text-2); }
 /* Problem → what was built → what changed, about 30–35 words for every
    project; the reserved lines keep the card the same height throughout. */
-.sw-project__summary { margin-block-start: .625rem; min-height: 5lh; max-width: 40rem; font-size: var(--fs-body); line-height: 1.5; color: #60665f; text-wrap: pretty; }
+.sw-project__summary { margin-block-start: .625rem; min-height: 5lh; max-width: 40rem; font-size: var(--fs-body); line-height: 1.5; color: var(--text); text-wrap: pretty; }
 /* A quiet underlined link, like "See my work" in the hero. The row keeps a
    full touch target (level with the mobile arrows) and the underline sits
    right under the text. */
@@ -63,7 +63,7 @@
 .sw-footer { display: flex; align-items: flex-start; gap: 1.5rem; margin-block-start: .75rem; border-block-start: 1px solid #77796e33; }
 .sw-selectors { position: relative; flex: 1; min-width: 0; display: flex; gap: .75rem; overflow-x: auto; overscroll-behavior-inline: contain; scrollbar-width: none; padding: .75rem 4px .375rem; }
 .sw-selectors::-webkit-scrollbar { display: none; }
-.sw-selector { position: relative; flex: 0 0 3.75rem; display: grid; place-items: start center; border: 0; padding: 0 .25rem .25rem; background: none; cursor: pointer; border-radius: 4px; color: #555d56; }
+.sw-selector { position: relative; flex: 0 0 3.75rem; display: grid; place-items: start center; border: 0; padding: 0 .25rem .25rem; background: none; cursor: pointer; border-radius: 4px; color: var(--text-2); }
 .sw-selector__content { display: grid; justify-items: center; gap: .625rem; }
 .sw-selector__name { display: none; }
 .sw-isotipo { position: relative; isolation: isolate; display: grid; place-items: center; width: 3rem; height: 3rem; border: 1px solid #ffffffa6; border-radius: 14px; background: #ffffff33; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); box-shadow: inset 0 1px 0 #ffffffb3, inset 0 -1px 0 #8e857329, 0 5px 18px #625b490d; transition: transform 220ms var(--ease-editorial); overflow: clip; }
