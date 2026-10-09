@@ -50,8 +50,10 @@
 /* Problem → what was built → what changed, about 30–35 words for every
    project; the reserved lines keep the card the same height throughout. */
 .sw-project__summary { margin-block-start: .625rem; min-height: 5lh; max-width: 40rem; font-size: var(--fs-body); line-height: 1.5; color: #60665f; text-wrap: pretty; }
-.sw-project__cta.button { min-height: 3.125rem; max-width: 54%; padding-inline: 1rem; gap: .75rem; margin-block-start: .5rem; background: #171b1c; }
-.sw-project__cta .arrow-icon { width: .875rem; height: .875rem; }
+/* A quiet underlined link, like "See my work" in the hero. The row keeps a
+   full touch target (level with the mobile arrows) and the underline sits
+   right under the text. */
+.sw-project__cta { min-height: 3rem; margin-block-start: .25rem; background-position: 0 calc(50% + .75em); color: #171b1c; }
 .sw-mobile-arrows { display: flex; position: absolute; z-index: 2; inset-inline-end: 0; inset-block-end: 0; gap: .625rem; }
 .selected-work .sw-arrow { width: 3rem; height: 3rem; --round-bg: #eae6df; --round-fg: #171b1c; }
 .selected-work .sw-arrow.round-button--primary { --round-bg: #171b1c; --round-fg: #faf8f3; }
@@ -116,7 +118,7 @@
   .sw-wordmark { --wm-scale: .9; }
   .sw-project__location { margin-block-start: .375rem; }
   .sw-project__summary { margin-block-start: .75rem; min-height: 4lh; max-width: 36rem; }
-  .sw-project__cta.button { min-height: 3.25rem; max-width: none; padding-inline: 1.5rem; gap: 1.5rem; margin-block-start: .75rem; }
+  .sw-project__cta { margin-block-start: .5rem; }
   .sw-mobile-arrows { display: none; }
   .sw-footer { margin-block-start: 1rem; }
   .sw-selectors { gap: clamp(1rem, 2vw, 3rem); padding-block: 1rem .25rem; }

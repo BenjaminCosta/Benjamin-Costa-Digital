@@ -31,9 +31,9 @@ export function WorkProject({ project }: Readonly<{ project: Project }>) {
         <p className="sw-project__location">{[project.category, project.location].filter(Boolean).join(" · ")}</p>
         <p className="sw-project__summary">{project.summary}</p>
         {project.href || project.previewHref ? (
-          <a className="button button--dark sw-project__cta" href={project.previewHref ?? project.href}
+          <a className="text-link text-link--underlined sw-project__cta" href={project.previewHref ?? project.href}
             target="_blank" rel="noopener noreferrer">
-            <span>{project.previewHref ? "View preview" : "Visit website"}</span>
+            <span className="text-link__label">{project.previewHref ? "View preview" : "Visit website"}</span>
             <ArrowIcon direction="up-right" />
             <span className="visually-hidden"> — {project.name} (opens in a new tab)</span>
           </a>
