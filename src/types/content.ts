@@ -8,14 +8,11 @@ export type ImageAsset = Readonly<{
 export type Project = Readonly<{
   id: string;
   name: string;
-  /** Business type, e.g. "Barbershop". Shown with the location on desktop. */
+  /** Industry, e.g. "Barbershop". Shown as "Industry · Location". */
   category?: string;
   location: string;
-  services: readonly string[];
-  /** One-line summary used on small screens. */
+  /** What the problem was → what was built → what changed, in about 30–35 words. */
   summary: string;
-  /** Longer case-study blurb used where there is room for it. */
-  description?: string;
   href?: string;
   image?: ImageAsset;
   /** Supplied brand assets; never recreate client lettering with a font. */

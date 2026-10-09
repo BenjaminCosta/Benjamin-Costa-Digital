@@ -28,10 +28,7 @@ export function WorkProject({ project }: Readonly<{ project: Project }>) {
             <span>{project.name}</span>
           )}
         </h3>
-        <p className="sw-project__location">{[project.category, project.location].filter(Boolean).join(" — ")}</p>
-        <ul className="sw-project__services" aria-label="Project focus">
-          {project.services.map((service) => <li key={service}>{service}</li>)}
-        </ul>
+        <p className="sw-project__location">{[project.category, project.location].filter(Boolean).join(" · ")}</p>
         <p className="sw-project__summary">{project.summary}</p>
         {project.href || project.previewHref ? (
           <a className="button button--dark sw-project__cta" href={project.previewHref ?? project.href}

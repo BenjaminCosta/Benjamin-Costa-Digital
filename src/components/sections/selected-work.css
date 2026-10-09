@@ -41,16 +41,15 @@
    so a swipe that starts on it reaches the carousel. */
 .sw-project__image { width: 100%; height: 100%; object-fit: cover; object-position: center; user-select: none; pointer-events: none; -webkit-user-drag: none; -webkit-touch-callout: none; }
 .sw-project__copy { position: relative; z-index: 1; padding-block-start: .5rem; }
-.sw-project__copy::before { content: ""; display: none; width: 1.25rem; height: 1px; background: #717471; margin-block-end: 1.125rem; }
 /* Each logo gets its own width (data: wordmark.display), balanced for its
    proportions and ink weight, inside one fixed-height row so the copy below
    never moves between projects. */
 .sw-wordmark { --wm-scale: .82; display: flex; align-items: center; height: calc(2.875rem * var(--wm-scale)); font-size: calc(2.25rem * var(--wm-scale)); font-weight: var(--weight-display); line-height: 1; letter-spacing: var(--tracking-display); }
 .sw-wordmark img { display: block; width: calc(var(--wm-w) * var(--wm-scale)); max-width: 100%; height: auto; }
 .sw-project__location { margin-block-start: .25rem; font-size: var(--fs-body); line-height: 1.4; color: #646965; }
-.sw-project__services { display: flex; flex-wrap: wrap; gap: 0; list-style: none; margin: .125rem 0 0; padding: 0; font-size: var(--fs-small); line-height: 1.5; color: #646965; }
-.sw-project__services li + li::before { content: "·"; padding-inline: .6rem; }
-.sw-project__summary { margin-block-start: .5rem; min-height: 3rem; max-width: 34ch; font-size: var(--fs-body); line-height: 1.5; color: #60665f; }
+/* Problem → what was built → what changed, about 30–35 words for every
+   project; the reserved lines keep the card the same height throughout. */
+.sw-project__summary { margin-block-start: .625rem; min-height: 5lh; max-width: 40rem; font-size: var(--fs-body); line-height: 1.5; color: #60665f; text-wrap: pretty; }
 .sw-project__cta.button { min-height: 3.125rem; max-width: 54%; padding-inline: 1rem; gap: .75rem; margin-block-start: .5rem; background: #171b1c; }
 .sw-project__cta .arrow-icon { width: .875rem; height: .875rem; }
 .sw-mobile-arrows { display: flex; position: absolute; z-index: 2; inset-inline-end: 0; inset-block-end: 0; gap: .625rem; }
@@ -111,14 +110,12 @@
   .sw-desktop-arrows { display: flex; flex: none; gap: .75rem; padding-block-start: 1rem; }
   .selected-work .sw-arrow { width: 3.5rem; height: 3.5rem; }
   .sw-title { position: absolute; z-index: 2; inset: 0 auto auto 0; width: 38%; pointer-events: none; }
-  .sw-project { grid-template-columns: minmax(0, .34fr) minmax(0, .66fr); min-height: clamp(22rem, 48vh, 30rem); align-items: end; }
+  .sw-project { grid-template-columns: minmax(0, .45fr) minmax(0, .55fr); min-height: clamp(22rem, 48vh, 30rem); align-items: end; }
   .sw-project__visual { grid-column: 2; grid-row: 1; align-self: center; justify-self: end; aspect-ratio: 3 / 2; width: min(calc(100% + 3.5rem), 44rem, 72vh); margin: 0 -1rem 0 0; }
-  .sw-project__copy { grid-column: 1; grid-row: 1; align-self: start; min-height: 0; padding: calc(var(--fs-title) * 2.04 + 1rem) 0 0; }
-  .sw-project__copy::before { display: block; margin-block-end: .75rem; }
+  .sw-project__copy { grid-column: 1; grid-row: 1; align-self: start; min-height: 0; padding: calc(var(--fs-title) * 2.04 + 1.75rem) 0 0; }
   .sw-wordmark { --wm-scale: .9; }
   .sw-project__location { margin-block-start: .375rem; }
-  .sw-project__services { margin-block-start: .25rem; }
-  .sw-project__summary { border-block-start: 1px solid #77796e33; padding-block-start: .75rem; margin-block-start: .75rem; min-height: 3.25rem; max-width: 33ch; }
+  .sw-project__summary { margin-block-start: .75rem; min-height: 4lh; max-width: 36rem; }
   .sw-project__cta.button { min-height: 3.25rem; max-width: none; padding-inline: 1.5rem; gap: 1.5rem; margin-block-start: .75rem; }
   .sw-mobile-arrows { display: none; }
   .sw-footer { margin-block-start: 1rem; }
@@ -127,6 +124,11 @@
   .sw-isotipo { --iso-scale: .875; width: 3.5rem; height: 3.5rem; }
   .sw-selector__content { gap: .5rem; }
   .sw-selector__name { display: block; font-size: var(--fs-micro); line-height: 1.5; white-space: nowrap; }
+}
+
+/* Wide screens fit every summary on three lines */
+@media (min-width: 80rem) {
+  .sw-project__summary { min-height: 3lh; }
 }
 
 @media (prefers-reduced-motion: reduce) {

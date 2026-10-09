@@ -13,8 +13,11 @@ test("seven supplied projects have real assets and no fabricated case-study URLs
       if (src) assert.ok(existsSync(path.join(process.cwd(), "public", src)), src);
     }
     assert.ok(project.image?.src.endsWith("-devices-v3.webp"));
-    assert.ok(project.services.length);
-    assert.ok(project.summary);
+    // One label format (Industry · Location) and one copy length, so the card
+    // never changes size between projects.
+    assert.ok(project.category && project.location, project.id);
+    const words = project.summary.split(/\s+/).length;
+    assert.ok(words >= 28 && words <= 36, `${project.id}: ${words} words`);
     assert.ok(statSync(path.join(process.cwd(), "public", project.image!.src)).size < 200_000);
     if (project.href) assert.equal(project.href, "https://moustachebarbersgc.com/");
     const originalIcon = path.join(process.cwd(), "assets/selected-work/brand-assets/isotipos", project.id + ".png");
