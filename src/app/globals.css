@@ -820,9 +820,32 @@ a {
   }
 }
 
-.hero__caption {
-  padding: 0.875rem var(--gutter) 0;
-  color: var(--muted);
+/* Where the photo was taken, written on it: bottom right on phones and
+   tablets, bottom left (beside the copy) on desktop. A faint shade at the
+   foot of the photo keeps it legible. */
+.hero__media::after {
+  position: absolute;
+  inset: auto 0 0;
+  height: 38%;
+  background: linear-gradient(to top, rgb(10 10 10 / 0.5), rgb(10 10 10 / 0));
+  content: "";
+  pointer-events: none;
+}
+
+.hero__place {
+  position: absolute;
+  z-index: 1;
+  inset: auto var(--gutter) 1.125rem auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--white);
+}
+
+.hero__place svg {
+  width: 0.875rem;
+  height: 0.875rem;
+  flex: none;
 }
 
 .hero__media img {
@@ -2529,6 +2552,10 @@ body[data-block-moving] :is(.ideas ~ section, .site-footer) {
     aspect-ratio: auto;
     margin: 0;
     height: auto;
+  }
+
+  .hero__place {
+    inset: auto auto 1.75rem 2rem;
   }
 
   .hero__media img {

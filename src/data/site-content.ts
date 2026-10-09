@@ -11,7 +11,8 @@ export const site = Object.freeze({
 export const heroImage = Object.freeze({
   src: "/images/bg/hero.png",
   alt: "Two people working together at a computer on the front counter of Kirra Dive, a dive shop in Tweed Heads, under its course and gear hire boards",
-  caption: "Kirra Dive — Tweed Heads",
+  /** Where it was taken, shown on the photo with a location pin. */
+  place: "Kirra Dive",
 });
 
 /** Subtle glass/acrylic backgrounds, one per section that carries one. */

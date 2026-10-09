@@ -35,7 +35,7 @@ export function HeroSection() {
       </div>
 
       {/* One photo: beside the copy on desktop (full height), under it on
-          phones and tablets with a short caption. */}
+          phones and tablets, with where it was taken written on it. */}
       <ArtDirectedPicture
         src={heroImage.src}
         alt={heroImage.alt}
@@ -44,9 +44,16 @@ export function HeroSection() {
         className="hero__media"
         quality={75}
         eager
-      />
-      {/* The alt text already names the place for screen readers */}
-      <p className="mono-label hero__caption only-mobile" aria-hidden="true">{heroImage.caption}</p>
+      >
+        {/* The alt text already names the place for screen readers */}
+        <p className="mono-label hero__place" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" focusable="false">
+            <path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0C18.5 15.4 12 21 12 21z" />
+            <circle cx="12" cy="10" r="2.3" />
+          </svg>
+          {heroImage.place}
+        </p>
+      </ArtDirectedPicture>
     </section>
   );
 }

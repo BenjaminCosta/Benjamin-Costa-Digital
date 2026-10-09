@@ -1,4 +1,5 @@
 import { getImageProps } from "next/image";
+import type { ReactNode } from "react";
 
 type PictureSource = Readonly<{ media: string; src: string; sizes: string }>;
 
@@ -14,6 +15,8 @@ type ArtDirectedPictureProps = Readonly<{
   className: string;
   quality?: 50 | 75;
   eager?: boolean;
+  /** Drawn over the photo, inside its frame (e.g. a caption). */
+  children?: ReactNode;
 }>;
 
 /**
@@ -29,6 +32,7 @@ export function ArtDirectedPicture({
   className,
   quality = 50,
   eager = false,
+  children,
 }: ArtDirectedPictureProps) {
   const common = {
     alt,
@@ -48,6 +52,7 @@ export function ArtDirectedPicture({
         })}
         <img {...props} alt={alt} />
       </picture>
+      {children}
     </div>
   );
 }
