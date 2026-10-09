@@ -2,6 +2,7 @@ import { Backdrop } from "@/components/ui/backdrop";
 import { ButtonLink } from "@/components/ui/button-link";
 import { SectionHead } from "@/components/ui/section-head";
 import { backdropAlt, backdrops, site } from "@/data/site-content";
+import { whatsAppHref } from "@/lib/contact";
 
 export function AboutSection() {
   return (
@@ -39,7 +40,9 @@ export function AboutSection() {
             </p>
           </div>
 
-          <ButtonLink href="#contact">Let’s talk</ButtonLink>
+          <ButtonLink href={whatsAppHref("about")} newTab="opens WhatsApp" arrow="up-right">
+            Let’s talk
+          </ButtonLink>
         </div>
       </div>
     </section>

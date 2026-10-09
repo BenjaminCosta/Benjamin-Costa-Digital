@@ -8,6 +8,8 @@ type ButtonLinkProps = Readonly<{
   arrow?: "right" | "up-right";
   className?: string;
   pendingLabel?: string;
+  /** Opens in a new tab; read to screen readers, e.g. "opens WhatsApp". */
+  newTab?: string;
 }>;
 
 export function ButtonLink({
@@ -17,6 +19,7 @@ export function ButtonLink({
   arrow = "right",
   className,
   pendingLabel,
+  newTab,
 }: ButtonLinkProps) {
   const classes = ["button", `button--${tone}`, className]
     .filter(Boolean)
@@ -33,6 +36,15 @@ export function ButtonLink({
       <span className={classes} data-pending title={pendingLabel}>
         {content}
       </span>
+    );
+  }
+
+  if (newTab) {
+    return (
+      <a className={classes} href={href} target="_blank" rel="noopener noreferrer">
+        {content}
+        <span className="visually-hidden"> ({newTab})</span>
+      </a>
     );
   }
 

@@ -1,5 +1,6 @@
 import { ButtonLink } from "@/components/ui/button-link";
 import { SectionHead } from "@/components/ui/section-head";
+import { whatsAppHref } from "@/lib/contact";
 
 export function ContactSection() {
   return (
@@ -18,7 +19,7 @@ export function ContactSection() {
         </h2>
 
         <div className="contact__actions">
-          <ButtonLink tone="light" pendingLabel="Contact link coming soon">
+          <ButtonLink tone="light" href={whatsAppHref("contact")} newTab="opens WhatsApp" arrow="up-right">
             Talk to me
           </ButtonLink>
 

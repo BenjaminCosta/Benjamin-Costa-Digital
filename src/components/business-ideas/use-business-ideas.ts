@@ -38,6 +38,10 @@ export function useBusinessIdeas({ available, whatsappNumber }: BusinessIdeasPro
       ? buildWhatsAppLink(whatsappNumber, { goal: selectedGoalId, link: cleanLink, description }, state.status === "success" ? state.result : undefined)
       : `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`Hey Ben, I’d love your take on my business. I selected: ${selectedGoal!.label}.`)}`
     : null;
+  // For visitors without a site: the message says so, and leaves room to describe the business.
+  const noWebsiteHref = whatsappNumber && selectedGoalId
+    ? `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`Hey Ben! I don’t have a website yet, but I’d love your take on my business. I selected: ${selectedGoal!.label}.\nAbout my business: `)}`
+    : null;
 
   async function submit(): Promise<ToolState | undefined> {
     if (!selectedGoalId || state.status === "loading" || !available) return;
@@ -89,7 +93,7 @@ export function useBusinessIdeas({ available, whatsappNumber }: BusinessIdeasPro
   return {
     selectedGoalId, setSelectedGoalId, selectedGoal,
     businessLink, setBusinessLink, description, setDescription, state,
-    resetRequest, submit, contactHref,
+    resetRequest, submit, contactHref, noWebsiteHref,
     needsContext: state.status === "error" && state.code === "needs-context",
     invalidLink: state.status === "error" && ["invalid-input", "unsafe-link"].includes(state.code),
   };

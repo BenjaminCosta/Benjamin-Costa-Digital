@@ -4,7 +4,8 @@ import { useEffect, useRef } from "react";
 import { ArrowIcon } from "@/components/ui/arrow-icon";
 import { site } from "@/data/site-content";
 
-export function SiteHeader() {
+/** contactHref: WhatsApp with a message ready to send (falls back to the contact section). */
+export function SiteHeader({ contactHref }: Readonly<{ contactHref?: string }>) {
   const headerRef = useRef<HTMLElement>(null);
 
   // The header sits over every section, so it takes on the theme of the
@@ -62,9 +63,11 @@ export function SiteHeader() {
           <a className="site-header__link only-desktop" href="#work">
             Work
           </a>
-          <a className="text-link site-header__cta" href="#contact">
+          <a className="text-link site-header__cta" href={contactHref ?? "#contact"}
+            {...(contactHref ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
             <span className="text-link__label">Let’s talk</span>
             <ArrowIcon direction="up-right" />
+            {contactHref ? <span className="visually-hidden"> (opens WhatsApp)</span> : null}
           </a>
         </nav>
       </div>

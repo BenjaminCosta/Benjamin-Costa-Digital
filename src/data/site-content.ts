@@ -7,6 +7,13 @@ export const site = Object.freeze({
   location: "Gold Coast, AU",
 });
 
+/** Pre-written WhatsApp messages, one per "let's talk" button. Visitors can edit them before sending. */
+export const contactMessages = Object.freeze({
+  header: "Hey Ben! I came across your website and I’d love to chat about my business.",
+  about: "Hey Ben! I read about how you work and I’d like to talk about my business.",
+  contact: "Hey Ben! There’s something in my business that could work better. Can we have a chat?",
+});
+
 /** Hero photo: beside the copy on desktop, under it on smaller screens. */
 export const heroImage = Object.freeze({
   src: "/images/bg/hero.png",
