@@ -820,9 +820,8 @@ a {
   }
 }
 
-/* Where the photo was taken, written on it: bottom right on phones and
-   tablets, bottom left (beside the copy) on desktop. A faint shade at the
-   foot of the photo keeps it legible. */
+/* Where the photo was taken, written on it, tucked into the bottom right
+   corner. A faint shade at the foot of the photo keeps it legible. */
 .hero__media::after {
   position: absolute;
   inset: auto 0 0;
@@ -835,7 +834,7 @@ a {
 .hero__place {
   position: absolute;
   z-index: 1;
-  inset: auto var(--gutter) 1.125rem auto;
+  inset: auto 0.875rem 0.75rem auto;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -2555,7 +2554,7 @@ body[data-block-moving] :is(.ideas ~ section, .site-footer) {
   }
 
   .hero__place {
-    inset: auto auto 1.75rem 2rem;
+    inset: auto 1.25rem 1rem auto;
   }
 
   .hero__media img {
