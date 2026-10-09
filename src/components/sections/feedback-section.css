@@ -69,8 +69,6 @@ a.linkedin-profile-link:hover .linkedin-profile-link__label { text-decoration-co
 .wk-carousel__arrows button:enabled:hover { background: #1d1b22; color: white; }
 .wk-carousel__arrows button:enabled:active { transform: scale(.96); }
 .wk-carousel__arrows button:disabled { opacity: .35; cursor: default; }
-.wk-feedback__note { text-align: center; color: var(--wk-muted); font-size: .72rem; line-height: 1.6; margin-top: 1rem; }
-.wk-feedback__note a { text-decoration: underline; text-underline-offset: .2em; }
 @media (min-width: 48rem) {
   .wk-profile { padding: 1.75rem; }
   .wk-reviews { grid-auto-columns: calc((100% - 1rem) / 2); }

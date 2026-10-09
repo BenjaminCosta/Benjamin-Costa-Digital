@@ -17,7 +17,7 @@ export function HeroSection() {
           </h1>
 
           <p className="hero__lede lines">
-            <span>I build websites, booking flows and</span>{" "}
+            <span>I build websites, online bookings and</span>{" "}
             <span>automations for local businesses</span>{" "}
             <span>on the Gold Coast.</span>
           </p>

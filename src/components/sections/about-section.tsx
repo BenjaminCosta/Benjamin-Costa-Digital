@@ -26,13 +26,13 @@ export function AboutSection() {
         <div className="about__aside">
           <div className="about__bio">
             <p>
-              I’m {site.name}, an independent developer and designer based on the
+              I’m {site.name} (Ben is fine), a developer and designer based on the
               Gold Coast.
             </p>
             <p>
-              Since 2023 I’ve been working with businesses — from barbershops and
-              dive centres to e-commerce stores — building websites, booking
-              systems and automations that save time and bring in more customers.
+              Since 2023 I’ve worked with barbershops, dive centres, online stores
+              and more, building websites, bookings and automations that save time
+              and bring in customers.
             </p>
             <p>
               I use modern tools to build in weeks, for a fraction of what an

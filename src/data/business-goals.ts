@@ -15,13 +15,13 @@ export const businessGoals: readonly BusinessGoal[] = [
       },
       {
         area: "conversion",
-        title: "Conversion",
+        title: "Turn visits into bookings",
         description:
           "Reduce the steps between finding your business and making a booking.",
       },
       {
         area: "retention",
-        title: "Retention",
+        title: "Bring people back",
         description:
           "Bring customers back with reminders, follow-ups and easier rebooking.",
       },
@@ -35,19 +35,19 @@ export const businessGoals: readonly BusinessGoal[] = [
     ideas: [
       {
         area: "automation",
-        title: "Automation",
+        title: "Let the routine run itself",
         description:
           "Connect the tools you already use so routine tasks don’t need someone moving information by hand.",
       },
       {
         area: "internal-tools",
-        title: "Internal tools",
+        title: "One place for the day-to-day",
         description:
           "Keep jobs, customers and day-to-day operations in one place that works for your team.",
       },
       {
         area: "ai",
-        title: "AI",
+        title: "AI where it actually helps",
         description:
           "Use AI for specific tasks such as sorting enquiries, summarising information or drafting replies for you to check.",
       },
@@ -61,19 +61,19 @@ export const businessGoals: readonly BusinessGoal[] = [
     ideas: [
       {
         area: "website",
-        title: "Website",
+        title: "A site that sells you",
         description:
           "Build a fast, clear website that explains what you do and works well on mobile.",
       },
       {
         area: "conversion",
-        title: "Conversion",
+        title: "A clear next step",
         description:
           "Give visitors a clear next step, whether that’s booking, buying or getting in touch.",
       },
       {
         area: "local-presence",
-        title: "Google / local presence",
+        title: "Show up on Google",
         description:
           "Connect your Google Business presence to useful pages and an easier path to becoming a customer.",
       },
@@ -87,25 +87,25 @@ export const businessGoals: readonly BusinessGoal[] = [
     ideas: [
       {
         area: "custom-tools",
-        title: "Custom tools",
+        title: "Built around how you work",
         description:
           "Build something around the way your business works when off-the-shelf tools don’t quite fit.",
       },
       {
         area: "apps",
-        title: "Apps",
+        title: "Start with a simple app",
         description:
           "Start with a focused app that lets people do the one thing your idea needs to prove.",
       },
       {
         area: "ai",
-        title: "AI",
+        title: "AI where it actually helps",
         description:
           "Add an AI feature where it solves a clear problem, such as finding information or helping people make a decision.",
       },
       {
         area: "e-commerce",
-        title: "E-commerce",
+        title: "Sell it online",
         description:
           "Turn a product idea into a store with a clear offer and a straightforward buying experience.",
       },

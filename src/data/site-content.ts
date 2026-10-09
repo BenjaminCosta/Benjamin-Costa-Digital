@@ -71,17 +71,16 @@ export const ideaOptions: readonly IdeaOption[] = businessGoals.map((goal) => ({
 
 export const ideasCopy = Object.freeze({
   title: "What could work better in your business?",
-  lede: "Choose the option that sounds most like your business.",
+  lede: "Pick the one that sounds most like you.",
   formTitle: "Want to see what this could look like for your business?",
   linkLabel: "Your business website",
   linkPlaceholder: "yourbusiness.com.au",
-  linkNote: "Use your public website. No private links or personal information.",
+  linkNote: "Just your public website — nothing private.",
   noWebsite: "No website yet? Even better — tell me about the business instead",
   contextToggle: "Add a little context (optional)",
   contextLabel: "What does your business do, and what would you like to improve?",
   contextPlaceholder: "We’re a Gold Coast barbershop. We’d like more repeat bookings.",
-  contextHelp:
-    "A short sentence helps when you don’t have a website or we can’t read it. Maximum 600 characters.",
+  contextHelp: "A sentence or two is plenty. Max 600 characters.",
   contextMax: 600,
   submit: "Show me ideas",
   submitDirect: "Take a look",
@@ -101,11 +100,10 @@ export const ideasCopy = Object.freeze({
   resultsSource: "Based on your website and public information",
   buildLabel: "What I’d build",
   closeTitle: "Want me to look at it properly?",
-  closeText:
-    "The ideas above were generated automatically. I’ll personally take a look and tell you what I’d actually do.",
+  closeText: "These came from a quick automatic read. Send them my way and I’ll tell you what I’d actually do.",
   closeCta: "Talk to Ben",
-  closePoints: ["Custom proposal for your business", "Clear next steps and pricing", "No commitment"],
-  closeNote: "WhatsApp opens with your business context, goal and ideas. You decide whether to send the message.",
+  closePoints: ["A plan made for your business", "Clear next steps and a fixed price", "No strings attached"],
+  closeNote: "WhatsApp opens with your ideas already in the message. Nothing’s sent until you hit send.",
   tryAnother: "Or try another option",
   restart: "Start again",
 });

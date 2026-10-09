@@ -78,7 +78,7 @@ export function FeedbackSection() {
         <p className="mono-label wk-feedback__index">04 <span aria-hidden="true"> / </span> Client feedback</p>
         <div className="wk-feedback__head">
           <h2 id="feedback-title" className="wk-feedback__title">What clients say.</h2>
-          <p className="wk-feedback__lede">Real feedback from businesses I’ve worked with on Workana. These reviews reflect the quality, commitment, and results I bring to every project.</p>
+          <p className="wk-feedback__lede">Straight from Workana. Translated from Spanish, otherwise untouched.</p>
           <ProfileLinks className="wk-profile-actions wk-profile-actions--desktop" />
         </div>
         <div className="wk-profile">
@@ -100,7 +100,6 @@ export function FeedbackSection() {
         <ReviewCarousel count={carouselTestimonials.length}>
           {carouselTestimonials.map((review) => <ReviewCard key={review.id} review={review} />)}
         </ReviewCarousel>
-        <p className="wk-feedback__note">Translated from Spanish. Original reviews available on <a href={workana.profileUrl} target="_blank" rel="noopener noreferrer">Workana<span className="visually-hidden"> (opens in a new tab)</span></a>.</p>
       </div>
     </section>
   );
