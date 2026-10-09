@@ -13,7 +13,6 @@ type WorkShowcaseProps = Readonly<{
 }>;
 
 type Phase = "idle" | "loading" | "exit" | "enter";
-const pad = (value: number) => String(value).padStart(2, "0");
 
 function pause(ms: number, signal: AbortSignal) {
   return new Promise<void>((resolve, reject) => {
@@ -207,7 +206,6 @@ export function WorkShowcase({ projectNames, heading, slides, selectors }: WorkS
     <div className="sw-shell" role="group" aria-roledescription="carousel" aria-label="Selected projects">
       <div className="sw-topline">
         <p className="mono-label sw-label">03 <span aria-hidden="true"> / </span> Selected work</p>
-        <p className="mono-label sw-counter" aria-hidden="true">{pad(active + 1)} / {pad(total)}</p>
       </div>
       <div className="sw-body">
         {heading}

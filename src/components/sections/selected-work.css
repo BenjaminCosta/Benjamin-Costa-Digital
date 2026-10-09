@@ -20,7 +20,7 @@
 
 .sw-shell { position: relative; width: min(1400px, calc(100% - 48px)); margin-inline: auto; }
 .sw-topline { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
-.sw-label, .sw-counter { color: #5b5f5c; font-size: var(--fs-label); letter-spacing: var(--tracking-label); }
+.sw-label { color: #5b5f5c; font-size: var(--fs-label); letter-spacing: var(--tracking-label); }
 .sw-label span { padding-inline: .5rem; }
 .sw-desktop-arrows { display: none; }
 .sw-body { position: relative; margin-block-start: var(--head-gap); }
