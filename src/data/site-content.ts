@@ -17,22 +17,13 @@ export const heroImage = Object.freeze({
 
 /** Subtle glass/acrylic backgrounds, one per section that carries one. */
 export const backdrops = Object.freeze({
-  // *-soft.jpg: reviews.png pre-toned (desaturated, lifted) so the browser
-  // doesn't have to filter it on every paint.
-  // Blurred, warmed light behind the Business Ideas glass cards.
-  ideas: "/images/bg/ideas-soft.jpg",
-  ideasDesktop: "/images/bg/ideas-dp-soft.jpg",
-  reviews: "/images/bg/reviews-soft.jpg",
-  reviewsDesktop: "/images/bg/reviews-dp-soft.jpg",
   work: "/images/bg/glass-devices-sunlight.png",
   about: "/images/bg/glass-laptop-soft.png",
 });
 
 /** What each section's background photo shows. */
 export const backdropAlt = Object.freeze({
-  ideas: "Soft, warm daylight and blurred leaf shadows on a pale wall",
   work: "Palm leaf shadows in morning sunlight across a cream wall and desk, with a glass block on the table",
-  reviews: "Prism light and rainbow refractions across a bright white surface",
   about: "A laptop, a phone and a frosted glass card on a bright desk in soft daylight",
 });
 

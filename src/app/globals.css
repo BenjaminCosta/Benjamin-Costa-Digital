@@ -62,7 +62,7 @@
   /* Vertical rhythm between sections */
   --section-space: 2.75rem;
   /* The one wash over every light section's photo (see .backdrop) */
-  --veil: rgb(242 240 234 / 0.4);
+  --veil: color-mix(in srgb, var(--paper) 40%, transparent);
 
   /* Section label to its title, the same in every section */
   --head-gap: 1.25rem;
@@ -597,11 +597,6 @@ a {
   isolation: isolate;
 }
 
-/* Reviews: near-white prism light */
-.feedback__backdrop img {
-  object-position: 60% 30%;
-}
-
 .feedback__body {
   position: relative;
   z-index: 1;
@@ -641,7 +636,7 @@ a {
    and the content blurring beneath it does the separating. A plain 10px blur
    (no saturate) keeps it cheap to repaint while scrolling on phones. */
 .site-header {
-  --header-bg: rgb(242 240 234 / 0.78);
+  --header-bg: color-mix(in srgb, var(--paper) 78%, transparent);
   --header-fg: var(--ink);
 
   position: sticky;
@@ -882,23 +877,6 @@ a {
 
   overflow: clip;
   padding-block: var(--section-space);
-}
-
-/* Soft, warm light for the glass to sit in. Fixed height (a little more
-   than the first view), so the tool can change size without the image being
-   rescaled on every frame; when results make the section taller, the light
-   gives way to the paper inside the section. */
-.ideas__backdrop {
-  inset-block-end: auto;
-  height: 50rem;
-  -webkit-mask-image: linear-gradient(#000 80%, transparent);
-  mask-image: linear-gradient(#000 80%, transparent);
-}
-
-/* The darkest of the photos: lifted to the others' level */
-.ideas__backdrop img {
-  object-position: 30% 30%;
-  filter: saturate(0.5) brightness(1.05);
 }
 
 .ideas__body {
@@ -2564,10 +2542,6 @@ body[data-block-moving] :is(.ideas ~ section, .site-footer) {
 
   .hero__media img {
     object-position: 45% 50%;
-  }
-
-  .feedback__backdrop img {
-    object-position: 50% 50%;
   }
 
   /* ---------- 02 Business ideas ---------- */
